@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>媒体在吵 DeepSeek，开发者在用 Qwen</title>
+<meta name="description" content="中国开源大模型出海的「两个现场」：被讨论的中国 AI 和被使用的中国 AI，是不是同一个？">
+<link rel="preload" href="fonts/sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/site.css?v=26">
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i></i></div>
+
+<!-- ======================= 封面 ======================= -->
+<header class="cover">
+  <div class="c-top">
+    <div class="c-meta"><div class="no">01</div>数据新闻<br>2026 媒介数据挖掘工作坊<br>文 · 图 · 数据　董宇翔</div>
+    <h1><span class="l1">媒体在吵 DeepSeek，</span><span class="l2">开发者在用 Qwen</span></h1>
+    <p class="subt">中国开源大模型出海的「两个现场」</p>
+    <div class="c-square" aria-hidden="true"></div>
+  </div>
+  <div class="c-blocks">
+    <div class="blk talk">
+      <div class="shape sun" aria-hidden="true"></div>
+      <div class="lab">被讨论的</div>
+      <div class="v" data-count="39105">39,105</div>
+      <div class="k">篇中文报刊报道涉及 DeepSeek<br>（2025Q1—2026Q2 · 慧科新闻库）</div>
+    </div>
+    <div class="blk use">
+      <div class="shape ring" aria-hidden="true"></div>
+      <div class="lab">被使用的</div>
+      <div class="v">3.19<small>亿</small></div>
+      <div class="k">次下载：Qwen 在 HuggingFace 上的最近 30 天<br>（截至 2026-09-06）</div>
+      <div class="live"><span class="dot" aria-hidden="true"></span><span>你打开这一页以来，Qwen 又被下载了</span><b id="ctr">0</b><span>次</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- 跑马灯：被讨论的现场（HN 上关于 DeepSeek 的真实帖子标题） -->
+<div class="ticker-wrap"><div class="ticker talk" data-src="talk" data-dir="-1" aria-hidden="true"><div class="track"></div></div></div>
+
+<main>
+  <!-- ======================= 引入 ======================= -->
+  <section class="lead" id="lead">
+    <div class="wm wm-talk" aria-hidden="true">DeepSeek</div>
+    <div class="wm wm-use" aria-hidden="true">Qwen</div>
+    <div class="lead-in">
+      <p class="ln">你最近一次听说中国 AI，大概是在<b class="c-talk">新闻里</b>。</p>
+      <p class="ln">你最近一次用到中国 AI，可能是在某个开源项目的<b class="c-use">依赖里</b>。</p>
+      <p class="ln punch">这两件事说的，<span class="hl">不是同一个中国 AI</span>。</p>
+    </div>
+  </section>
+
+  <!-- ======================= 背景：数据卡片 + 正文卡片 ======================= -->
+  <section class="story" id="story">
+    <div class="stats">
+      <div class="stat talk"><div class="sv"><span data-scrub-count="1">1</span> 周</div><div class="sl">DeepSeek-R1 发布后，登顶美国 App Store 免费榜</div></div>
+      <div class="stat ink"><div class="sv">约 <span data-scrub-count="5890">5,890</span> 亿美元</div><div class="sl">英伟达在 2025 年 1 月 27 日一天之内蒸发的市值（据彭博社、路透社报道）</div></div>
+      <div class="stat talk"><div class="sv"><span data-scrub-count="17856">17,856</span> 篇</div><div class="sl">当季中文报刊写到 DeepSeek 的报道（2025Q1 · 慧科新闻库）</div></div>
+    </div>
+    <div class="card story-card">
+      <div class="tag">背景 · 2025 年 1 月</div>
+      <p class="big">2025 年 1 月，DeepSeek 发布推理模型 R1，“DeepSeek 时刻”成了全球头条。</p>
+      <p>此后，DeepSeek 成为媒体报道中国大模型时最受关注的对象。但在全球最大的开源模型平台 HuggingFace 上，下载量最高的中国模型并不是它。</p>
+      <div class="next"><span data-icon="arrow-down-right"></span>先看整体：中国开源模型的下载量占多少</div>
+    </div>
+  </section>
+
+  <!-- ======================= 图 01 ======================= -->
+  <section class="figcard card" id="fig12">
+    <div class="fig-head">
+      <div class="fig-no"><span>01</span>总体规模</div>
+      <h2 class="fig-title" data-bind="fig12.title"></h2>
+      <p class="fig-sub" data-bind="fig12.sub"></p>
+    </div>
+    <div class="fig-body"></div>
+    <div class="fig-note" data-bind="fig12.note"></div>
+  </section>
+
+  <!-- 跑马灯：被使用的现场（Qwen 模型与真实下载量） -->
+  <div class="ticker-wrap"><div class="ticker use" data-src="use" data-dir="1" aria-hidden="true"><div class="track"></div></div></div>
+
+  <!-- ======================= 问题与数据来源 ======================= -->
+  <section class="sources" id="sources">
+    <p class="statement">中国机构发布的开源模型，下载量已占近三分之二。本文要回答的是：<span class="hl">被大量下载的是哪些模型</span>，它们与媒体报道中的中国 AI 是否一致？</p>
+    <div class="src-row">
+      <div class="src-lab">五类数据</div>
+      <div class="chip"><span data-icon="download-simple" class="c-use"></span><b>HuggingFace</b><i>下载量、衍生模型</i></div>
+      <div class="chip"><span data-icon="github-logo"></span><b>GitHub</b><i>仓库收藏数</i></div>
+      <div class="chip"><span data-icon="chats-circle" class="c-talk"></span><b>Hacker News</b><i>开发者讨论</i></div>
+      <div class="chip"><span data-icon="newspaper-clipping" class="c-talk"></span><b>慧科新闻库</b><i>中文报刊报道</i></div>
+      <div class="chip"><span data-icon="bank"></span><b>各国政府公告</b><i>20 项限制措施</i></div>
+    </div>
+  </section>
+
+  <section class="qs" id="qs">
+    <div class="q"><div class="n">01</div><span class="act">第一幕</span><div class="t">被讨论的是谁？</div><div class="d">中文报刊和开发者社区在谈哪个中国 AI、谈些什么。</div></div>
+    <div class="q"><div class="n">02</div><span class="act">第二幕</span><div class="t">被使用的是谁？</div><div class="d">全球开发者实际在下载、在二次开发哪个中国 AI。</div></div>
+    <div class="q"><div class="n">03</div><span class="act">第三幕</span><div class="t">限制措施管到了什么？</div><div class="d">各国针对 DeepSeek 的限制措施覆盖了哪些使用方式，又有哪些没有覆盖。</div></div>
+  </section>
+
+  <!-- ======================= 第一幕章节页 ======================= -->
+  <section class="chapter talk" id="ch1">
+    <div class="slab">
+      <div class="bignum">39,105</div>
+      <div class="bigcap">篇中文报刊报道涉及 DeepSeek（2025Q1—2026Q2）</div>
+      <div class="act">第一幕</div>
+      <h2>被讨论的中国 AI</h2>
+      <p class="one">2025Q1—2026Q2，涉及 DeepSeek 的中文报刊报道有 39,105 篇，<br>涉及 Qwen 的有 2,622 篇。</p>
+    </div>
+  </section>
+
+  <section class="txt">
+    <div class="note">
+      <div class="tag">第一幕 · 被讨论的</div>
+      <p class="big">2025 年 1 月起，中文报刊对 DeepSeek 的报道量远超同为开源模型的 Qwen。</p>
+      <p>通义千问（Qwen）六个季度的报道合计 2,622 篇。除 2025 年一季度的 622 篇外，每季度在 350 至 450 篇之间。</p>
+    </div>
+  </section>
+
+  <section class="figcard card" id="fig2">
+    <div class="fig-head">
+      <div class="fig-no"><span>02</span>报道量</div>
+      <h2 class="fig-title" data-bind="fig2.title"></h2>
+      <p class="fig-sub" data-bind="fig2.sub"></p>
+    </div>
+    <div class="fig-body"></div>
+    <div class="fig-note" data-bind="fig2.note"></div>
+  </section>
+
+  <section class="txt split">
+    <div class="note">
+      <div class="tag">讨论的议题</div>
+      <p class="big">除了报道数量，还要看讨论的内容。</p>
+      <p>我们对 Hacker News（以程序员和创业者为主的英文技术社区）上标题含 DeepSeek 或 Qwen 的 1,943 条帖子逐条做了议题编码。右侧是两者各自得分最高的帖子。</p>
+    </div>
+    <div class="clips" data-examples></div>
+  </section>
+
+  <section class="figcard card" id="fig3">
+    <div class="fig-head">
+      <div class="fig-no"><span>03</span>讨论议题</div>
+      <h2 class="fig-title" data-bind="fig3.title"></h2>
+      <p class="fig-sub" data-bind="fig3.sub"></p>
+    </div>
+    <div class="fig-body"></div>
+    <div class="fig-note" data-bind="fig3.note"></div>
+  </section>
+
+  <section class="txt">
+    <div class="note">
+      <div class="tag">议题差异</div>
+      <p>DeepSeek 相关帖子多涉及英伟达股价、训练成本、出口管制、审查与数据安全；Qwen 相关帖子多涉及本地部署、量化和接入开发工具。</p>
+      <p class="big">DeepSeek 的报道量在 2025 年一季度达到高点后持续回落。</p>
+    </div>
+  </section>
+
+  <section class="figcard card" id="fig1">
+    <div class="fig-head">
+      <div class="fig-no"><span>04</span>此消彼长</div>
+      <h2 class="fig-title" data-bind="fig1.title"></h2>
+      <p class="fig-sub" data-bind="fig1.sub"></p>
+    </div>
+    <div class="fig-body"></div>
+    <div class="fig-note" data-bind="fig1.note"></div>
+  </section>
+
+  <section class="pull" id="pull1">
+    <div class="pn"><span data-pull="87.7">87.7</span>%</div>
+    <div class="pc">2025Q1 至 2026Q2，DeepSeek 中文报刊季度报道量的降幅。<br>同期，基于中国底座模型的新衍生模型数增至 2.6 倍。</div>
+  </section>
+
+  <!-- ======================= 第二幕 ======================= -->
+  <section class="chapter use" id="ch2">
+    <div class="slab">
+      <div class="bignum" data-end="3.19" data-dec="2" data-suffix=" 亿">3.19 亿</div>
+      <div class="bigcap">次下载：Qwen 在 HuggingFace 上的最近 30 天</div>
+      <div class="act">第二幕</div>
+      <h2>被使用的中国 AI</h2>
+      <p class="one">下载量最高的中国开源模型，<br>中文报刊报道量只有 DeepSeek 的十五分之一。</p>
+    </div>
+  </section>
+
+  <section class="txt" style="--act: var(--use)">
+    <div class="note">
+      <div class="tag">第二幕 · 被使用的</div>
+      <p class="big">在 HuggingFace 上，下载量最高的中国开源模型是 Qwen。</p>
+      <p>Qwen 是阿里巴巴通义千问团队发布的开源模型系列，参数规模从 6 亿到数千亿不等。开发者可以免费下载、在本地运行，并按许可协议修改和再发布。</p>
+    </div>
+  </section>
+
+  <section class="figcard card" id="fig4">
+    <div class="fig-head">
+      <div class="fig-no"><span>05</span>下载量</div>
+      <h2 class="fig-title" data-bind="fig4.title"></h2>
+      <p class="fig-sub" data-bind="fig4.sub"></p>
+    </div>
+    <div class="fig-body"></div>
+    <div class="fig-note" data-bind="fig4.note"></div>
+  </section>
+
+  <section class="txt" style="--act: var(--use)">
+    <div class="note">
+      <div class="tag">讨论与使用</div>
+      <p class="big">开发者社区的讨论量，同样偏向 DeepSeek。</p>
+      <p>将中文报刊报道量、Hacker News 帖子数、GitHub 收藏数和 HuggingFace 下载量放在一起比较：</p>
+    </div>
+  </section>
+
+  <section class="figcard card" id="fig5">
+    <div class="fig-head">
+      <div class="fig-no"><span>06</span>四项指标</div>
+      <h2 class="fig-title" data-bind="fig5.title"></h2>
+      <p class="fig-sub" data-bind="fig5.sub"></p>
+    </div>
+    <div class="fig-body"></div>
+    <div class="fig-note" data-bind="fig5.note"></div>
+  </section>
+
+  <section class="txt" style="--act: var(--use)">
+    <div class="note">
+      <div class="tag">衍生模型</div>
+      <p class="big">衍生模型的数量，比下载量更能反映实际使用。</p>
+      <p>开发者在已有模型的基础上微调、量化或合并，再作为新模型发布，即衍生模型。HuggingFace 的模型页面可以标注底座模型（base model），据此可统计每个底座上新发布的衍生模型数。</p>
+    </div>
+  </section>
+
+  <section class="figcard card" id="fig6">
+    <div class="fig-head">
+      <div class="fig-no"><span>07</span>衍生占比</div>
+      <h2 class="fig-title" data-bind="fig6.title"></h2>
+      <p class="fig-sub" data-bind="fig6.sub"></p>
+    </div>
+    <div class="fig-body"></div>
+    <div class="fig-note" data-bind="fig6.note"></div>
+  </section>
+
+  <section class="txt" style="--act: var(--use)">
+    <div class="note">
+      <div class="tag">底座分布</div>
+      <p class="big">这些衍生模型中，过半基于 Qwen。</p>
+    </div>
+  </section>
+
+  <section class="figcard card" id="fig7">
+    <div class="fig-head">
+      <div class="fig-no"><span>08</span>底座流向</div>
+      <h2 class="fig-title" data-bind="fig7.title"></h2>
+      <p class="fig-sub" data-bind="fig7.sub"></p>
+    </div>
+    <div class="fig-body"></div>
+    <div class="fig-note" data-bind="fig7.note"></div>
+  </section>
+
+  <section class="txt" style="--act: var(--use)">
+    <div class="note">
+      <div class="tag">发布者与国别</div>
+      <p class="big">下载量第 9 位的模型由美国公司 NVIDIA 发布，底座是 Qwen。</p>
+      <p>NVIDIA 将 Qwen 量化后以自己的账号发布，最近 30 天下载 1,016 万次。本文按发布机构划分国别，这类模型计入美欧，因此中国模型的份额是保守估计。</p>
+    </div>
+  </section>
+
+  <section class="figcard card" id="fig8">
+    <div class="fig-head">
+      <div class="fig-no"><span>09</span>下载榜</div>
+      <h2 class="fig-title" data-bind="fig8.title"></h2>
+      <p class="fig-sub" data-bind="fig8.sub"></p>
+    </div>
+    <div class="fig-body"></div>
+    <div class="fig-note" data-bind="fig8.note"></div>
+  </section>
+
+  <section class="pull use" id="pull2">
+    <div class="pn"><span data-pull="13.8">13.8</span>×</div>
+    <div class="pc">HuggingFace 最近 30 天下载量之比（Qwen : DeepSeek）。<br>中文报刊报道量之比为 1 : 15，方向正好相反。</div>
+  </section>
+
+  <!-- ======================= 第三幕 ======================= -->
+  <section class="chapter ink" id="ch3">
+    <div class="slab">
+      <div class="bignum">20</div>
+      <div class="bigcap">项各国政府针对 DeepSeek 的限制措施（2025 年至今）</div>
+      <div class="act">第三幕</div>
+      <h2>禁令的边界</h2>
+      <p class="one">20 项限制措施针对的是官方 App 和政府系统，<br>没有一项覆盖个人在本地运行下载的模型。</p>
+    </div>
+  </section>
+
+  <section class="txt" style="--act: var(--ink)">
+    <div class="note">
+      <div class="tag">第三幕 · 禁令的边界</div>
+      <p class="big">DeepSeek 走红后，多国政府相继出台限制措施。</p>
+      <p>我们逐条核对了 2025 年以来各国政府针对 DeepSeek 的 20 项限制措施：能查到官方原文的以原文为准，查不到原件的单独标注。</p>
+    </div>
+  </section>
+
+  <section class="figcard card" id="fig9">
+    <div class="fig-head">
+      <div class="fig-no"><span>10</span>禁令时间</div>
+      <h2 class="fig-title" data-bind="fig9.title"></h2>
+      <p class="fig-sub" data-bind="fig9.sub"></p>
+    </div>
+    <div class="fig-body"></div>
+    <div class="fig-note" data-bind="fig9.note"></div>
+  </section>
+
+  <section class="txt" style="--act: var(--ink)">
+    <div class="note">
+      <div class="tag">覆盖范围</div>
+      <p class="big">2025 年二季度以后，新出台的限制措施明显减少，但没有停止。</p>
+      <p>后期措施从禁用单个 App 转向立法，或将多家中国 AI 公司一并列入限制名单。下面逐项比较这些措施的覆盖范围。</p>
+    </div>
+  </section>
+
+  <section class="figcard card" id="fig10">
+    <div class="fig-head">
+      <div class="fig-no"><span>11</span>管辖对象</div>
+      <h2 class="fig-title" data-bind="fig10.title"></h2>
+      <p class="fig-sub" data-bind="fig10.sub"></p>
+    </div>
+    <div class="fig-body"></div>
+    <div class="fig-note" data-bind="fig10.note"></div>
+  </section>
+
+  <section class="txt" style="--act: var(--ink)">
+    <div class="note">
+      <div class="tag">报道与衍生</div>
+      <p class="big">报道量和限制措施都集中在 2025 年一季度，衍生模型的走势则不同。</p>
+      <p>把每季度的报道量和衍生模型数放在同一张图上，以 2025 年一季度为基准：</p>
+    </div>
+  </section>
+
+  <section class="figcard card" id="fig11">
+    <div class="fig-head">
+      <div class="fig-no"><span>12</span>此消彼长</div>
+      <h2 class="fig-title" data-bind="fig11.title"></h2>
+      <p class="fig-sub" data-bind="fig11.sub"></p>
+    </div>
+    <div class="fig-body"></div>
+    <div class="fig-note" data-bind="fig11.note"></div>
+  </section>
+
+  <section class="pull ink" id="pull3">
+    <div class="pn"><span data-pull="0" data-from="20" data-dec="0">0</span> / 20</div>
+    <div class="pc">20 项限制措施中，适用于个人在本地运行开源模型的为 0 项。<br>澳大利亚和捷克的政府禁令还明确豁免了本地部署的开源模型。</div>
+  </section>
+
+  <!-- ======================= 结语 ======================= -->
+  <section class="txt ending" id="ending" style="--act: var(--ink)">
+    <div class="note">
+      <div class="tag">结语</div>
+      <p class="big">三组数据显示：中文报刊关注的主要是 DeepSeek，开发者使用的主要是 Qwen。</p>
+      <p>2025Q1—2026Q2，DeepSeek 的中文报刊报道量下降 87.7%，各国针对它的 20 项限制措施集中在官方 App 和政府系统。同期，Qwen 在 HuggingFace 上的下载量是 DeepSeek 的 13.8 倍，新衍生模型中有 52.9% 基于 Qwen；个人下载并在本地运行开源模型，不在任何一项限制措施的覆盖范围内。</p>
+    </div>
+  </section>
+
+  <!-- ======================= 收束：一屏红蓝两块 + 结论条，与封面首尾呼应 ======================= -->
+  <section class="finale" id="finale">
+    <div class="eb talk">
+      <div class="shape sun" aria-hidden="true"></div>
+      <div class="lab">被谈论得最多的</div>
+      <div class="v">DeepSeek</div>
+      <div class="k">报道量 18 个月下降 87.7%；各国限制措施 20 项</div>
+      <div class="meter"><p>你读到这里的这段时间，中文报刊大约写了</p><div class="mv"><b id="m-talk">0.000</b>篇 DeepSeek 报道</div><small data-rate="talk"></small></div>
+    </div>
+    <div class="eb use">
+      <div class="shape ring" aria-hidden="true"></div>
+      <div class="lab">被使用得最多的</div>
+      <div class="v">Qwen</div>
+      <div class="k">下载量是 DeepSeek 的 13.8 倍；新衍生模型中 52.9% 基于 Qwen</div>
+      <div class="meter"><p>同一段时间，Qwen 在 HuggingFace 上被下载了</p><div class="mv"><b id="m-use">0</b>次</div><small data-rate="use"></small></div>
+    </div>
+    <div class="end-bar">
+      <p class="punch2">被谈论得最多的，<span class="hl">不一定是被使用得最多的</span>。<br>报道会随热点回落，使用会持续累积。</p>
+    </div>
+  </section>
+
+  <!-- ======================= 数据与方法 ======================= -->
+  <section class="method" id="method">
+    <details>
+      <summary><span class="tag">数据与方法</span>五类数据来源、口径与局限（点开查看）</summary>
+      <div class="method-body" data-method></div>
+    </details>
+    <footer class="foot">
+      <div>数据新闻作品 ·《媒体在吵 DeepSeek，开发者在用 Qwen——中国开源大模型出海的「两个现场」》</div>
+      <div>文 · 图 · 数据　董宇翔　｜　中央民族大学新闻与传播学院　2026 媒介数据挖掘工作坊</div>
+    </footer>
+  </section>
+</main>
+
+<script src="js/d3.v7.min.js"></script>
+<script src="js/gsap.min.js"></script>
+<script src="js/ScrollTrigger.min.js"></script>
+<script src="js/lenis.min.js"></script>
+<script src="data/data.js?v=5"></script>
+<script src="js/figs.js?v=19"></script>
+<script src="js/app.js?v=22"></script>
+</body>
+</html>

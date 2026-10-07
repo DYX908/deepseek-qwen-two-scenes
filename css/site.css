@@ -1,0 +1,252 @@
+/* ==================================================================
+   正式页面 · 风格 C：瑞士国际主义 / 大色块
+   朱红 = 被讨论，钴蓝 = 被使用，明黄 = 强调，墨黑 = 结构
+   画面充实的办法：网点底纹、跑马灯色带、数据卡片、背景描边大字——都承载真实内容
+   ================================================================== */
+@font-face { font-family: "NSans"; src: url(../fonts/sans.woff2) format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Plex Mono"; src: url(../fonts/mono-400.woff2) format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Plex Mono"; src: url(../fonts/mono-600.woff2) format("woff2"); font-weight: 600; font-display: swap; }
+
+:root {
+  --paper: #F1EFEA;
+  --talk: #E5402A;
+  --use: #1F48C8;
+  --yel: #F4C21B;
+  --ink: #111111;
+  --grey: #DEDBD4;
+  --muted: #6B6B6B;
+  --card: #FFFFFF;
+  --f: "NSans", "PingFang SC", sans-serif;
+  --mono: "Plex Mono", "NSans", monospace;
+  --pad: clamp(20px, 3.9vw, 56px);
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: auto !important; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+body {
+  margin: 0; color: var(--ink); overflow-x: hidden;
+  font-family: var(--f); font-size: 18px; line-height: 1.85; font-weight: 400;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  /* 网点底纹：纸面不再是一片空白 */
+  background-color: var(--paper);
+  background-image: radial-gradient(rgba(17,17,17,.13) 1.1px, transparent 1.4px);
+  background-size: 16px 16px;
+}
+b, strong { font-weight: 700; }
+.c-talk { color: var(--talk); font-weight: 900; }
+.c-use { color: var(--use); font-weight: 900; }
+.hl { position: relative; display: inline-block; z-index: 0; }
+.hl::before { content: ""; position: absolute; z-index: -1; left: -.08em; right: -.08em; bottom: .06em; height: .42em; background: var(--yel); transform-origin: left center; transform: scaleX(var(--hl, 1)); }
+.card { background: var(--card); border-top: 8px solid var(--ink); box-shadow: 0 1px 0 rgba(0,0,0,.05), 0 20px 50px rgba(17,17,17,.07); }
+.tag { display: inline-block; padding: 3px 12px 4px; background: var(--ink); color: var(--paper); font-size: 13px; font-weight: 900; letter-spacing: .18em; line-height: 1.5; }
+[data-icon] { display: inline-flex; width: 1.15em; height: 1.15em; vertical-align: -.18em; }
+[data-icon] svg { width: 100%; height: 100%; }
+
+/* ---------------- 封面 ---------------- */
+.cover { position: relative; min-height: 100vh; display: grid; grid-template-rows: auto 1fr; overflow: hidden; }
+.c-top { position: relative; display: grid; grid-template-columns: repeat(12, 1fr); gap: 0 20px; padding: 60px var(--pad) 44px; }
+.c-meta { grid-column: 1 / 4; font-size: 13px; font-weight: 600; line-height: 1.6; letter-spacing: .04em; }
+.c-meta .no { font-size: 64px; font-weight: 900; line-height: 1; letter-spacing: -.04em; margin-bottom: 6px; }
+.cover h1 { grid-column: 4 / 13; margin: 0; font-weight: 900; font-size: clamp(46px, 6.4vw, 100px); line-height: 1.04; letter-spacing: -.02em; }
+.cover h1 span { display: block; white-space: nowrap; }
+.cover h1 .l1 { color: var(--talk); }
+.cover h1 .l2 { color: var(--use); }
+.cover .subt { grid-column: 4 / 13; margin: 18px 0 0; font-size: 22px; font-weight: 500; }
+.c-square { position: absolute; left: var(--pad); bottom: -20px; width: 64px; height: 64px; background: var(--ink); }
+.c-blocks { display: grid; grid-template-columns: 1fr 1fr; min-height: 46vh; }
+.blk { position: relative; padding: 36px var(--pad); color: var(--paper); overflow: hidden; }
+.blk.talk { background: var(--talk); }
+.blk.use { background: var(--use); }
+.blk > *:not(.shape) { position: relative; }
+.blk .lab { font-size: 14px; font-weight: 700; letter-spacing: .2em; }
+.blk .v { font-size: clamp(80px, 11vw, 176px); font-weight: 900; line-height: 1.05; padding-bottom: .06em; letter-spacing: -.05em; margin-top: 14px; font-variant-numeric: tabular-nums; }
+.blk .v small { font-size: .38em; letter-spacing: 0; margin-left: .1em; }
+.blk .k { font-size: 17px; font-weight: 500; line-height: 1.6; margin-top: 12px; }
+/* 实时计数器：独立一行，直播点 + 大号黄色数字 */
+.live { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; margin-top: 22px; font-size: 16px; font-weight: 700; }
+.live b { font-family: var(--mono); font-size: clamp(32px, 3.2vw, 48px); font-weight: 600; color: var(--yel); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.live .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--yel); align-self: center; box-shadow: 0 0 0 0 rgba(244,194,27,.7); animation: livepulse 1.4s ease-out infinite; }
+@keyframes livepulse { 0% { box-shadow: 0 0 0 0 rgba(244,194,27,.7); opacity: 1; } 70% { box-shadow: 0 0 0 14px rgba(244,194,27,0); opacity: .55; } 100% { box-shadow: 0 0 0 0 rgba(244,194,27,0); opacity: 1; } }
+/* 阅读进度条 */
+.progress { position: fixed; left: 0; right: 0; top: 0; height: 5px; z-index: 100; pointer-events: none; }
+.progress i { display: block; height: 100%; background: var(--talk); transform-origin: left center; transform: scaleX(0); transition: background-color .4s; }
+/* 章节页背景的旋转虚线圆 */
+.ch-ring { position: absolute; left: -12vw; bottom: -38vh; width: 70vw; height: 70vw; border-radius: 50%; border: 3px dashed rgba(241,239,234,.3); pointer-events: none; }
+/* 轨道上的两颗点：圆环转起来时沿轨道走，让持续旋转一眼可见 */
+.ch-ring::before, .ch-ring::after, .shape.ring::after { content: ""; position: absolute; left: 50%; width: 18px; height: 18px; margin-left: -9px; border-radius: 50%; background: var(--yel); }
+.ch-ring::before { top: -10px; }
+.ch-ring::after { width: 12px; height: 12px; margin-left: -6px; bottom: -7px; background: var(--paper); }
+.shape.ring::after { top: -8px; width: 14px; height: 14px; margin-left: -7px; }
+.blk .k b { font-family: var(--mono); font-weight: 600; }
+.shape { position: absolute; border-radius: 50%; pointer-events: none; }
+.shape.sun { width: 34vw; height: 34vw; right: -12vw; bottom: -16vw; background: var(--yel); mix-blend-mode: multiply; }
+.shape.ring { width: 22vw; height: 22vw; right: 4vw; top: -11vw; border: 2px dashed rgba(241,239,234,.7); }
+
+/* ---------------- 跑马灯色带（随滚动左右移动） ---------------- */
+.ticker-wrap { overflow: hidden; padding: 34px 0; }
+.ticker { width: 112%; margin-left: -6%; overflow: hidden; white-space: nowrap; padding: 16px 0; }
+.ticker.talk { background: var(--ink); color: var(--paper); transform: rotate(-1.6deg); }
+.ticker.use { background: var(--use); color: #fff; transform: rotate(1.4deg); }
+.ticker .track { display: inline-block; will-change: transform; }
+.ticker .it { display: inline-block; margin-right: 34px; font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
+.ticker.talk .it::before { content: ""; display: inline-block; width: .55em; height: .55em; margin-right: 18px; background: var(--talk); vertical-align: .08em; }
+.ticker.use .it { font-family: var(--mono); font-weight: 600; font-size: 20px; }
+.ticker.use .it em { font-style: normal; color: var(--yel); margin: 0 .5em; }
+
+/* ---------------- 引入：背景描边大字 + 三句话 ---------------- */
+.lead { position: relative; min-height: 100vh; display: flex; align-items: center; padding: 6vh var(--pad); overflow-x: clip; overflow-y: visible; }
+/* 字号按实测字宽算：DeepSeek = 4.64em，20.5vw 时约占屏宽 95%（完整可见的最大值）；Qwen = 2.72em，可放到 27vw；
+   同时受屏高约束（两字高度合计 ≤ 97vh），16:9 投影上也能一屏看全；行高留出 Q 的尾巴 */
+.wm { position: absolute; font-weight: 900; line-height: 1.2; letter-spacing: -.05em; color: transparent; white-space: nowrap; pointer-events: none; }
+.wm-talk { top: 0; left: 2.5vw; font-size: min(20.5vw, 34vh); -webkit-text-stroke: 3px rgba(229,64,42,.5); }
+.wm-use { bottom: 0; right: 2.5vw; font-size: min(27vw, 44vh); line-height: 1.28; -webkit-text-stroke: 3px rgba(31,72,200,.5); }
+.lead-in { position: relative; }
+.lead p { margin: 0 0 .5em; max-width: 1320px; text-wrap: balance; font-size: clamp(26px, 3vw, 44px); font-weight: 500; line-height: 1.45; letter-spacing: -.01em; }
+.lead p.punch { margin-top: .9em; font-size: clamp(40px, 5.2vw, 80px); font-weight: 900; line-height: 1.15; letter-spacing: -.02em; }
+
+/* ---------------- 背景：数据卡片 + 正文卡片 ---------------- */
+.story { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; padding: 8vh var(--pad) 12vh; align-items: start; }
+.stats { grid-column: 1 / 6; display: grid; gap: 16px; }
+.stat { background: var(--card); padding: 20px 24px 22px; border-left: 10px solid var(--ink); box-shadow: 0 14px 34px rgba(17,17,17,.06); }
+.stat.talk { border-left-color: var(--talk); }
+.stat .sv { font-size: 48px; font-weight: 900; line-height: 1.05; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.stat.talk .sv { color: var(--talk); }
+.stat .sl { margin-top: 8px; font-size: 15px; line-height: 1.6; color: #444; }
+.story-card { grid-column: 6 / 13; padding: 40px 48px 36px; margin-top: 7vh; }
+.story-card .tag { margin-bottom: 22px; }
+.story-card p { margin: 0 0 1.1em; text-wrap: pretty; }
+.story-card .big { font-size: 28px; font-weight: 900; line-height: 1.45; letter-spacing: -.01em; }
+.story-card .next { display: flex; align-items: center; gap: 10px; margin-top: 26px; padding-top: 16px; border-top: 2px solid var(--ink); font-size: 16px; font-weight: 700; }
+.story-card .next [data-icon] { color: var(--talk); width: 1.4em; height: 1.4em; }
+
+/* ---------------- 图表卡片 ---------------- */
+.figcard { margin: 0 var(--pad); padding: 44px 48px 30px; }
+.fig-head { display: grid; grid-template-columns: repeat(12, 1fr); gap: 0 20px; margin-bottom: 30px; }
+.fig-no { grid-column: 1 / 4; font-size: 13px; font-weight: 900; letter-spacing: .2em; padding-top: 8px; }
+.fig-no span { display: block; font-size: 64px; letter-spacing: -.04em; line-height: 1; margin-bottom: 6px; color: var(--use); }
+.fig-title { grid-column: 4 / 13; margin: 0; font-size: clamp(26px, 2.5vw, 36px); font-weight: 900; line-height: 1.3; letter-spacing: -.01em; text-wrap: balance; word-break: keep-all; overflow-wrap: anywhere; }
+.fig-sub { grid-column: 4 / 13; margin: 12px 0 0; font-size: 16px; font-weight: 500; line-height: 1.7; color: #444; text-wrap: pretty; }
+.fig-body svg { display: block; width: 100%; height: auto; overflow: visible; }
+.fig-note { margin-top: 22px; padding-top: 10px; border-top: 3px solid var(--ink); font-size: 12.5px; line-height: 1.75; color: var(--muted); text-wrap: pretty; }
+
+/* ---------------- 幕内文字卡片 + 剪报 ---------------- */
+.txt { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; padding: 10vh var(--pad); align-items: center; }
+.txt .note { grid-column: 3 / 11; padding: 6px 0 6px 40px; border-left: 12px solid var(--act, var(--talk)); background: none; box-shadow: none; border-top: 0; }
+.txt.split .note { grid-column: 1 / 8; }
+.note .tag { margin-bottom: 14px; padding: 0; background: none; color: var(--act, var(--talk)); font-size: 14px; letter-spacing: .25em; }
+.note p { margin: 0 0 1em; text-wrap: pretty; }
+.note .big { font-size: 34px; font-weight: 900; line-height: 1.4; letter-spacing: -.015em; }
+.note p:not(.big) { font-size: 20px; font-weight: 500; line-height: 1.8; }
+.clips { grid-column: 8 / 13; display: grid; gap: 12px; }
+.clip { background: var(--card); padding: 14px 20px 14px 18px; border-left: 8px solid var(--talk); box-shadow: 0 12px 30px rgba(17,17,17,.06); font-size: 17px; font-weight: 700; line-height: 1.4; }
+.clip.use { border-left-color: var(--use); }
+.clip small { display: block; margin-top: 6px; font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--muted); }
+.clip-h { font-size: 13px; font-weight: 900; letter-spacing: .2em; margin-top: 6px; }
+.figcard { margin: 6vh var(--pad); }
+
+/* ---------------- 抽出数字页 ---------------- */
+.pull { padding: 14vh var(--pad) 10vh; }
+.pn { font-size: 24vw; font-weight: 900; line-height: 1.08; padding-bottom: .04em; letter-spacing: -.06em; color: var(--talk); font-variant-numeric: tabular-nums; }
+.pull.use .pn { color: var(--use); }
+.pull.ink .pn { color: var(--ink); }
+.pc-cursor { position: absolute; left: 0; top: -6px; width: 72px; height: 6px; background: var(--yel); }
+.pc { position: relative; text-wrap: pretty; margin-top: 26px; max-width: 1000px; font-size: clamp(20px, 2vw, 28px); font-weight: 700; line-height: 1.55; padding-top: 18px; border-top: 6px solid var(--ink); }
+
+/* ---------------- 结语：两块色块再对撞一次 ---------------- */
+.txt.ending { padding-bottom: 14vh; }
+.eb.talk { background: var(--talk); }
+.eb.use { background: var(--use); }
+.eb .lab { font-size: 14px; font-weight: 700; letter-spacing: .2em; }
+.eb .v { margin-top: 14px; font-size: clamp(64px, 8vw, 128px); font-weight: 900; line-height: 1; letter-spacing: -.04em; }
+.eb .k { margin-top: 14px; max-width: 30em; font-size: 18px; font-weight: 500; line-height: 1.6; }
+/* 收束：一屏红蓝两块 + 黑色结论条，与封面首尾呼应 */
+.finale { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr auto; height: 100vh; min-height: 680px; }
+.finale .eb { position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 0; padding: clamp(28px, 6vh, 64px) clamp(28px, 3.4vw, 56px) clamp(24px, 4.5vh, 48px); color: var(--paper); }
+.finale .eb > :not(.shape) { position: relative; z-index: 1; }
+.finale .eb .lab { margin-bottom: auto; }
+.finale .eb .v { font-size: clamp(56px, min(9vw, 15vh), 144px); }
+.finale .eb .k { min-height: 3.2em; }
+.meter { margin-top: clamp(16px, 3vh, 28px); padding-top: 14px; border-top: 2px solid rgba(241,239,234,.35); }
+.meter p { margin: 0; font-size: 16px; font-weight: 700; }
+.meter .mv { display: flex; align-items: baseline; gap: 10px; font-size: 17px; font-weight: 700; }
+.meter .mv b { font-family: var(--mono); font-weight: 600; font-size: clamp(36px, min(4vw, 6.5vh), 60px); line-height: 1.2; letter-spacing: -.02em; color: var(--yel); font-variant-numeric: tabular-nums; }
+.meter small { display: block; font-size: 13px; font-weight: 500; opacity: .72; }
+.end-bar { grid-column: 1 / -1; padding: clamp(26px, 5vh, 52px) var(--pad); background: var(--ink); color: var(--paper); }
+.end-bar .punch2 { margin: 0; font-size: clamp(30px, min(3.6vw, 6vh), 58px); font-weight: 900; line-height: 1.3; letter-spacing: -.02em; }
+.end-bar .hl { color: var(--ink); }
+.end-bar .hl::before { bottom: .02em; height: 1.16em; }
+
+/* ---------------- 数据与方法 + 页脚 ---------------- */
+.method { padding: 4vh var(--pad) 10vh; }
+.method summary { display: flex; align-items: center; gap: 16px; padding: 20px 0; cursor: pointer; list-style: none; border-top: 3px solid var(--ink); border-bottom: 1px solid rgba(17,17,17,.15); font-size: 18px; font-weight: 700; }
+.method summary::-webkit-details-marker { display: none; }
+.method summary::after { content: "+"; margin-left: auto; font-size: 28px; font-weight: 900; }
+.method details[open] summary::after { content: "−"; }
+.method-body { columns: 2; column-gap: 48px; padding-top: 22px; font-size: 14px; line-height: 1.8; }
+.method-body section { break-inside: avoid; margin-bottom: 20px; }
+.method-body h3 { margin: 0 0 6px; font-size: 16px; font-weight: 900; }
+.method-body p, .method-body li { margin: 0 0 6px; }
+.method-body ul, .method-body ol { margin: 0; padding-left: 1.2em; }
+.method-body a { color: var(--use); word-break: break-all; }
+.foot { margin-top: 6vh; font-size: 13px; line-height: 1.9; color: var(--muted); }
+
+/* ---------------- 问题 + 数据来源 ---------------- */
+.sources { padding: 8vh var(--pad) 6vh; }
+.statement { margin: 0; max-width: 1200px; font-size: clamp(32px, 3.6vw, 54px); font-weight: 900; line-height: 1.3; letter-spacing: -.02em; text-wrap: balance; }
+.src-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 44px; }
+.src-lab { flex-basis: 100%; font-size: 13px; font-weight: 900; letter-spacing: .2em; }
+.chip { display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px 10px 14px; background: var(--card); border: 2px solid var(--ink); font-size: 16px; line-height: 1.2; }
+.chip [data-icon] { width: 26px; height: 26px; }
+.chip b { font-weight: 900; }
+.chip i { font-style: normal; font-size: 13px; color: var(--muted); }
+
+.qs { display: grid; grid-template-columns: repeat(3, 1fr); padding: 2vh var(--pad) 0; }
+.q { padding: 34px 30px 40px; min-height: 340px; color: var(--paper); }
+.q:nth-child(1) { background: var(--talk); }
+.q:nth-child(2) { background: var(--use); }
+.q:nth-child(3) { background: var(--ink); }
+.q .n { font-size: 88px; font-weight: 900; line-height: .9; letter-spacing: -.05em; }
+.q .act { display: block; margin: 22px 0 8px; font-size: 13px; font-weight: 700; letter-spacing: .2em; opacity: .8; }
+.q .t { font-size: 30px; font-weight: 900; line-height: 1.3; }
+.q .d { margin-top: 12px; font-size: 16px; line-height: 1.7; opacity: .9; }
+
+/* ---------------- 章节页：满幅色块随滚动推入 ---------------- */
+.chapter { position: relative; height: 100vh; overflow: hidden; margin-top: 14vh; }
+.chapter .slab > .act, .chapter .slab > h2, .chapter .slab > .one { position: relative; z-index: 1; }
+.chapter .slab { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 var(--pad) 10vh; color: var(--paper); }
+.chapter.talk .slab { background: var(--talk); }
+.chapter.use .slab { background: var(--use); }
+.chapter.ink .slab { background: var(--ink); }
+.chapter .act { font-size: 15px; font-weight: 700; letter-spacing: .3em; }
+.chapter h2 { margin: 12px 0 0; font-size: clamp(56px, 8vw, 128px); font-weight: 900; line-height: 1; letter-spacing: -.03em; }
+.chapter .one { margin-top: 26px; max-width: 1100px; text-wrap: balance; font-size: clamp(22px, 2.2vw, 32px); font-weight: 500; line-height: 1.5; }
+.chapter .bigcap { position: absolute; right: var(--pad); top: calc(8vh + clamp(120px, 20vw, 320px) * 1.06); font-size: clamp(16px, 1.4vw, 22px); font-weight: 700; color: rgba(241,239,234,.75); text-align: right; }
+.chapter .bignum { position: absolute; right: var(--pad); top: 8vh; font-size: clamp(120px, 20vw, 320px); font-weight: 900; line-height: .9; letter-spacing: -.06em; color: rgba(241,239,234,.16); font-variant-numeric: tabular-nums; }
+
+.draft-end { padding: 10vh var(--pad); text-align: center; font-size: 13px; font-weight: 700; letter-spacing: .3em; color: var(--muted); }
+
+/* ---------------- 手机 ---------------- */
+@media (max-width: 760px) {
+  body { font-size: 17px; }
+  .c-top { display: block; padding-top: 40px; }
+  .c-meta { margin-bottom: 24px; }
+  .cover h1 { font-size: clamp(32px, 9vw, 46px); }
+  .c-square { display: none; }
+  .c-blocks { grid-template-columns: 1fr; }
+  .blk .v { font-size: 22vw; }
+  .story { display: block; }
+  .stats { margin-bottom: 20px; }
+  .story-card { margin-top: 0; padding: 28px 24px; }
+  .figcard { padding: 28px 20px; }
+  .fig-head { display: block; }
+  .fig-no span { font-size: 44px; }
+  .qs { grid-template-columns: 1fr; }
+  .txt { display: block; }
+  .clips { margin-top: 16px; }
+  .q { min-height: 0; }
+  .finale { grid-template-columns: 1fr; height: auto; }
+  .finale .eb { min-height: 72vh; }
+  .method-body { columns: 1; }
+}
