@@ -309,8 +309,10 @@
         el.ds = grid(nD, 210, C.talk);
         const lab = (y, name, color, v) => { const g = svg.append("g");
           g.append("text").attr("x", 0).attr("y", y + 4).attr("font-size", 20).attr("font-weight", 900).attr("fill", color).text(name);
-          g.append("text").attr("x", 0).attr("y", y + 40).attr("font-size", 32).attr("font-weight", 900).attr("fill", C.ink).attr("letter-spacing", "-.02em").text(wan(v));
-          g.append("text").attr("x", 0).attr("y", y + 62).attr("font-size", 13).attr("font-weight", 500).attr("fill", C.muted).text("次下载 · 最近 30 天"); return g.node(); };
+          const t = g.append("text").attr("x", 0).attr("y", y + 40).attr("font-size", 32).attr("font-weight", 900).attr("fill", C.ink).attr("letter-spacing", "-.02em");
+          const [num, unit] = wan(v).split(" ");
+          t.append("tspan").text(num); t.append("tspan").attr("font-size", 16).attr("dx", 4).attr("letter-spacing", 0).text(unit + "次");
+          g.append("text").attr("x", 0).attr("y", y + 62).attr("font-size", 13).attr("font-weight", 500).attr("fill", C.muted).text("最近 30 天下载量"); return g.node(); };
         el.lq = lab(36, "Qwen", C.use, qw); el.ld = lab(214, "DeepSeek", C.talk, ds);
         const rg = svg.append("g").attr("transform", "translate(870,0)").append("g");
         rg.append("text").attr("y", 120).attr("font-size", 96).attr("font-weight", 900).attr("letter-spacing", "-.05em").attr("fill", C.ink).text(`${ratio} : 1`);

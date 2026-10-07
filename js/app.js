@@ -200,12 +200,12 @@
 
     /* ---------- 章节页：满幅色块从下往上推满，背景大数字同步计数 ---------- */
     document.querySelectorAll(".chapter").forEach(ch => {
-      const big = ch.querySelector(".bignum"), o = { v: 0 };
-      const end = +(big.dataset.end || big.textContent.replace(/,/g, "")), dec = +(big.dataset.dec || 0), suf = big.dataset.suffix || "";
+      const big = ch.querySelector(".bignum .bn"), o = { v: 0 };  // 只计数数字本身，单位小字留在后面不动
+      const end = +(big.dataset.end || big.textContent.replace(/,/g, "")), dec = +(big.dataset.dec || 0);
       gsap.timeline({ scrollTrigger: passing(ch, "top bottom", "top 3%") })
         .fromTo(ch.querySelector(".slab"), { clipPath: "inset(100% 0 0 0)" }, { clipPath: "inset(0% 0 0 0)", ease: "none", duration: 1 })
         .from(ch.querySelectorAll(".act, h2, .one, .bigcap"), { y: 120, opacity: 0, stagger: .1, duration: .4, ease: "none" }, .5)
-        .to(o, { v: end, ease: "none", duration: 1.35, onUpdate: () => (big.textContent = (dec ? o.v.toFixed(dec) : fmt(Math.round(o.v))) + suf) }, 0);
+        .to(o, { v: end, ease: "none", duration: 1.35, onUpdate: () => (big.textContent = dec ? o.v.toFixed(dec) : fmt(Math.round(o.v))) }, 0);
     });
 
     /* ---------- 持续动效：停下来画面也在动；区块离开屏幕就暂停 ---------- */
