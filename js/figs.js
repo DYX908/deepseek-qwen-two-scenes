@@ -8,6 +8,7 @@
   window.PAL = C;
   window.TEXT = {};
   window.FIGS = {};
+  TEXT.hf = { nvidia: `NVIDIA 用自己的账号发布了 Qwen 的量化版本 ${D.nvidia_qwen.model_id.split("/")[1]}，最近 30 天下载约 ${Math.round(D.nvidia_qwen.downloads_30d / 1e4)} 万次。这些下载按发布机构归属，计入美国。` };
 
   /* ---------------- 图 01（内部编号 fig12）：总体份额 ---------------- */
   (function () {
@@ -15,8 +16,8 @@
     const cn = s.CN, us = s.US_EU, total = cn.models + us.models;
     const ratio = (cn.download_pct / cn.model_pct).toFixed(1);
     TEXT.fig12 = {
-      title: "2024 年以来发布的开源模型中，中国机构的模型数占三成，下载量占近三分之二",
-      sub: `统计范围：中美欧 28 家主要开源模型发布机构在 2024 年以后发布的 ${fmt(total)} 个模型。上方一条按模型数计算份额，下方一条按最近 30 天下载量计算份额。`,
+      title: `2024 年以后的开源模型，中国机构发布的占 ${pct(cn.model_pct)}，下载量占 ${pct(cn.download_pct)}`,
+      sub: `统计范围：中美欧 28 家主要开源模型发布机构在 2024 年以后发布的 ${fmt(total)} 个模型。上面一条按模型个数算，下面一条按最近 30 天的下载量算。`,
       note: `数据：HuggingFace Hub API，采集于 ${D.meta.snapshot_hf}。中国机构 16 家（通义千问 Qwen、DeepSeek、智谱、腾讯、字节跳动 Seed、月之暗面、MiniMax 等），美欧机构 12 家（Google、Meta、OpenAI、微软、英伟达、Mistral 等）；国别按发布机构计，英伟达发布的 Qwen 量化版计入美欧。含 2024 年以前旧模型的全量口径下，中国占模型数 ${pct(all.CN.model_pct)}、下载量 ${pct(all.CN.download_pct)}。`
     };
     const el = {};
@@ -73,7 +74,7 @@
         const rg = svg.append("g").attr("transform", `translate(${x0 + 20},${my})`).append("g");  // 外层定位、内层做动画
         rg.append("text").attr("y", 12).attr("font-size", narrow ? 34 : 34).attr("font-weight", 900).attr("fill", C.ink).text(`× ${ratio}`);
         rg.append("text").attr("x", narrow ? 100 : 104).attr("y", 9).attr("font-size", narrow ? 18 : 15).attr("font-weight", 700).attr("fill", C.ink)
-          .text(narrow ? "下载量占比 ÷ 模型数占比" : `中国机构：下载量占比 ${pct(cn.download_pct)} ÷ 模型数占比 ${pct(cn.model_pct)}`);
+          .text("中国机构的下载份额 ÷ 模型数份额");
         el.ratio = rg.node();
       },
       // 随滚动分步：上条从左长出 → 下条从左长出 → 黄带自上而下流下 → 倍数出现
@@ -102,19 +103,20 @@
     return host.append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("role", "img").attr("aria-label", label);
   };
 
-  /* ---------- 图 02：报纸堆 → 方块单位图（15 : 1） ---------- */
+  /* ---------- 图 02：新闻篇数 → 方块单位图（10 : 1） ---------- */
   (function () {
-    const m = D.media, ds = m.sum.DeepSeek, qw = m.sum.Qwen, UNIT = 500;
+    const m = D.gdelt, ds = m.sum.DeepSeek, qw = m.sum.Qwen, UNIT = 500;
     const nD = Math.floor(ds / UNIT), nQ = Math.floor(qw / UNIT), ratio = Math.round(ds / qw);
     TEXT.fig2 = {
-      title: `六个季度里，中文报刊涉及 DeepSeek 的报道是 Qwen 的 ${ratio} 倍`,
-      sub: `每个方块代表 ${UNIT} 篇中文报刊报道：DeepSeek ${nD} 块，Qwen ${nQ} 块。`,
-      note: `数据：慧科新闻搜索研究库（完整检索库），中国大陆报刊，标题与正文检索；检索式「DeepSeek」与「通义千问 OR Qwen」；2025Q1—2026Q2 累计，采集于 ${D.meta.snapshot_wisers}。不足 ${UNIT} 篇的部分不画方块。检索式可能漏掉「千问」「深度求索」等写法，若 Qwen 漏检更多，实际倍数会低于 ${ratio} 倍。`
+      title: `六个季度里，海外网络新闻每写 ${ratio} 篇 DeepSeek，才写 1 篇 Qwen`,
+      sub: `一个方块代表 ${UNIT} 篇海外网络新闻报道。DeepSeek 的报道堆成了一面墙，同为中国开源模型的 Qwen 只有一排。`,
+      note: `数据：GDELT DOC 2.0 API（timelinevolraw），中国大陆以外来源的网络新闻；检索「DeepSeek」与「(Qwen OR "Tongyi Qianwen")」，均排除中国大陆来源。2025Q1—2026Q2 累计，采集于 ${D.meta.snapshot_gdelt}；精确报道量之比为 ${(ds / qw).toFixed(1)} 倍。不足 ${UNIT} 篇的部分不画方块。查询区间返回 ${m.days} / ${m.days_total} 个日度数据点，计数为返回记录之和。`
+
     };
     const el = {};
     FIGS.fig2 = {
       draw() {
-        const W = 1200, H = 400, cell = 30, gap = 6, p = cell + gap, cols = 13, base = 360;
+        const W = 1200, H = 400, cell = 30, gap = 6, p = cell + gap, cols = 10, base = 360;
         const svg = svgIn("fig2", W, H, `DeepSeek ${fmt(ds)} 篇，Qwen ${fmt(qw)} 篇`);
         const grid = (n, x0, color) => d3.range(n).map(i => svg.append("rect")
           .attr("x", x0 + (i % cols) * p).attr("y", base - cell - Math.floor(i / cols) * p)
@@ -130,7 +132,7 @@
           return g.node();
         };
         el.hd = head(0, "DeepSeek", C.talk, nD, ds);
-        el.hq = head(560, "Qwen（通义千问）", C.use, nQ, qw);
+        el.hq = head(560, "Qwen", C.use, nQ, qw);
         const r = svg.append("g").attr("transform", "translate(900,0)").append("g");  // 外层定位、内层做动画
         r.append("text").attr("y", 200).attr("font-size", 128).attr("font-weight", 900).attr("letter-spacing", "-.05em").attr("fill", C.ink).text(`${ratio} : 1`);
         r.append("text").attr("y", 246).attr("font-size", 17).attr("font-weight", 700).attr("fill", C.ink).text("报道量之比（DeepSeek : Qwen）");
@@ -165,8 +167,8 @@
     const COL = { G: C.talk, M: C.yel, T: C.grey, H: C.use, O: "#ECE9E3" };  // 朱红 / 明黄 / 中性浅灰 / 钴蓝 / 更浅的灰，与其他图的中性色一致
     const mgD = ds.pct.M + ds.pct.G, mgQ = qw.pct.M + qw.pct.G;
     TEXT.fig3 = {
-      title: `DeepSeek 相关帖子四成谈市场与国家安全，Qwen 相关帖子一半谈部署与使用`,
-      sub: `Hacker News 上标题提到这两个模型的 ${fmt(ds.n + qw.n)} 条帖子按议题归为五类，色块面积对应各类占比。红色为国家与安全，黄色为成本、市场与公司，蓝色为部署与动手，灰色为技术与发布。`,
+      title: `谈 DeepSeek 的帖子四成在谈市场和国家安全，谈 Qwen 的一半在讲怎么用`,
+      sub: `把 Hacker News 上标题提到这两个模型的 ${fmt(ds.n + qw.n)} 条帖子逐条归类，各自拼成一个「版面」。红色是国家与安全，黄色是成本、市场与公司，蓝色是部署与动手，灰色是技术与发布。`,
       note: `数据：Hacker News（Algolia API），2025-01—2026-06 标题含关键词的帖子，DeepSeek ${fmt(ds.n)} 条、Qwen ${fmt(qw.n)} 条；采集于 2026-10-07。由大模型逐条读标题编码、人工分层抽样 100 条复核；一条标题按主要落点归一类。审查、隐私、禁令、出口管制、蒸馏指控、模型安全漏洞归「国家与安全」；股价、训练成本、定价、融资与公司新闻归「成本、市场与公司」；本地运行、量化、接入工具、教程、开发者自建项目归「部署与动手」。`
     };
     const el = {};
@@ -225,18 +227,18 @@
 
   /* ---------- 图 04：中缝镜像（报道量 vs 中国底座新衍生） ---------- */
   (function () {
-    const Qs = D.meta.quarters, med = D.media.quarterly, der = D.derivatives.quarterly;
+    const Qs = D.meta.quarters, med = D.gdelt.quarterly, der = D.derivatives.quarterly;
     const r0 = der[0].CN, r1 = der[der.length - 1].CN, grow = (r1 / r0).toFixed(1);
     TEXT.fig1 = {
-      title: `六个季度里，DeepSeek 报道量下降 ${D.media.deepseek_drop_pct}%，基于中国底座的新衍生模型增至 ${grow} 倍`,
-      sub: "中轴以上为每季度涉及 DeepSeek 的中文报刊报道量，中轴以下为每季度基于中国底座模型新发布的衍生模型数。上下两部分刻度不同，仅比较走势。",
-      note: `报道量：慧科新闻库，检索式「DeepSeek」。衍生模型：HuggingFace Hub API，30 日下载量 ≥ 50 万的 260 个底座（中国 133 / 美欧 127）上新建的模型，按创建时间计季度；同期美欧底座的新衍生由 ${fmt(der[0].US_EU)} 增至 ${fmt(der[der.length - 1].US_EU)}（${(der[der.length - 1].US_EU / der[0].US_EU).toFixed(1)} 倍）。2024 年各季度因底座按当前热度选取、早期覆盖不足，未纳入。`
+      title: `六个季度里，DeepSeek 报道量跌了近九成，基于中国模型的衍生模型涨到 ${grow} 倍`,
+      sub: "中缝以上是媒体：每季度写到 DeepSeek 的海外网络新闻报道。中缝以下是开发者：每季度在中国模型基础上微调、量化后重新发布的新模型，即「衍生模型」。上下刻度不同，比较的是走势。",
+      note: `报道量：GDELT，中国大陆以外来源，统计同图 02。衍生模型：HuggingFace Hub API，30 日下载量 ≥ 50 万的 260 个底座（中国 133 / 美欧 127）上新建的模型，按创建时间计季度；同期美欧底座的新衍生由 ${fmt(der[0].US_EU)} 增至 ${fmt(der[der.length - 1].US_EU)}（${(der[der.length - 1].US_EU / der[0].US_EU).toFixed(1)} 倍）。2024 年各季度因底座按 2026 年 9 月热度选取、早期覆盖不足，未纳入。`
     };
     const el = {};
     FIGS.fig1 = {
       draw() {
         const W = 1200, H = 470, x0 = 240, x1 = W, mid = 235, hmax = 180;
-        const svg = svgIn("fig1", W, H, "报道量逐季下降，中国底座衍生逐季上升");
+        const svg = svgIn("fig1", W, H, "DeepSeek 海外报道回落，中国底座新衍生模型总体增长");
         const x = d3.scaleBand().domain(Qs).range([x0, x1]).padding(.28);
         const yu = d3.scaleLinear().domain([0, d3.max(med, d => d.DeepSeek)]).range([0, hmax]);
         const yd = d3.scaleLinear().domain([0, d3.max(der, d => d.CN)]).range([0, hmax]);
@@ -259,10 +261,10 @@
         // 左侧说明
         const L = svg.append("g");
         L.append("text").attr("x", 0).attr("y", 70).attr("font-size", 20).attr("font-weight", 900).attr("fill", C.talk).text("被讨论的");
-        L.append("text").attr("x", 0).attr("y", 98).attr("font-size", 15).attr("font-weight", 500).attr("fill", C.ink).text("DeepSeek 中文报刊报道");
-        L.append("text").attr("x", 0).attr("y", 132).attr("font-size", 34).attr("font-weight", 900).attr("fill", C.ink).text(`↓ ${D.media.deepseek_drop_pct}%`);
+        L.append("text").attr("x", 0).attr("y", 98).attr("font-size", 15).attr("font-weight", 500).attr("fill", C.ink).text("DeepSeek 海外报道");
+        L.append("text").attr("x", 0).attr("y", 132).attr("font-size", 34).attr("font-weight", 900).attr("fill", C.ink).text(`↓ ${D.gdelt.deepseek_drop_pct}%`);
         L.append("text").attr("x", 0).attr("y", 350).attr("font-size", 20).attr("font-weight", 900).attr("fill", C.use).text("被使用的");
-        L.append("text").attr("x", 0).attr("y", 378).attr("font-size", 15).attr("font-weight", 500).attr("fill", C.ink).text("中国底座的新衍生模型");
+        L.append("text").attr("x", 0).attr("y", 378).attr("font-size", 15).attr("font-weight", 500).attr("fill", C.ink).text("基于中国模型的衍生模型");
         L.append("text").attr("x", 0).attr("y", 412).attr("font-size", 34).attr("font-weight", 900).attr("fill", C.ink).text(`↑ ${grow} 倍`);
         el.left = L.node();
       },
@@ -291,11 +293,11 @@
   /* ---------- 图 05：铅字方阵（下载量 14 : 1） ---------- */
   (function () {
     const r = D.ratios.find(x => x.metric.startsWith("HuggingFace")), qw = r.Qwen, ds = r.DeepSeek;
-    const nQ = Math.floor(qw / 1e6), nD = Math.floor(ds / 1e6), ratio = Math.round(qw / ds), share = D.qwen_in_cn;
+    const nQ = Math.floor(qw / 1e6), nD = Math.floor(ds / 1e6), ratio = (qw / ds).toFixed(1), share = D.qwen_in_cn;
     const dsShare = ds / share.cn_total * 100, other = 100 - share.pct - dsShare;
     TEXT.fig4 = {
-      title: `Qwen 最近 30 天的下载量是 DeepSeek 的 ${ratio} 倍`,
-      sub: `HuggingFace 下载量，每个小方块代表 100 万次：Qwen ${nQ} 块，DeepSeek ${nD} 块。与图 02 的报道量相比，方向正好相反。`,
+      title: `开发者每下载 ${ratio} 次 Qwen，才下载 1 次 DeepSeek`,
+      sub: "一个小方块代表 100 万次下载。和图 02 正好反过来：报道里一面墙的 DeepSeek，到了下载量这里只剩一排。",
       note: `数据：HuggingFace Hub API，Qwen 与 deepseek-ai 两个官方账号下全部模型最近 30 天下载量之和，截至 ${D.meta.snapshot_hf}；精确比值为 ${(qw / ds).toFixed(1)} 倍。不足 100 万次的部分不画方块。下方比例条为 16 家中国机构的全部下载量构成。`
     };
     const el = {};
@@ -315,7 +317,7 @@
           g.append("text").attr("x", 0).attr("y", y + 62).attr("font-size", 13).attr("font-weight", 500).attr("fill", C.muted).text("最近 30 天下载量"); return g.node(); };
         el.lq = lab(36, "Qwen", C.use, qw); el.ld = lab(214, "DeepSeek", C.talk, ds);
         const rg = svg.append("g").attr("transform", "translate(870,0)").append("g");
-        rg.append("text").attr("y", 120).attr("font-size", 96).attr("font-weight", 900).attr("letter-spacing", "-.05em").attr("fill", C.ink).text(`${ratio} : 1`);
+        rg.append("text").attr("y", 120).attr("font-size", 84).attr("font-weight", 900).attr("letter-spacing", "-.05em").attr("fill", C.ink).text(`${ratio} : 1`);
         rg.append("text").attr("y", 172).attr("font-size", 17).attr("font-weight", 700).attr("fill", C.ink).text("下载量之比（Qwen : DeepSeek）");
         rg.append("rect").attr("y", 200).attr("width", cell).attr("height", cell).attr("fill", C.ink);
         rg.append("text").attr("x", 22).attr("y", 212).attr("font-size", 14).attr("font-weight", 500).attr("fill", C.muted).text("= 100 万次下载");
@@ -326,7 +328,7 @@
         let small = 0;
         [[share.pct, C.use, `Qwen ${pct(share.pct)}`, "#fff"], [dsShare, C.talk, `DeepSeek ${pct(dsShare)}`, "#fff"], [other, C.grey, `其他 14 家 ${pct(other)}`, C.ink]].reduce((x, [v, c, t, tc]) => {
           g.append("rect").attr("x", x).attr("y", by).attr("width", sx(v)).attr("height", 40).attr("fill", c);
-          if (sx(v) > 110) g.append("text").attr("x", x + 12).attr("y", by + 26).attr("font-size", 15).attr("font-weight", 900).attr("fill", tc).text(t);
+          if (sx(v) > 190) g.append("text").attr("x", x + 12).attr("y", by + 26).attr("font-size", 15).attr("font-weight", 900).attr("fill", tc).text(t);
           else { g.append("text").attr("x", x + sx(v)).attr("y", by + 64 + small * 22).attr("text-anchor", "end").attr("font-size", 13).attr("font-weight", 700).attr("fill", c === C.grey ? C.ink : c).text(t); small++; }
           return x + sx(v); }, x0);
         el.share = g.node();
@@ -352,24 +354,24 @@
 
   /* ---------- 图 06：四项指标发散图（对数刻度） ---------- */
   (function () {
-    const R = D.ratios;
-    const NAME = { "中文报刊报道量": "中文报刊报道", "Hacker News 帖子数": "开发者论坛帖子", "GitHub star": "GitHub 收藏数", "HuggingFace 30 日下载量": "HuggingFace 下载量" };
+    const R = [...D.ratios].sort((a, b) => (a.metric === "国外网络新闻报道量" ? -1 : b.metric === "国外网络新闻报道量" ? 1 : 0));
+    const NAME = { "中文报刊报道量": "中文报刊报道", "国外网络新闻报道量": "国外网络新闻", "Hacker News 帖子数": "开发者论坛帖子", "GitHub star": "GitHub 收藏数", "HuggingFace 30 日下载量": "HuggingFace 下载量" };
     TEXT.fig5 = {
-      title: "三项讨论类指标偏向 DeepSeek，唯一的使用类指标偏向 Qwen",
-      sub: `每项指标计算 DeepSeek 与 Qwen 之间的倍数，条形向左表示 DeepSeek 更多，向右表示 Qwen 更多。下载量的倍数（${R[3].ratio} 倍）与报道量的倍数（${R[0].ratio} 倍）相近、方向相反。横轴为对数刻度。`,
-      note: R.map(r => `${NAME[r.metric]}：DeepSeek ${fmt(r.DeepSeek)}，Qwen ${fmt(r.Qwen)}（${r.window}，${r.source}）`).join("；") + "。四项口径与时间窗口各不相同，倍数只比较方向和量级。"
+      title: "连开发者社区的讨论都偏向 DeepSeek，可他们下载的是 Qwen",
+      sub: "五项指标，每一项都比较 DeepSeek 和 Qwen 谁更多、多几倍。四项「讨论」都偏向 DeepSeek，只有「使用」反过来偏向 Qwen。横轴为对数刻度。",
+      note: R.map(r => `${NAME[r.metric]}：DeepSeek ${fmt(r.DeepSeek)}，Qwen ${fmt(r.Qwen)}（${r.window}，${r.source}）`).join("；") + "。五项口径与时间窗口各不相同，倍数只比较方向和量级。"
     };
     const el = {};
     FIGS.fig5 = {
       draw() {
-        const W = 1200, H = 430, cx = 600, half = 470, top = 60, rh = 64, gapUse = 30;
-        const svg = svgIn("fig5", W, H, "三项讨论指标偏向 DeepSeek，下载量偏向 Qwen");
+        const top = 60, rh = 64, gapUse = 30, nTalk = R.filter(r => r.side === "talk").length, W = 1200, H = top + R.length * rh + gapUse + 84, cx = 600, half = 470;
+        const svg = svgIn("fig5", W, H, "四项讨论指标偏向 DeepSeek，下载量偏向 Qwen");
         const s = d3.scaleLog().domain([1, 20]).range([0, half]);
         // 刻度
         const ax = svg.append("g");
         [1, 2, 5, 10, 20].forEach(v => [-1, 1].forEach(sg => { if (v === 1 && sg < 0) return;
           const x = cx + sg * s(v);
-          ax.append("line").attr("x1", x).attr("x2", x).attr("y1", top - 14).attr("y2", top + 4 * rh + gapUse).attr("stroke", C.ink).attr("stroke-opacity", v === 1 ? 1 : .12).attr("stroke-width", v === 1 ? 3 : 1);
+          ax.append("line").attr("x1", x).attr("x2", x).attr("y1", top - 14).attr("y2", top + R.length * rh + gapUse).attr("stroke", C.ink).attr("stroke-opacity", v === 1 ? 1 : .12).attr("stroke-width", v === 1 ? 3 : 1);
           ax.append("text").attr("x", x).attr("y", top - 22).attr("text-anchor", "middle").attr("font-size", 13).attr("font-weight", 700).attr("fill", C.muted).text(v === 1 ? "持平" : v + "×"); }));
         ax.append("text").attr("x", cx - 16).attr("y", 18).attr("text-anchor", "end").attr("font-size", 15).attr("font-weight", 900).attr("fill", C.talk).text("← DeepSeek 更多");
         ax.append("text").attr("x", cx + 16).attr("y", 18).attr("font-size", 15).attr("font-weight", 900).attr("fill", C.use).text("Qwen 更多 →");
@@ -386,8 +388,8 @@
           g.append("text").attr("x", lead ? cx + 16 : cx - 16).attr("y", y + rh / 2 + 22).attr("text-anchor", lead ? "start" : "end").attr("font-size", 12).attr("font-weight", 700).attr("letter-spacing", ".15em").attr("fill", r.side === "use" ? C.use : C.talk).text(r.side === "use" ? "使用" : "讨论");
           el.labs.push(g.node());
         });
-        svg.append("line").attr("x1", 0).attr("x2", W).attr("y1", top + 3 * rh + gapUse / 2 + 2).attr("y2", top + 3 * rh + gapUse / 2 + 2).attr("stroke", C.ink).attr("stroke-dasharray", "6 6").attr("stroke-opacity", .5);
-        svg.append("line").attr("x1", cx).attr("x2", cx).attr("y1", top - 14).attr("y2", top + 4 * rh + gapUse).attr("stroke", C.ink).attr("stroke-width", 3);  // 中线最后画，压在色条上
+        svg.append("line").attr("x1", 0).attr("x2", W).attr("y1", top + nTalk * rh + gapUse / 2 + 2).attr("y2", top + nTalk * rh + gapUse / 2 + 2).attr("stroke", C.ink).attr("stroke-dasharray", "6 6").attr("stroke-opacity", .5);
+        svg.append("line").attr("x1", cx).attr("x2", cx).attr("y1", top - 14).attr("y2", top + R.length * rh + gapUse).attr("stroke", C.ink).attr("stroke-width", 3);  // 中线最后画，压在色条上
       },
       steps(tl) {
         el.bars.forEach((b, i) => {
@@ -403,8 +405,8 @@
     const Q = D.derivatives.quarterly;
     const firstHalf = Q.find(q => q.cn_pct > 50);
     TEXT.fig6 = {
-      title: `从 ${firstHalf.quarter.slice(0, 4)} 年${"一二三四"[+firstHalf.quarter.slice(5) - 1]}季度起，热门底座上的新衍生模型过半基于中国模型`,
-      sub: "每个方阵代表一个季度新发布的衍生模型（微调、量化、合并后的新模型），一格为 1%。蓝格为基于中国底座的衍生模型，灰格为基于美欧底座的衍生模型。",
+      title: `从 ${firstHalf.quarter.slice(0, 4)} 年${"一二三四"[+firstHalf.quarter.slice(5) - 1]}季度起，热门底座上的新衍生模型，过半出自中国底座`,
+      sub: "每个方阵代表一个季度里新发布的衍生模型（微调、量化、合并后的新模型），一格是 1%。蓝格出自中国底座，灰格出自美欧底座。",
       note: `数据：HuggingFace Hub API，30 日下载量 ≥ 50 万的 260 个底座（中国 ${D.derivatives.bases.CN} / 美欧 ${D.derivatives.bases.US_EU}）上的 ${fmt(D.derivatives.total_relations)} 条衍生关系，按衍生模型创建时间计季度。「热门」指底座按 2026 年 9 月的下载量选取；国别按发布机构计，英伟达发布的 Qwen 量化版计入美欧，中国占比为保守估计。`
     };
     const el = {};
@@ -453,9 +455,9 @@
     nodes.push({ name: `其他 ${rest.length} 家`, v: d3.sum(rest, b => b.total), country: "mix", org: "rest" });
     const q = B.find(b => b.org === "Qwen").total, l = B.find(b => b.org === "meta-llama").total, d = B.find(b => b.org === "deepseek-ai").total;
     TEXT.fig7 = {
-      title: `基于 Qwen 的新衍生模型数，是 Llama 的 ${(q / l).toFixed(1)} 倍、DeepSeek 的 ${Math.round(q / d)} 倍`,
-      sub: `左侧为底座模型的发布机构，带宽表示基于该机构模型新发布的衍生模型数；右侧为合计：2025Q1—2026Q2 共 ${fmt(total)} 个，其中基于 Qwen 的占 ${pct(q / total * 100)}。`,
-      note: `数据：同图 07，仅计 2025Q1—2026Q2 创建的衍生模型。「其他」包括 ${rest.slice(0, 6).map(b => b.org).join("、")} 等。`
+      title: `六个季度里，基于 Qwen 的新模型是 Llama 的 ${(q / l).toFixed(1)} 倍、DeepSeek 的 ${Math.round(q / d)} 倍`,
+      sub: `左边是底座的发布机构，带子越宽，在它的模型上新做出来的衍生模型越多。所有带子汇成右边一条：2025Q1—2026Q2 新发布的 ${fmt(total)} 个衍生模型，Qwen 一家占了 ${pct(q / total * 100)}。`,
+      note: `数据：同图 08，仅计 2025Q1—2026Q2 创建的衍生模型。「其他」包括 ${rest.slice(0, 6).map(b => b.org).join("、")} 等。`
     };
     const el = {};
     FIGS.fig7 = {
@@ -502,24 +504,26 @@
 
   /* ---------- 图 09：书脊货架（单模型下载榜前十） ---------- */
   (function () {
-    const T = D.top10, nQ = T.filter(t => t.model_id.toLowerCase().includes("qwen")).length;
+    const T = D.top10_archive, nQ = T.filter(t => t.model_id.toLowerCase().includes("qwen")).length;
     const nv = T.find(t => t.org === "nvidia" && t.model_id.toLowerCase().includes("qwen"));
     TEXT.fig8 = {
-      title: `28 家机构的模型中，下载量前十有 ${nQ} 个基于 Qwen，其中 1 个由 NVIDIA 发布`,
-      sub: "28 家机构的全部模型中，最近 30 天下载量最高的 10 个，柱宽与下载量成正比。蓝色为 Qwen 官方发布，黄色为 NVIDIA 基于 Qwen 量化后发布，灰色为其他机构的模型。",
-      note: `数据：HuggingFace Hub API，28 家机构全部模型按最近 30 天下载量排序，截至 ${D.meta.snapshot_hf}。第 1 名 google/electra-base-discriminator 是 2020 年的旧模型，下载多来自自动化流水线的重复调用。`
+      title: `下载榜前十，${nQ} 个模型基于 Qwen`,
+      sub: "书脊越宽，下载越多。蓝色是 Qwen 官方发布的模型，黄色是 NVIDIA 发布的 Qwen 量化版本。",
+      note: `数据：HuggingFace Hub API，28 家机构全部模型按最近 30 天下载量排序。统计时间：${D.meta.snapshot_rank}（本图为该日完整榜单）；其他下载指标更新至 ${D.meta.snapshot_hf}。第 9 名由 NVIDIA 发布，以 Qwen 为底座。下载量包含重复下载，不等同于用户数。`
     };
     const el = {};
     FIGS.fig8 = {
       draw() {
-        const W = 1200, H = 500, base = 440, bh = 340, gap = 8, x0 = 0, sum = d3.sum(T, t => t.downloads_30d), k = (W - x0 - gap * 9) / sum;
+        const W = 1200, H = 500, base = 440, bh = 340, gap = 8, x0 = 0, shelfW = W;
+        const sum = d3.sum(T, t => t.downloads_30d), k = (shelfW - x0 - gap * 9) / sum;
         const svg = svgIn("fig8", W, H, TEXT.fig8.title);
-        let x = x0; el.books = [];
+        let x = x0; el.books = []; el.featuredBook = null;
         T.forEach((t, i) => {
           const w = t.downloads_30d * k, isQ = t.model_id.toLowerCase().includes("qwen"), isNv = t === nv;
           const col = isNv ? C.yel : isQ ? C.use : C.grey, tc = isNv || !isQ ? C.ink : "#fff";
           const g0 = svg.append("g").attr("transform", `translate(${x},0)`).append("g"), g = isNv ? g0.append("g") : g0;  // 外层定位、中层入场、内层持续动效
           if (isNv) el.nvBook = g.node();
+          if (isQ && !el.featuredBook) el.featuredBook = g.node();
           g.append("rect").attr("x", 0).attr("y", base - bh).attr("width", w).attr("height", bh).attr("fill", col);
           g.append("text").attr("x", 10).attr("y", base - bh + 32).attr("font-size", w > 60 ? 26 : 20).attr("font-weight", 900).attr("fill", tc).text(t.rank);
           const name = t.model_id.split("/")[1];
@@ -536,22 +540,23 @@
           }
           if (i === 0) {
             const a = svg.append("g").attr("transform", `translate(${x + 12},${base - bh - 18})`).append("g");
-            a.append("text").attr("y", 0).attr("font-size", 13).attr("font-weight", 700).attr("fill", C.muted).text("2020 年的旧模型，多为自动化调用");
+            a.append("text").attr("y", 0).attr("font-size", 13).attr("font-weight", 700).attr("fill", C.muted).text(`仓库建于 ${t.created_at.slice(0, 4)} 年`);
             el.old = a.node();
           }
           x += w + gap;
         });
-        svg.append("rect").attr("x", 0).attr("y", base).attr("width", W).attr("height", 10).attr("fill", C.ink);
+        svg.append("rect").attr("x", 0).attr("y", base).attr("width", shelfW).attr("height", 10).attr("fill", C.ink);
+
       },
       steps(tl) {
         tl.from(el.books, { y: 60, opacity: 0, stagger: .08, duration: .35, ease: "none" })
-          .from([el.old, el.nv], { opacity: 0, y: -10, duration: .3, ease: "none" }, "-=.2");
+          .from([el.old, el.nv].filter(Boolean), { opacity: 0, y: -10, duration: .3, ease: "none" }, "-=.2");
       },
-      // 持续动效：NVIDIA 发布的那本 Qwen 反复被抽出来一下
+      // 持续动效：榜单中的 Qwen 书脊反复被抽出来一下
       ambient() {
         return gsap.timeline({ repeat: -1, repeatDelay: .9, paused: true })
-          .to([el.nvBook, el.nvTag], { y: -18, duration: .4, ease: "power2.out" })
-          .to([el.nvBook, el.nvTag], { y: 0, duration: .7, ease: "bounce.out" }, "+=.5");
+          .to([el.nvBook || el.featuredBook, el.nvTag].filter(Boolean), { y: -18, duration: .4, ease: "power2.out" })
+          .to([el.nvBook || el.featuredBook, el.nvTag].filter(Boolean), { y: 0, duration: .7, ease: "bounce.out" }, "+=.5");
       }
     };
   })();
@@ -571,8 +576,8 @@
   (function () {
     const q1 = D.bans.quarterly[0].count, total = D.bans.total;
     TEXT.fig9 = {
-      title: `${total} 项限制措施中，${q1} 项出台于 DeepSeek 报道量最高的 2025 年一季度`,
-      sub: "浅红色柱为每季度涉及 DeepSeek 的中文报刊报道量；每个点代表一项政府限制措施，按公布日期标在时间轴上。",
+      title: `${total} 项限制措施里，${q1} 项出现在 DeepSeek 报道最多的 2025 年一季度`,
+      sub: "浅红色的柱子是每个季度写到 DeepSeek 的海外网络新闻报道量，每个点是一项政府限制措施，按公布日期落在时间轴上。报道最热的那个季度，也是限制最密集的季度。",
       note: `数据：限制措施由作者逐条核查（2026-10-07），${D.bans.items.filter(b => b.grade !== "media").length} 项有官方原文或官方新闻稿，${D.bans.items.filter(b => b.grade === "media").length} 项只有媒体报道、原件未公开（空心点）。纳入标准：政府机构针对 DeepSeek 或整批列名中国 AI 厂商的正式措施；排除非专项建议、未通过的法案和未落地的报道。报道量同图 02。`
     };
     const el = {};
@@ -581,14 +586,14 @@
         const W = 1200, H = 470, x0 = 30, x1 = 1170, base = 380, t0 = new Date("2025-01-01"), t1 = new Date("2026-07-01");
         const svg = svgIn("fig9", W, H, TEXT.fig9.title);
         const x = d3.scaleTime().domain([t0, t1]).range([x0, x1]);
-        const yb = d3.scaleLinear().domain([0, 18000]).range([0, 300]);
+        const yb = d3.scaleLinear().domain([0, d3.max(D.gdelt.quarterly, q => q.DeepSeek)]).range([0, 300]);
         svg.append("defs").append("clipPath").attr("id", "f9c").append("rect").attr("x", 0).attr("y", 0).attr("width", W).attr("height", H);
         el.clip = svg.select("#f9c rect").node();
         const g = svg.append("g").attr("clip-path", "url(#f9c)");
-        D.media.quarterly.forEach(q => {
+        D.gdelt.quarterly.forEach(q => {
           const y = +q.quarter.slice(0, 4), m = (+q.quarter.slice(5) - 1) * 3, a = x(new Date(y, m, 1)), b = x(new Date(y, m + 3, 1));
           g.append("rect").attr("x", a + 2).attr("y", base - yb(q.DeepSeek)).attr("width", b - a - 4).attr("height", yb(q.DeepSeek)).attr("fill", C.talk).attr("opacity", .13);
-          if (q === D.media.quarterly[0] || q === D.media.quarterly[D.media.quarterly.length - 1])
+          if (q === D.gdelt.quarterly[0] || q === D.gdelt.quarterly[D.gdelt.quarterly.length - 1])
             g.append("text").attr("x", a + 10).attr("y", base - yb(q.DeepSeek) - 10).attr("font-size", 14).attr("font-weight", 900).attr("fill", C.talk).text(`报道 ${fmt(q.DeepSeek)} 篇`);
           g.append("text").attr("x", (a + b) / 2).attr("y", base + 30).attr("text-anchor", "middle").attr("font-size", 13).attr("font-weight", 900).attr("fill", C.ink).text(q.quarter);
         });
@@ -642,8 +647,8 @@
   (function () {
     const cols = Object.keys(D.bans.columns), CN = { public_app: "公众使用\n官方 App", gov_use: "政府人员与设备\n使用 App / 网站 / API", gov_local_model: "政府系统里\n本地运行的模型", public_local_model: "公众在自己电脑上\n运行下载的模型" };
     TEXT.fig10 = {
-      title: `${B.length} 项限制措施中，没有一项覆盖公众在本地运行下载的模型`,
-      sub: "每行为一项限制措施，每列为一类使用方式。红色为明确覆盖，斜线为条文措辞宽泛、可能覆盖，黄色为条文明确排除。最右一列全部为空。",
+      title: `${B.length} 项限制措施，没有一项管到公众在自己电脑上运行下载的模型`,
+      sub: "每一行是一项限制措施，每一列是一类可能被管到的使用方式。红色是明确覆盖，斜线是条文措辞宽泛、可能覆盖，黄色是条文明确把它排除在外。最右一列从头到尾是空的。",
       note: "澳大利亚内政部 PSPF Direction 001-2025 脚注写明，限制「不包括」代码可审查、部署在政府系统本地的开源大模型；捷克政府第 537 号决议的实施方法论同样排除了本地部署、无法与 DeepSeek 服务器通信的开源模型。台湾地区公务机关的禁令明列「地端下载」，美国《2026 财年国防授权法》第 1532 条禁止国防部系统使用「DeepSeek 开发的任何 AI」——两者覆盖到模型本身，但只限政府内部。逐条来源见页面底部的数据说明。"
     };
     const el = {};
@@ -719,15 +724,15 @@
 
   /* ---------- 图 12：两个面板的指数折线（2025Q1 = 100） ---------- */
   (function () {
-    const Q = D.meta.quarters, M = D.media.quarterly, O = D.derivatives.by_base_org;
+    const Q = D.meta.quarters, M = D.gdelt.quarterly, O = D.derivatives.by_base_org;
     const panels = [["DeepSeek", "deepseek-ai", C.talk], ["Qwen", "Qwen", C.use]].map(([k, org, col]) => {
       const der = O.find(b => b.org === org).quarterly, rep = M.map(m => m[k]);
       return { k, col, rep, der, ri: rep.map(v => v / rep[0] * 100), di: der.map(v => v / der[0] * 100) };
     });
     const [dk, qw] = panels, chg = (a) => a[a.length - 1] / a[0];
     TEXT.fig11 = {
-      title: `DeepSeek 的报道量与衍生模型数同步下降；Qwen 报道量下降 ${Math.round((1 - chg(qw.rep)) * 100)}%，衍生模型数增至 ${chg(qw.der).toFixed(0)} 倍`,
-      sub: "左右两个面板分别为 DeepSeek 和 Qwen。红线为每季度中文报刊报道量，蓝线为每季度基于该模型新发布的衍生模型数，均以 2025 年一季度为 100。",
+      title: `DeepSeek 的报道和衍生一起往下走，Qwen 的海外报道减少 ${Math.round((1 - chg(qw.rep)) * 100)}%、衍生涨到 ${chg(qw.der).toFixed(0)} 倍`,
+      sub: "左右两个面板，各画两条线：红线是每季度的海外网络新闻报道量，蓝线是每季度基于这个模型的新衍生模型数。都以 2025 年一季度为 100，看它们后来涨还是跌。",
       note: `报道量同图 02；衍生数同图 08（以 deepseek-ai、Qwen 官方模型为底座的新衍生模型）。DeepSeek：报道 ${fmt(dk.rep[0])} → ${fmt(dk.rep[5])} 篇，衍生 ${fmt(dk.der[0])} → ${fmt(dk.der[5])} 个；Qwen：报道 ${fmt(qw.rep[0])} → ${fmt(qw.rep[5])} 篇，衍生 ${fmt(qw.der[0])} → ${fmt(qw.der[5])} 个。`
     };
     const el = { clips: [], ends: [], ripples: [] };
@@ -768,7 +773,7 @@
         });
         // 图例
         const lg = svg.append("g").attr("transform", `translate(${W - 360},24)`);
-        [[C.talk, "中文报刊报道量"], [C.use, "新衍生模型数"]].forEach(([c, s], i) => {
+        [[C.talk, "海外网络新闻"], [C.use, "新衍生模型数"]].forEach(([c, s], i) => {
           lg.append("line").attr("x1", i * 180).attr("x2", i * 180 + 30).attr("y1", 0).attr("y2", 0).attr("stroke", c).attr("stroke-width", 6);
           lg.append("text").attr("x", i * 180 + 40).attr("y", 5).attr("font-size", 13).attr("font-weight", 700).attr("fill", C.ink).text(s);
         });
@@ -785,4 +790,61 @@
       }
     };
   })();
+})();
+
+/* ---------- 中外报道：同一时间轴上的收窄带，宽度按各库首季归一 ---------- */
+(function () {
+  const D = window.DATA, C = window.PAL, fmt = d3.format(",");
+  const el = { clips: [], counters: [] };
+  TEXT.fig13 = {
+    title: "海外网络新闻和中文报刊中，DeepSeek 的季度报道量都减少了八成以上",
+    sub: "2025 年一季度—2026 年二季度。红色带的厚度对应每季度的报道篇数，两边均以各自首季为基准；灰色轮廓表示首季水平。",
+    note: `中文报刊：慧科完整检索库，中国大陆报刊，检索「DeepSeek」与「通义千问 OR Qwen」。海外网络新闻：GDELT DOC 2.0，排除中国大陆来源，检索「DeepSeek」与「(Qwen OR \"Tongyi Qianwen\")」。两库分别统计，不相加；GDELT 查询区间返回 ${D.gdelt.days} / ${D.gdelt.days_total} 个日度数据点，季度值按返回记录汇总。报道倍数为 18 个月累计值，降幅为首末季度之比。`
+  };
+  FIGS.fig13 = {
+    draw() {
+      const host = d3.select("#fig13 .fig-body"); host.selectAll("*").remove();
+      const narrow = host.node().clientWidth < 700, W = narrow ? 600 : 1200, H = narrow ? 840 : 420;
+      const svg = host.append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("role", "img").attr("aria-label", TEXT.fig13.title);
+      const defs = svg.append("defs"); el.clips = []; el.counters = [];
+      const panels = [
+        { label: "中文报刊", source: "慧科 · 中国大陆报刊", rows: D.media.quarterly, sums: D.media.sum, drop: D.media.deepseek_drop_pct },
+        { label: "海外网络新闻", source: "GDELT · 中国大陆以外来源", rows: D.gdelt.quarterly, sums: D.gdelt.sum, drop: D.gdelt.deepseek_drop_pct }
+      ];
+      // 慧科总数用季度序列计算，避免依赖字段名。
+      panels[0].sums = Object.fromEntries(["DeepSeek", "Qwen"].map(k => [k, d3.sum(panels[0].rows, r => r[k])]));
+      panels.reverse();
+      panels.forEach((p, i) => {
+        const group = svg.append("g").attr("transform", `translate(${narrow ? 20 : i * 640},${narrow ? i * 420 : 0})`);
+        const text = (x, y, size, value, color = C.ink, weight = 700) => group.append("text").attr("x", x).attr("y", y).attr("font-size", size).attr("font-weight", weight).attr("fill", color).text(value);
+        text(0, 28, 25, p.label, C.ink, 900);
+        text(0, 55, 14, p.source, C.muted, 500);
+        const count = text(0, 137, 72, `−${p.drop.toFixed(1)}%`, C.talk, 900).node();
+        el.counters.push({ node: count, drop: p.drop });
+        text(0, 166, 16, "DeepSeek 季度报道量降幅");
+        text(355, 117, 34, `${(p.sums.DeepSeek / p.sums.Qwen).toFixed(1)} : 1`, C.ink, 900);
+        text(355, 144, 14, "DeepSeek / Qwen");
+        text(355, 165, 13, "18 个月累计报道量", C.muted, 500);
+        const xs = d3.scalePoint().domain(d3.range(6)).range([24, 520]), cy = 263, thick = 68;
+        const area = d3.area().x((d, j) => xs(j)).y0(d => cy - thick * d.DeepSeek / p.rows[0].DeepSeek).y1(d => cy + thick * d.DeepSeek / p.rows[0].DeepSeek).curve(d3.curveMonotoneX);
+        group.append("rect").attr("x", 24).attr("y", cy - thick).attr("width", 496).attr("height", thick * 2).attr("fill", C.paper).attr("stroke", C.grey).attr("stroke-dasharray", "4 5");
+        const cid = `media-ribbon-${i}`;
+        const clip = defs.append("clipPath").attr("id", cid).append("rect").attr("x", 0).attr("y", 185).attr("width", 560).attr("height", 160).node();
+        el.clips.push(clip);
+        group.append("path").datum(p.rows).attr("d", area).attr("fill", C.talk).attr("clip-path", `url(#${cid})`);
+        p.rows.forEach((r, j) => {
+          text(xs(j), 364, 18, fmt(r.DeepSeek), C.talk, 900).attr("text-anchor", "middle");
+          text(xs(j), 390, 13, r.quarter, C.muted, 500).attr("text-anchor", "middle");
+        });
+      });
+      if (!narrow) svg.append("line").attr("x1", 598).attr("x2", 598).attr("y1", 0).attr("y2", 400).attr("stroke", C.grey).attr("stroke-width", 2);
+    },
+    steps(tl) {
+      el.clips.forEach((clip, i) => tl.from(clip, { attr: { width: 0 }, duration: 1.25, ease: "none" }, i * .12));
+      el.counters.forEach(c => {
+        const value = { n: 0 };
+        tl.to(value, { n: c.drop, duration: 1.35, ease: "none", onUpdate: () => (c.node.textContent = `−${value.n.toFixed(1)}%`) }, 0);
+      });
+    }
+  };
 })();

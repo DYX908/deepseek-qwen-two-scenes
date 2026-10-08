@@ -45,8 +45,8 @@ b, strong { font-weight: 700; }
 [data-icon] svg { width: 100%; height: 100%; }
 
 /* ---------------- 封面 ---------------- */
-.cover { position: relative; min-height: 100vh; display: grid; grid-template-rows: auto 1fr; overflow: hidden; }
-.c-top { position: relative; display: grid; grid-template-columns: repeat(12, 1fr); gap: 0 20px; padding: 60px var(--pad) 44px; }
+.cover { position: relative; min-height: 100vh; display: grid; grid-template-rows: 1fr auto; overflow: hidden; }
+.c-top { position: relative; display: grid; grid-template-columns: repeat(12, 1fr); align-content: center; gap: 0 20px; padding: 60px var(--pad) 56px; }
 .c-meta { grid-column: 1 / 4; font-size: 13px; font-weight: 600; line-height: 1.6; letter-spacing: .04em; }
 .c-meta .no { font-size: 64px; font-weight: 900; line-height: 1; letter-spacing: -.04em; margin-bottom: 6px; }
 .cover h1 { grid-column: 4 / 13; margin: 0; font-weight: 900; font-size: clamp(46px, 6.4vw, 100px); line-height: 1.04; letter-spacing: -.02em; }
@@ -55,8 +55,8 @@ b, strong { font-weight: 700; }
 .cover h1 .l2 { color: var(--use); }
 .cover .subt { grid-column: 4 / 13; margin: 18px 0 0; font-size: 22px; font-weight: 500; }
 .c-square { position: absolute; left: var(--pad); bottom: -20px; width: 64px; height: 64px; background: var(--ink); }
-.c-blocks { display: grid; grid-template-columns: 1fr 1fr; min-height: 46vh; }
-.blk { position: relative; padding: 36px var(--pad); color: var(--paper); overflow: hidden; }
+.c-blocks { display: grid; grid-template-columns: 1fr 1fr; }
+.blk { position: relative; padding: 36px var(--pad) 40px; color: var(--paper); overflow: hidden; }
 .blk.talk { background: var(--talk); }
 .blk.use { background: var(--use); }
 .blk > *:not(.shape) { position: relative; }
@@ -65,7 +65,7 @@ b, strong { font-weight: 700; }
 .blk .v small { font-size: .38em; letter-spacing: 0; margin-left: .1em; }
 .blk .k { font-size: 17px; font-weight: 500; line-height: 1.6; margin-top: 12px; }
 /* 实时计数器：独立一行，直播点 + 大号黄色数字 */
-.live { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; margin-top: 22px; font-size: 16px; font-weight: 700; }
+.live { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; margin-top: 8px; font-size: 16px; font-weight: 700; }
 .live b { font-family: var(--mono); font-size: clamp(32px, 3.2vw, 48px); font-weight: 600; color: var(--yel); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
 .live .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--yel); align-self: center; box-shadow: 0 0 0 0 rgba(244,194,27,.7); animation: livepulse 1.4s ease-out infinite; }
 @keyframes livepulse { 0% { box-shadow: 0 0 0 0 rgba(244,194,27,.7); opacity: 1; } 70% { box-shadow: 0 0 0 14px rgba(244,194,27,0); opacity: .55; } 100% { box-shadow: 0 0 0 0 rgba(244,194,27,0); opacity: 1; } }
@@ -154,29 +154,61 @@ b, strong { font-weight: 700; }
 .pc-cursor { position: absolute; left: 0; top: -6px; width: 72px; height: 6px; background: var(--yel); }
 .pc { position: relative; text-wrap: pretty; margin-top: 26px; max-width: 1000px; font-size: clamp(20px, 2vw, 28px); font-weight: 700; line-height: 1.55; padding-top: 18px; border-top: 6px solid var(--ink); }
 
-/* ---------------- 结语：两块色块再对撞一次 ---------------- */
-.txt.ending { padding-bottom: 14vh; }
-.eb.talk { background: var(--talk); }
-.eb.use { background: var(--use); }
-.eb .lab { font-size: 14px; font-weight: 700; letter-spacing: .2em; }
-.eb .v { margin-top: 14px; font-size: clamp(64px, 8vw, 128px); font-weight: 900; line-height: 1; letter-spacing: -.04em; }
-.eb .k { margin-top: 14px; max-width: 30em; font-size: 18px; font-weight: 500; line-height: 1.6; }
-/* 收束：一屏红蓝两块 + 黑色结论条，与封面首尾呼应 */
-.finale { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr auto; height: 100vh; min-height: 680px; }
-.finale .eb { position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 0; padding: clamp(28px, 6vh, 64px) clamp(28px, 3.4vw, 56px) clamp(24px, 4.5vh, 48px); color: var(--paper); }
-.finale .eb > :not(.shape) { position: relative; z-index: 1; }
-.finale .eb .lab { margin-bottom: auto; }
-.finale .eb .v { font-size: clamp(56px, min(9vw, 15vh), 144px); }
-.finale .eb .k { min-height: 3.2em; }
-.meter { margin-top: clamp(16px, 3vh, 28px); padding-top: 14px; border-top: 2px solid rgba(241,239,234,.35); }
-.meter p { margin: 0; font-size: 16px; font-weight: 700; }
-.meter .mv { display: flex; align-items: baseline; gap: 10px; font-size: 17px; font-weight: 700; }
-.meter .mv b { font-family: var(--mono); font-weight: 600; font-size: clamp(36px, min(4vw, 6.5vh), 60px); line-height: 1.2; letter-spacing: -.02em; color: var(--yel); font-variant-numeric: tabular-nums; }
-.meter small { display: block; font-size: 13px; font-weight: 500; opacity: .72; }
-.end-bar { grid-column: 1 / -1; padding: clamp(26px, 5vh, 52px) var(--pad); background: var(--ink); color: var(--paper); }
-.end-bar .punch2 { margin: 0; font-size: clamp(30px, min(3.6vw, 6vh), 58px); font-weight: 900; line-height: 1.3; letter-spacing: -.02em; }
-.end-bar .hl { color: var(--ink); }
-.end-bar .hl::before { bottom: .02em; height: 1.16em; }
+/* ---------------- 结语：杂志跨页式编排，图形承接两个现场 ---------------- */
+.ending { padding: 14vh var(--pad) 32vh; }
+.ending-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 8vw; border-top: 1px solid var(--ink); padding-top: 36px; }
+.ending-head .tag { padding: 0; background: none; color: var(--muted); font-weight: 700; letter-spacing: .14em; }
+.ending-head h2 { margin: 24px 0 0; font-size: clamp(44px, 4.8vw, 82px); font-weight: 900; line-height: 1.2; letter-spacing: -.045em; }
+.ending-two { background: linear-gradient(transparent 79%, var(--yel) 79% 95%, transparent 95%); }
+.ending-art { position: relative; display: flex; gap: 52px; width: 340px; height: 146px; margin-top: 38px; }
+.ending-disc { display: block; width: 140px; height: 140px; border-radius: 50%; background: var(--talk); }
+.ending-tile { display: grid; width: 140px; height: 140px; grid-template: 1fr 1fr / 1fr 1fr; gap: 8px; transform: rotate(-8deg); }
+.ending-tile span { background: var(--use); }
+.ending-orbit { position: absolute; inset: 22px -8px 22px -8px; border: 1px solid var(--ink); border-radius: 50%; transform: rotate(-16deg); opacity: .3; }
+.ending-key { display: flex; align-items: center; gap: 26px; width: 340px; margin-top: 28px; font-size: 17px; font-weight: 700; letter-spacing: .12em; }
+.ending-key span { width: 140px; text-align: center; flex-shrink: 0; }
+.ending-key span:first-child { color: var(--talk); }
+.ending-key span:last-child { color: var(--use); }
+.ending-key i { width: 0; }
+.ending-scenes { display: grid; gap: 30px; padding-top: 2px; }
+.ending-scene { position: relative; border-top: 2px solid var(--talk); padding: 18px 0 0; }
+.ending-scene.use { border-color: var(--use); }
+.ending-scene::after { content: ''; position: absolute; right: 0; top: 17px; width: 18px; height: 18px; border-radius: 50%; background: var(--talk); }
+.ending-scene.use::after { border-radius: 0; background: var(--use); transform: rotate(-8deg); }
+.scene-index { color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: .12em; }
+.ending-scene h3 { margin: 10px 0 16px; font-size: clamp(26px, 2.5vw, 40px); line-height: 1.25; font-weight: 900; letter-spacing: -.025em; }
+.ending-scene p { margin: 0 0 14px; font-size: clamp(18px, 1.4vw, 23px); line-height: 1.7; max-width: 28em; text-wrap: pretty; }
+.ending-scene p:last-child { margin-bottom: 0; }
+.ending-verdict { margin: 44px 0 0; padding-top: 28px; border-top: 1px solid rgba(17,17,17,.22); font-size: clamp(28px, 3.1vw, 52px); font-weight: 900; line-height: 1.4; letter-spacing: -.025em; text-wrap: balance; }
+.ending-verdict span { background: linear-gradient(transparent 79%, var(--yel) 79% 95%, transparent 95%); }
+
+/* ---------------- 最后一页：浅底几何海报，两种节奏 ---------------- */
+.finale { position: relative; display: grid; grid-template-rows: auto 1fr auto; gap: 28px; height: 100vh; min-height: 700px; padding: clamp(28px, 6vh, 64px) var(--pad); background: var(--paper); color: var(--ink); border-top: 1px solid var(--ink); }
+.fin-context { display: flex; align-items: center; gap: 14px; font-size: clamp(20px, 1.8vw, 28px); font-weight: 700; letter-spacing: -.02em; }
+.fin-context small { margin-left: auto; color: var(--muted); font-size: 13px; font-weight: 500; letter-spacing: .12em; }
+.end-bar { position: relative; align-self: center; padding: 0; }
+.end-bar .punch2 { display: grid; gap: 22px; margin: 0; font-size: clamp(32px, min(5.05vw, 8.1vh), 92px); font-weight: 900; line-height: 1.5; letter-spacing: -.045em; }
+.punch2 > span { display: block; white-space: nowrap; }
+.punch2 > .acc { margin-left: 8vw; }
+.end-bar .c { display: inline-block; }
+.end-bar .ebb .c:nth-child(-n+2), .end-bar .ebb .is-it { color: var(--talk); }
+.end-bar .acc .c:nth-child(-n+2), .end-bar .acc .is-it { color: var(--use); }
+.end-bar .is-it { font-size: 1.65em; line-height: .9; margin: 0 .045em; vertical-align: -.075em; transform-origin: center bottom; }
+.it-letter { display: inline-block; transform-origin: center bottom; }
+.end-bar .acc .c:nth-last-child(n+2):nth-last-child(-n+4) { background: linear-gradient(transparent 78%, var(--yel) 78% 95%, transparent 95%); }
+.fin-bottom { border-top: 1px solid rgba(17,17,17,.18); padding-top: 18px; }
+.fin-time { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; color: var(--muted); font-size: 14px; font-weight: 500; }
+.fin-time b { font-family: var(--mono); color: var(--ink); font-size: 23px; font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; }
+.fin-time b small { font-family: var(--f); font-size: .6em; font-weight: 500; margin: 0 .5em 0 .15em; }
+.fin-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 5vw; margin-top: 18px; }
+.finale .eb { position: relative; padding: 0; }
+.eb .lab { color: var(--talk); font-size: clamp(17px, 1.3vw, 20px); font-weight: 700; letter-spacing: -.015em; }
+.eb .lab::before { content: ""; display: inline-block; width: 7px; height: 7px; margin: 0 9px 2px 0; background: currentColor; }
+.eb.use .lab { color: var(--use); }
+.meter { margin-top: 7px; }
+.meter .mv { display: flex; align-items: baseline; flex-wrap: wrap; gap: 7px; margin: 0 0 5px; font-size: 15px; font-weight: 500; }
+.meter .mv b { font-family: var(--mono); font-weight: 500; font-size: clamp(28px, 2.3vw, 34px); line-height: 1.2; color: var(--ink); letter-spacing: -.025em; font-variant-numeric: tabular-nums; }
+.meter small { display: block; font-size: 12px; font-weight: 400; color: var(--muted); }
 
 /* ---------------- 数据与方法 + 页脚 ---------------- */
 .method { padding: 4vh var(--pad) 10vh; }
@@ -195,8 +227,8 @@ b, strong { font-weight: 700; }
 /* ---------------- 问题 + 数据来源 ---------------- */
 .sources { padding: 8vh var(--pad) 6vh; }
 .statement { margin: 0; max-width: 1200px; font-size: clamp(32px, 3.6vw, 54px); font-weight: 900; line-height: 1.3; letter-spacing: -.02em; text-wrap: balance; }
-.src-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 44px; }
-.src-lab { flex-basis: 100%; font-size: 13px; font-weight: 900; letter-spacing: .2em; }
+.src-row { display: grid; grid-template-columns: repeat(3, max-content); align-items: center; gap: 12px; margin-top: 44px; }
+.src-lab { grid-column: 1 / -1; font-size: 13px; font-weight: 900; letter-spacing: .2em; }
 .chip { display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px 10px 14px; background: var(--card); border: 2px solid var(--ink); font-size: 16px; line-height: 1.2; }
 .chip [data-icon] { width: 26px; height: 26px; }
 .chip b { font-weight: 900; }
@@ -230,6 +262,7 @@ b, strong { font-weight: 700; }
 
 /* ---------------- 手机 ---------------- */
 @media (max-width: 760px) {
+  .src-row { grid-template-columns: max-content; }
   body { font-size: 17px; }
   .c-top { display: block; padding-top: 40px; }
   .c-meta { margin-bottom: 24px; }
@@ -245,9 +278,20 @@ b, strong { font-weight: 700; }
   .fig-no span { font-size: 44px; }
   .qs { grid-template-columns: 1fr; }
   .txt { display: block; }
+  .ending-grid { grid-template-columns: 1fr; gap: 40px; }
+  .ending-scenes { gap: 32px; }
+  .ending { padding-bottom: 24vh; }
   .clips { margin-top: 16px; }
   .q { min-height: 0; }
   .finale { grid-template-columns: 1fr; height: auto; }
-  .finale .eb { min-height: 72vh; }
+  .fin-metrics { grid-template-columns: 1fr; gap: 24px; }
+  .fin-context { flex-wrap: wrap; }
+  .fin-context small { margin-left: 0; width: 100%; }
+  .end-bar { margin: 40px 0; }
+  .punch2 > .acc { margin-left: 0; }
+  .ending-art { max-width: 100%; gap: 32px; }
+  .ending-key { max-width: 100%; gap: 16px; }
+  .end-bar .punch2 { font-size: 6vw; gap: 36px; }
+  .punch2 > span { white-space: normal; }
   .method-body { columns: 1; }
 }

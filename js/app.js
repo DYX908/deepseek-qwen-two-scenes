@@ -20,8 +20,9 @@
 
   // 实时计数器（封面一个、结尾两个，都从打开页面开始计）：
   // Qwen 下载 = 最近 30 天下载量 ÷ 30 天；DeepSeek 报道 = 2026Q2 报道量 ÷ 91 天
-  const ctr = document.getElementById("ctr"), mUse = document.getElementById("m-use"), mTalk = document.getElementById("m-talk");
-  const perDay = D.ratios.find(r => r.metric.startsWith("HuggingFace")).Qwen / 30, lastQ = D.media.quarterly[D.media.quarterly.length - 1];
+  const ctr = document.getElementById("ctr"), mUse = document.getElementById("m-use"), mTalk = document.getElementById("m-talk"), mTime = document.getElementById("m-time");
+  let lastSec = -1;
+  const perDay = D.ratios.find(r => r.metric.startsWith("HuggingFace")).Qwen / 30, lastQ = D.gdelt.quarterly[D.gdelt.quarterly.length - 1];
   const talkPerDay = lastQ.DeepSeek / 91, perSec = perDay / 86400, talkPerSec = talkPerDay / 86400, t0 = performance.now();
   document.querySelectorAll("[data-rate]").forEach(el => (el.textContent = el.dataset.rate === "use"
     ? `按最近 30 天的日均下载量（约 ${fmt(Math.round(perDay / 1e4))} 万次）推算`
@@ -31,6 +32,10 @@
     if (ctr) ctr.textContent = fmt(Math.floor(s * perSec));
     if (mUse) mUse.textContent = fmt(Math.floor(s * perSec));
     if (mTalk) mTalk.textContent = (s * talkPerSec).toFixed(3);
+    if (mTime && Math.floor(s) !== lastSec) {
+      lastSec = Math.floor(s);
+      mTime.innerHTML = `${Math.floor(lastSec / 60)}<small>分</small>${String(lastSec % 60).padStart(2, "0")}<small>秒</small>`;
+    }
     requestAnimationFrame(tick);
   })();
 
@@ -45,12 +50,12 @@
     });
   }
 
-  // 文字卡片旁的剪报：两边得分最高的真实帖子
+  // 文字卡片旁的剪报：两边点赞最多的真实帖子
   function fillExamples() {
     const host = document.querySelector("[data-examples]"); if (!host) return;
     const esc = s => s.replace(/[&<>]/g, "");
     const block = (kw, cls, label) => `<div class="clip-h ${cls === "use" ? "c-use" : "c-talk"}">${label}</div>` +
-      D.hn_examples[kw].slice(0, 2).map(x => `<div class="clip ${cls}">${esc(x.title)}<small>Hacker News · ${x.month} · ${fmt(x.points)} 分</small></div>`).join("");
+      D.hn_examples[kw].slice(0, 2).map(x => `<div class="clip ${cls}">${esc(x.title)}<small>Hacker News · ${x.month} · 获赞 ${fmt(x.points)}</small></div>`).join("");
     host.innerHTML = block("DeepSeek", "talk", "谈 DeepSeek 的帖子") + block("Qwen", "use", "谈 Qwen 的帖子");
   }
 
@@ -60,29 +65,35 @@
     const G = D.bans.grades, dv = D.derivatives;
     const bans = D.bans.items.map(b => `<li>${b.date} ${b.place} · ${b.issuer}：${b.document}（${G[b.grade]}）<br><a href="${b.url}" target="_blank" rel="noopener">${b.url}</a></li>`).join("");
     host.innerHTML = `
-      <section><h3>五类数据来源</h3><ol>
-        <li>HuggingFace Hub API：28 家主要开源模型发布机构的全部公开模型 6,952 个；${dv.bases.CN + dv.bases.US_EU} 个热门底座上的 ${fmt(dv.total_relations)} 条衍生关系。采集于 ${D.meta.snapshot_hf}。</li>
+      <section><h3>六类数据来源</h3><ol>
+        <li>HuggingFace Hub API：28 家主要开源模型发布机构的全部公开模型 ${fmt(D.meta.hf_model_count)} 个，下载快照采集于 ${D.meta.snapshot_hf}；图 10 下载榜单独采用 ${D.meta.snapshot_rank} 的完整快照。衍生关系采用 ${D.meta.snapshot_derivatives} 的固定样本：${dv.bases.CN + dv.bases.US_EU} 个热门底座、${fmt(dv.total_relations)} 条关系。</li>
         <li>GitHub REST API：deepseek-ai 与 QwenLM 两个组织全部自有仓库的收藏数。采集于 ${D.meta.snapshot_github}。</li>
         <li>Hacker News（Algolia API）：关键词精确匹配的月度帖子数（采集于 ${D.meta.snapshot_hn}）；标题含 DeepSeek / Qwen 的帖子 ${fmt(D.hn_topics.by_keyword.DeepSeek.n + D.hn_topics.by_keyword.Qwen.n)} 条（采集于 2026-10-07）。</li>
         <li>慧科新闻搜索研究库（完整检索库）：中国大陆报刊，标题与正文检索，按季度统计报道篇数。采集于 ${D.meta.snapshot_wisers}。</li>
-        <li>各国政府公告：${D.bans.total} 项限制措施，逐条核查官方原文，来源见下。核查于 2026-10-07。</li></ol></section>
-      <section><h3>口径与局限</h3><ul>
-        <li>HuggingFace 只提供最近 30 天下载量，没有历史数据，所以下载量只做横截面比较，时间趋势用衍生模型的创建时间。</li>
-        <li>衍生关系依赖作者自填的底座字段，没填的统计不到，中美底座同受影响。</li>
-        <li>底座按 2026 年 9 月的下载量（≥ 50 万）选取，越早的季度覆盖越不足，因此时间序列只用 2025Q1—2026Q2 六个完整季度。</li>
-        <li>国别按发布机构计：英伟达发布的 Qwen 量化版计入美欧，中国占比是保守估计。</li>
-        <li>报道量检索式可能漏掉「千问」「深度求索」等写法；若 Qwen 漏检更多，DeepSeek 与 Qwen 的报道倍数偏高。</li>
-        <li>论坛帖子按关键词计数，提到某个模型不等于以它为主题。</li>
-        <li>四项指标的口径与时间窗口各不相同，倍数只比较方向和量级。</li></ul></section>
-      <section><h3>两次差点让结论反过来的纠错</h3><ul>
-        <li>慧科有近期库和完整库两个入口：2025Q1 检索 DeepSeek，近期库只返回 1 条，完整库返回 17,856 条。本作品全部使用完整库。</li>
-        <li>衍生模型最初按「每家机构取下载量前 4 的模型」做底座，因各家模型总数悬殊（Qwen 465 个、Meta 70 个），算出中国占比 27.3%；改为统一下载量门槛后为 51.3%。本作品使用统一门槛。</li></ul></section>
-      <section><h3>议题编码</h3><p>对 Hacker News 上标题含 DeepSeek 或 Qwen 的全部帖子，由大模型逐条读标题，归入「技术与发布、部署与动手、成本市场与公司、国家与安全、其他」五类；作者对分层随机抽取的 100 条做了人工复核。一条标题按主要落点只归一类。</p></section>
+        <li>GDELT 全球新闻库（DOC 2.0 API）：65 种语言的网络新闻，外语文章经机器翻译后检索；检索式「DeepSeek」与「(Qwen OR "Tongyi Qianwen")」，去掉中国大陆来源（-sourcecountry:CH）；2025Q1—2026Q2 按季度统计文章数。采集于 ${D.meta.snapshot_gdelt}。</li>
+        <li>各国政府公告：${D.bans.total} 项限制措施，依据官方公告与公开报道核查，来源见下。核查于 2026-10-07。</li></ol></section>
+      <section><h3>统计说明</h3><ul>
+        <li>时间序列统一为 2025 年一季度至 2026 年二季度；下载量为采集日之前 30 天的快照。</li>
+        <li>模型所属地区按发布机构归属划分；衍生关系依据 HuggingFace 的底座字段，底座统一采用 30 日下载量 ≥ 50 万的筛选标准。</li>
+        <li>慧科统计中国大陆报刊；GDELT 统计中国大陆以外来源的网络新闻，两库分别计算，不合并篇数。GDELT 的 ${D.gdelt.days_total} 天查询区间中，接口返回 ${D.gdelt.days} 个日度数据点，季度值为返回记录之和。</li>
+        <li>报道与帖子按所列关键词检索；新闻篇数、帖子数、收藏数、下载量和衍生关系分别反映报道、讨论与模型获取情况，不等同于独立用户数或实际部署数量。</li>
+        <li>五项对比指标分别按各自的统计范围与时间窗口计算，倍数用于比较各指标内的 DeepSeek 与 Qwen。</li></ul></section>
+      <section><h3>议题编码</h3><p>对 Hacker News 上标题含 DeepSeek 或 Qwen 的全部帖子，按标题主要内容归入「技术与发布、部署与动手、成本市场与公司、国家与安全、其他」五类。一条标题按主要落点只归一类。</p></section>
       <section><h3>限制措施逐条来源</h3><ol>${bans}</ol></section>
       <section><h3>开源工具与字体</h3><p>D3（ISC）、GSAP（标准免费授权）、Lenis（MIT）、Phosphor Icons（MIT）；思源黑体、IBM Plex Mono（SIL OFL）。</p></section>`;
   }
 
   function build() {
+    const hf = D.ratios.find(r => r.metric.startsWith("HuggingFace"));
+    document.querySelectorAll("[data-hf-total]").forEach(el => {
+      el.textContent = (hf.Qwen / 1e8).toFixed(2);
+      if (el.hasAttribute("data-end")) el.dataset.end = el.textContent;
+    });
+    document.querySelectorAll("[data-hf-ratio]").forEach(el => {
+      el.textContent = hf.ratio.toFixed(1);
+      if (el.hasAttribute("data-pull")) el.dataset.pull = hf.ratio;
+    });
+    document.querySelectorAll("[data-hf-date]").forEach(el => el.textContent = D.meta.snapshot_hf);
     fillTickers();
     fillExamples();
     fillMethod();
@@ -95,17 +106,19 @@
     document.querySelectorAll(".pull .pc").forEach(pc => {
       const c = document.createElement("i"); c.className = "pc-cursor"; c.setAttribute("aria-hidden", "true"); pc.prepend(c);
     });
+    // 收尾句逐字拆开，供逐字动画用
+    document.querySelectorAll(".end-bar .ebb, .end-bar .acc").forEach(el => (el.innerHTML = [...el.textContent].map(ch => ch === "它"
+      ? '<span class="c is-it"><span class="it-letter">它</span></span>' : `<span class="c">${ch}</span>`).join("")));
     if (REDUCED) return;
 
     // 平滑滚动
     if (!/nosmooth/.test(Q) && window.Lenis) {
-      const lenis = new Lenis({ lerp: 0.16, smoothWheel: true });
+      const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
       lenis.on("scroll", ScrollTrigger.update);
       gsap.ticker.add(t => lenis.raf(t * 1000));
       gsap.ticker.lagSmoothing(0);
     }
-    const SMOOTH = !/nosmooth/.test(Q) && !!window.Lenis;
-    const passing = (trigger, start = "top 85%", end = "top 40%") => ({ trigger, start, end, scrub: SMOOTH ? true : .3, invalidateOnRefresh: true });
+    const passing = (trigger, start = "top 85%", end = "top 40%") => ({ trigger, start, end, scrub: .5, invalidateOnRefresh: true });
 
     /* ---------- 封面：打开时播一次；滚出时视差 ---------- */
     const intro = gsap.timeline({ onComplete: () => alive(".cover", ambient.cover) });
@@ -181,22 +194,28 @@
         .from(el.closest(".pull").querySelector(".pc"), { y: 40, opacity: 0, ease: "none" }, .4);
     });
 
-    /* ---------- 结语：两块色块从两侧推入，正文上升，黄色标记划过 ---------- */
-    // 收束一屏：红蓝两块从两侧推入 → 文字升起 → 黑条从下推上 → 结论句 → 黄色标记；顶边贴到屏幕顶时全部完成
-    gsap.timeline({ scrollTrigger: passing("#finale", "top bottom", "top 2%") })
-      .fromTo("#finale .eb.talk", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", ease: "none", duration: 1 }, 0)
-      .fromTo("#finale .eb.use", { clipPath: "inset(0 0 0 100%)" }, { clipPath: "inset(0 0 0 0%)", ease: "none", duration: 1 }, 0)
-      .from("#finale .eb > :not(.shape)", { y: 70, opacity: 0, stagger: .06, duration: .4, ease: "none" }, .35)
-      .fromTo("#finale .end-bar", { clipPath: "inset(100% 0 0 0)" }, { clipPath: "inset(0% 0 0 0)", ease: "none", duration: .5 }, .5)
-      .from("#finale .punch2", { y: 50, opacity: 0, duration: .4, ease: "none" }, .7)
-      .fromTo("#finale .hl", { "--hl": 0, color: "#F1EFEA" }, { "--hl": 1, color: "#111", duration: .4, ease: "none" }, 1.05);
+    /* ---------- 收束：两句话先完整进入视野，计数器随后补充 ---------- */
+    gsap.timeline({ scrollTrigger: passing("#finale", "top bottom", "top 16%") })
+      .from("#finale .fin-context", { y: 50, opacity: 0, duration: .4, ease: "none" }, 0)
+      .from("#finale .ebb .c:not(.is-it)", { x: -90, yPercent: 70, opacity: 0, stagger: .025, duration: .6, ease: "none" }, .05)
+      .from("#finale .acc .c:not(.is-it)", { x: 90, yPercent: 90, opacity: 0, stagger: .025, duration: .6, ease: "none" }, .15)
+      .from("#finale .ebb .is-it", { scale: .35, rotation: -18, opacity: 0, duration: .7, ease: "none" }, .1)
+      .from("#finale .acc .is-it", { scale: .35, rotation: 18, opacity: 0, duration: .7, ease: "none" }, .15)
+      .from("#finale .fin-bottom", { y: 50, opacity: 0, duration: .55, ease: "none" }, .35);
 
     /* ---------- 问题陈述：黄色标记划过；数据来源标签依次弹出 ---------- */
     gsap.fromTo("#sources .hl", { "--hl": 0 }, { "--hl": 1, ease: "none", scrollTrigger: passing("#sources .statement", "top 92%", "center 64%") });
     gsap.from("#sources .chip, #sources .src-lab", { y: 80, opacity: 0, stagger: .12, ease: "none", scrollTrigger: passing("#sources .src-row", "top bottom", "center 64%") });
 
     /* ---------- 三个问题：色卡依次升起 ---------- */
-    gsap.from(".q", { yPercent: 90, opacity: 0, stagger: .15, ease: "none", scrollTrigger: passing("#qs", "top bottom", "center 66%") });
+    gsap.from(".q", { yPercent: 90, opacity: 0, stagger: .08, ease: "none", scrollTrigger: passing("#qs", "top bottom", "center 74%") });
+
+    /* 结语独立排版：标题、两个现场、结论依次进入视野。 */
+    gsap.timeline({ scrollTrigger: passing("#ending", "top bottom", "top 16%") })
+      .from("#ending .ending-head", { x: -200, opacity: 0, duration: .85, ease: "none" }, 0)
+      .from("#ending .ending-art", { y: 100, scale: .55, opacity: 0, duration: .75, ease: "none" }, .05)
+      .from("#ending .ending-scene", { x: 180, opacity: 0, stagger: .1, duration: .75, ease: "none" }, .05)
+      .from("#ending .ending-verdict", { y: 110, opacity: 0, duration: .75, ease: "none" }, .1);
 
     /* ---------- 章节页：满幅色块从下往上推满，背景大数字同步计数 ---------- */
     document.querySelectorAll(".chapter").forEach(ch => {
@@ -224,10 +243,11 @@
       loopTo(".wm-use", { y: 18 }, 4.4, { yoyo: true, ease: "sine.inOut" })]);
     // 章节页：大虚线圈慢转
     document.querySelectorAll(".chapter").forEach((ch, i) => alive(ch, [loopTo(ch.querySelector(".ch-ring"), { rotation: i % 2 ? -360 : 360 }, 70)]));
-    // 结尾：太阳呼吸、圆环转（与封面呼应）
-    alive("#finale", [
-      loopTo("#finale .shape.sun", { scale: 1.08 }, 3.2, { yoyo: true, ease: "sine.inOut" }),
-      loopTo("#finale .shape.ring", { rotation: -360 }, 48)]);
+    // 红圆缓慢聚焦，蓝色模块轮流呼吸；保持文字静止便于阅读。
+    alive("#ending", [loopTo("#ending .ending-orbit", { rotation: 16 }, 6, { yoyo: true, ease: "sine.inOut" }),
+      loopTo("#ending .ending-tile", { rotation: 0 }, 4, { yoyo: true, ease: "sine.inOut" })]);
+    alive("#finale", [loopTo("#finale .ebb .it-letter", { y: -5, rotation: -2 }, 2.6, { yoyo: true, ease: "sine.inOut" }),
+      loopTo("#finale .acc .it-letter", { y: 5, rotation: 2 }, 3.2, { yoyo: true, ease: "sine.inOut" })]);
     // 大数字页：数字下方黑线上的黄色游标来回走
     document.querySelectorAll(".pull").forEach(p => {
       const pc = p.querySelector(".pc"), c = pc.querySelector(".pc-cursor");

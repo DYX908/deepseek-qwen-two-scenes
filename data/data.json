@@ -1,9 +1,12 @@
 {
  "meta": {
-  "snapshot_hf": "2026-09-06",
+  "snapshot_hf": "2026-10-08",
+  "snapshot_derivatives": "2026-09-06",
+  "hf_model_count": 7117,
   "snapshot_wisers": "2026-09-06",
   "snapshot_hn": "2026-09-06",
   "snapshot_github": "2026-10-07",
+  "snapshot_gdelt": "2026-10-08",
   "quarters": [
    "2025Q1",
    "2025Q2",
@@ -12,136 +15,250 @@
    "2026Q1",
    "2026Q2"
   ],
-  "threshold_downloads_30d": 500000
+  "threshold_downloads_30d": 500000,
+  "snapshot_rank": "2026-09-06"
  },
  "download_share": {
   "all": {
    "CN": {
-    "models": 1709,
-    "downloads": 381275471,
-    "download_pct": 50.6,
-    "model_pct": 24.6
+    "models": 1823,
+    "downloads": 344738478,
+    "download_pct": 49.8,
+    "model_pct": 25.6
    },
    "US_EU": {
-    "models": 5243,
-    "downloads": 371946901,
-    "download_pct": 49.4,
-    "model_pct": 75.4
+    "models": 5294,
+    "downloads": 346902367,
+    "download_pct": 50.2,
+    "model_pct": 74.4
    }
   },
   "since_2024": {
    "CN": {
-    "models": 1591,
-    "downloads": 376023924,
-    "download_pct": 64.8,
-    "model_pct": 29.7
+    "models": 1705,
+    "downloads": 342428023,
+    "download_pct": 63.9,
+    "model_pct": 30.8
    },
    "US_EU": {
-    "models": 3772,
-    "downloads": 204375498,
-    "download_pct": 35.2,
-    "model_pct": 70.3
+    "models": 3823,
+    "downloads": 193134687,
+    "download_pct": 36.1,
+    "model_pct": 69.2
    }
   }
  },
  "org_downloads": [
   {
    "org": "Qwen",
-   "downloads": 319360442,
-   "models": 465,
+   "downloads": 274666754,
+   "models": 468,
    "country": "CN"
   },
   {
    "org": "google",
-   "downloads": 140267565,
-   "models": 1133,
+   "downloads": 138131737,
+   "models": 1136,
    "country": "US_EU"
   },
   {
    "org": "openai",
-   "downloads": 63668068,
+   "downloads": 60168221,
    "models": 39,
    "country": "US_EU"
   },
   {
    "org": "nvidia",
-   "downloads": 50474372,
-   "models": 928,
+   "downloads": 40495483,
+   "models": 948,
    "country": "US_EU"
   },
   {
    "org": "microsoft",
-   "downloads": 42223323,
-   "models": 538,
-   "country": "US_EU"
-  },
-  {
-   "org": "meta-llama",
-   "downloads": 25708647,
-   "models": 70,
+   "downloads": 37109178,
+   "models": 545,
    "country": "US_EU"
   },
   {
    "org": "deepseek-ai",
-   "downloads": 23154806,
-   "models": 104,
+   "downloads": 26257475,
+   "models": 105,
    "country": "CN"
   },
   {
-   "org": "ibm-granite",
-   "downloads": 11735465,
-   "models": 241,
-   "country": "US_EU"
-  },
-  {
-   "org": "mistralai",
-   "downloads": 10568566,
-   "models": 75,
+   "org": "meta-llama",
+   "downloads": 24207671,
+   "models": 70,
    "country": "US_EU"
   },
   {
    "org": "zai-org",
-   "downloads": 10188040,
+   "downloads": 15375731,
    "models": 154,
    "country": "CN"
   },
   {
-   "org": "HuggingFaceTB",
-   "downloads": 9338011,
-   "models": 84,
+   "org": "ibm-granite",
+   "downloads": 12142433,
+   "models": 243,
+   "country": "US_EU"
+  },
+  {
+   "org": "mistralai",
+   "downloads": 9907823,
+   "models": 75,
    "country": "US_EU"
   },
   {
    "org": "EleutherAI",
-   "downloads": 8419942,
-   "models": 974,
+   "downloads": 9166392,
+   "models": 978,
    "country": "US_EU"
   },
   {
-   "org": "MiniMaxAI",
-   "downloads": 7444705,
-   "models": 21,
-   "country": "CN"
+   "org": "HuggingFaceTB",
+   "downloads": 7404197,
+   "models": 84,
+   "country": "US_EU"
   },
   {
    "org": "Alibaba-NLP",
-   "downloads": 7013478,
+   "downloads": 6540801,
    "models": 74,
    "country": "CN"
   },
   {
+   "org": "openbmb",
+   "downloads": 6110920,
+   "models": 173,
+   "country": "CN"
+  },
+  {
    "org": "allenai",
-   "downloads": 6538713,
-   "models": 970,
+   "downloads": 5861138,
+   "models": 978,
    "country": "US_EU"
   }
  ],
  "qwen_in_cn": {
-  "qwen": 319360442,
-  "cn_total": 381275471,
-  "pct": 83.8
+  "qwen": 274666754,
+  "cn_total": 344738478,
+  "pct": 79.7
  },
  "top10": [
+  {
+   "rank": 1,
+   "model_id": "google/electra-base-discriminator",
+   "org": "google",
+   "country": "US_EU",
+   "downloads_30d": 46065089,
+   "created_at": "2022-03-02"
+  },
+  {
+   "rank": 2,
+   "model_id": "Qwen/Qwen3-0.6B",
+   "org": "Qwen",
+   "country": "CN",
+   "downloads_30d": 31151426,
+   "created_at": "2025-04-27"
+  },
+  {
+   "rank": 3,
+   "model_id": "openai/clip-vit-base-patch32",
+   "org": "openai",
+   "country": "US_EU",
+   "downloads_30d": 20237996,
+   "created_at": "2022-03-02"
+  },
+  {
+   "rank": 4,
+   "model_id": "google/gemma-4-26B-A4B-it",
+   "org": "google",
+   "country": "US_EU",
+   "downloads_30d": 12265732,
+   "created_at": "2026-03-11"
+  },
+  {
+   "rank": 5,
+   "model_id": "google/vit-base-patch16-224",
+   "org": "google",
+   "country": "US_EU",
+   "downloads_30d": 11586601,
+   "created_at": "2022-03-02"
+  },
+  {
+   "rank": 6,
+   "model_id": "Qwen/Qwen3-8B",
+   "org": "Qwen",
+   "country": "CN",
+   "downloads_30d": 10122747,
+   "created_at": "2025-04-27"
+  },
+  {
+   "rank": 7,
+   "model_id": "Qwen/Qwen3-VL-8B-Instruct",
+   "org": "Qwen",
+   "country": "CN",
+   "downloads_30d": 9722655,
+   "created_at": "2025-10-11"
+  },
+  {
+   "rank": 8,
+   "model_id": "Qwen/Qwen3-4B",
+   "org": "Qwen",
+   "country": "CN",
+   "downloads_30d": 9603998,
+   "created_at": "2025-04-27"
+  },
+  {
+   "rank": 9,
+   "model_id": "google/gemma-4-31B-it",
+   "org": "google",
+   "country": "US_EU",
+   "downloads_30d": 9565805,
+   "created_at": "2026-03-11"
+  },
+  {
+   "rank": 10,
+   "model_id": "Qwen/Qwen3-Embedding-0.6B",
+   "org": "Qwen",
+   "country": "CN",
+   "downloads_30d": 8981355,
+   "created_at": "2025-06-03"
+  }
+ ],
+ "nvidia_qwen": {
+  "model_id": "nvidia/Qwen3.6-35B-A3B-NVFP4",
+  "org": "nvidia",
+  "country": "US_EU",
+  "downloads_30d": 5255793,
+  "likes": 644,
+  "created_at": "2026-05-27T18:09:46.000Z",
+  "pipeline_tag": "text-generation",
+  "library": "Model Optimizer",
+  "tags": [
+   "Model Optimizer",
+   "safetensors",
+   "qwen3_5_moe",
+   "nvidia",
+   "ModelOpt",
+   "Qwen3.6",
+   "quantized",
+   "FP4",
+   "fp4",
+   "text-generation",
+   "conversational",
+   "base_model:Qwen/Qwen3.6-35B-A3B",
+   "base_model:quantized:Qwen/Qwen3.6-35B-A3B",
+   "license:apache-2.0",
+   "8-bit",
+   "modelopt",
+   "deploy:azure",
+   "deploy:sagemaker",
+   "region:us"
+  ]
+ },
+ "top10_archive": [
   {
    "rank": 1,
    "model_id": "google/electra-base-discriminator",
@@ -653,6 +770,76 @@
   },
   "deepseek_drop_pct": 87.7
  },
+ "gdelt": {
+  "source": "GDELT DOC 2.0 API（timelinevolraw），65 种语言网络新闻，外语文章经机器翻译后检索",
+  "query": {
+   "DeepSeek": "DeepSeek",
+   "Qwen": "(Qwen OR \"Tongyi Qianwen\")",
+   "exclude": "-sourcecountry:CH（去掉中国大陆来源）"
+  },
+  "quarterly": [
+   {
+    "quarter": "2025Q1",
+    "DeepSeek": 14358,
+    "Qwen": 496
+   },
+   {
+    "quarter": "2025Q2",
+    "DeepSeek": 3301,
+    "Qwen": 236
+   },
+   {
+    "quarter": "2025Q3",
+    "DeepSeek": 2475,
+    "Qwen": 311
+   },
+   {
+    "quarter": "2025Q4",
+    "DeepSeek": 2231,
+    "Qwen": 512
+   },
+   {
+    "quarter": "2026Q1",
+    "DeepSeek": 1578,
+    "Qwen": 551
+   },
+   {
+    "quarter": "2026Q2",
+    "DeepSeek": 1952,
+    "Qwen": 410
+   }
+  ],
+  "sum": {
+   "DeepSeek": 25895,
+   "Qwen": 2516
+  },
+  "sum_with_cn": {
+   "DeepSeek": 28086,
+   "Qwen": 2883
+  },
+  "deepseek_drop_pct": 86.4,
+  "qwen_change_pct": -17.3,
+  "days": 529,
+  "days_total": 546,
+  "cn_share_pct": {
+   "DeepSeek": 7.8,
+   "Qwen": 12.7
+  }
+ },
+ "wiki": {
+  "DeepSeek": {
+   "sum": 5412760,
+   "first": 2706762,
+   "last": 65532,
+   "peak": 2706762
+  },
+  "Qwen": {
+   "sum": 405213,
+   "first": 17711,
+   "last": 34896,
+   "peak": 34896
+  }
+ },
  "hn": {
   "keywords": [
    "DeepSeek",
@@ -858,6 +1045,16 @@
    "ratio": 14.9
   },
   {
+   "metric": "国外网络新闻报道量",
+   "side": "talk",
+   "DeepSeek": 25895,
+   "Qwen": 2516,
+   "window": "2025Q1–2026Q2 累计，不含中国来源",
+   "source": "GDELT DOC 2.0 API",
+   "leader": "DeepSeek",
+   "ratio": 10.3
+  },
+  {
    "metric": "Hacker News 帖子数",
    "side": "talk",
    "DeepSeek": 1870,
@@ -880,12 +1077,12 @@
   {
    "metric": "HuggingFace 30 日下载量",
    "side": "use",
-   "DeepSeek": 23154806,
-   "Qwen": 319360442,
-   "window": "30 日快照 2026-09-06",
+   "DeepSeek": 26257475,
+   "Qwen": 274666754,
+   "window": "30 日快照 2026-10-08",
    "source": "HuggingFace Hub API",
    "leader": "Qwen",
-   "ratio": 13.8
+   "ratio": 10.5
   }
  ],
  "bans": {
@@ -1540,243 +1737,243 @@
   "use": [
    {
     "id": "Qwen/Qwen3-0.6B",
-    "dl": 21510837
-   },
-   {
-    "id": "Qwen/Qwen3-VL-8B-Instruct",
-    "dl": 13859514
+    "dl": 31151426
    },
    {
     "id": "Qwen/Qwen3-8B",
-    "dl": 13209969
+    "dl": 10122747
    },
    {
-    "id": "Qwen/Qwen3.6-35B-A3B-FP8",
-    "dl": 12900333
-   },
-   {
-    "id": "Qwen/Qwen3.5-9B",
-    "dl": 11772488
-   },
-   {
-    "id": "Qwen/Qwen2.5-7B-Instruct",
-    "dl": 11049595
-   },
-   {
-    "id": "Qwen/Qwen2.5-VL-7B-Instruct",
-    "dl": 7863287
-   },
-   {
-    "id": "Qwen/Qwen3.6-27B-FP8",
-    "dl": 7488790
-   },
-   {
-    "id": "Qwen/Qwen2.5-1.5B-Instruct",
-    "dl": 7308263
-   },
-   {
-    "id": "Qwen/Qwen3.5-4B",
-    "dl": 7199129
-   },
-   {
-    "id": "Qwen/Qwen3-Embedding-0.6B",
-    "dl": 7157326
-   },
-   {
-    "id": "Qwen/Qwen2.5-3B-Instruct",
-    "dl": 6815899
-   },
-   {
-    "id": "Qwen/Qwen3.8-27B-FP8",
-    "dl": 6610521
+    "id": "Qwen/Qwen3-VL-8B-Instruct",
+    "dl": 9722655
    },
    {
     "id": "Qwen/Qwen3-4B",
-    "dl": 6275473
+    "dl": 9603998
    },
    {
-    "id": "Qwen/Qwen3.8-27B",
-    "dl": 6190807
+    "id": "Qwen/Qwen3-Embedding-0.6B",
+    "dl": 8981355
+   },
+   {
+    "id": "Qwen/Qwen3.5-9B",
+    "dl": 8537820
+   },
+   {
+    "id": "Qwen/Qwen2.5-7B-Instruct",
+    "dl": 8097130
+   },
+   {
+    "id": "Qwen/Qwen3.5-4B",
+    "dl": 8082635
    },
    {
     "id": "Qwen/Qwen2.5-0.5B-Instruct",
-    "dl": 5880393
+    "dl": 7955457
    },
    {
-    "id": "Qwen/Qwen3-32B",
-    "dl": 5153212
+    "id": "Qwen/Qwen3.8-27B",
+    "dl": 6841660
    },
    {
-    "id": "Qwen/Qwen3.6-27B",
-    "dl": 5123849
+    "id": "Qwen/Qwen2.5-1.5B-Instruct",
+    "dl": 6730687
    },
    {
-    "id": "Qwen/Qwen3.6-35B-A3B",
-    "dl": 4299521
-   },
-   {
-    "id": "Qwen/Qwen3-VL-4B-Instruct",
-    "dl": 3965678
-   },
-   {
-    "id": "Qwen/Qwen-72B",
-    "dl": 3817054
-   },
-   {
-    "id": "Qwen/Qwen2.5-7B-Instruct-AWQ",
-    "dl": 3690778
-   },
-   {
-    "id": "Qwen/Qwen3-4B-Instruct-2507",
-    "dl": 3548944
-   },
-   {
-    "id": "Qwen/Qwen3-ASR-1.7B",
-    "dl": 3519498
-   },
-   {
-    "id": "Qwen/Qwen3-1.7B",
-    "dl": 3447859
-   },
-   {
-    "id": "Qwen/Qwen3-TTS-12Hz-1.7B-Base",
-    "dl": 3369758
-   },
-   {
-    "id": "Qwen/Qwen2.5-VL-3B-Instruct",
-    "dl": 3197495
-   },
-   {
-    "id": "Qwen/Qwen3-VL-2B-Instruct",
-    "dl": 2948892
-   },
-   {
-    "id": "Qwen/Qwen3-Embedding-4B",
-    "dl": 2754927
-   },
-   {
-    "id": "Qwen/Qwen2.5-14B-Instruct",
-    "dl": 2655159
-   },
-   {
-    "id": "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
-    "dl": 2601442
-   },
-   {
-    "id": "Qwen/Qwen3.5-2B",
-    "dl": 2537301
-   },
-   {
-    "id": "Qwen/Qwen3-Reranker-4B",
-    "dl": 2461839
-   },
-   {
-    "id": "Qwen/Qwen3.5-0.8B",
-    "dl": 2365411
-   },
-   {
-    "id": "Qwen/Qwen3.5-35B-A3B",
-    "dl": 2357238
-   },
-   {
-    "id": "Qwen/Qwen3-VL-8B-Instruct-FP8",
-    "dl": 2343088
-   },
-   {
-    "id": "Qwen/Qwen3.5-27B",
-    "dl": 2317755
-   },
-   {
-    "id": "Qwen/Qwen2.5-Coder-7B-Instruct",
-    "dl": 2301302
-   },
-   {
-    "id": "Qwen/Qwen3-14B-AWQ",
-    "dl": 2282295
-   },
-   {
-    "id": "Qwen/Qwen3-Embedding-8B",
-    "dl": 2200536
-   },
-   {
-    "id": "Qwen/Qwen2.5-14B-Instruct-AWQ",
-    "dl": 2152810
-   },
-   {
-    "id": "Qwen/Qwen3-30B-A3B",
-    "dl": 2147543
-   },
-   {
-    "id": "Qwen/Qwen2.5-32B-Instruct",
-    "dl": 2092946
-   },
-   {
-    "id": "Qwen/Qwen2-VL-2B-Instruct",
-    "dl": 1983455
-   },
-   {
-    "id": "Qwen/Qwen3-4B-Base",
-    "dl": 1976108
-   },
-   {
-    "id": "Qwen/Qwen2.5-Coder-14B-Instruct",
-    "dl": 1919973
-   },
-   {
-    "id": "Qwen/Qwen3-1.7B-Base",
-    "dl": 1901396
-   },
-   {
-    "id": "Qwen/Qwen3-VL-Reranker-2B",
-    "dl": 1867245
-   },
-   {
-    "id": "Qwen/Qwen2.5-Coder-14B-Instruct-AWQ",
-    "dl": 1833620
-   },
-   {
-    "id": "Qwen/Qwen2.5-VL-7B-Instruct-AWQ",
-    "dl": 1826743
+    "id": "Qwen/Qwen2.5-VL-7B-Instruct",
+    "dl": 5436064
    },
    {
     "id": "Qwen/Qwen3-14B",
-    "dl": 1734782
+    "dl": 4801773
    },
    {
-    "id": "Qwen/Qwen2.5-VL-32B-Instruct-AWQ",
-    "dl": 1718314
+    "id": "Qwen/Qwen3.8-27B-FP8",
+    "dl": 4666226
    },
    {
-    "id": "Qwen/Qwen3-Coder-Next-FP8",
-    "dl": 1709879
+    "id": "Qwen/Qwen3.6-35B-A3B-FP8",
+    "dl": 4455887
    },
    {
-    "id": "Qwen/Qwen2.5-Coder-32B-Instruct",
-    "dl": 1703797
+    "id": "Qwen/Qwen2.5-3B-Instruct",
+    "dl": 4333852
    },
    {
-    "id": "Qwen/Qwen2.5-0.5B",
-    "dl": 1688938
+    "id": "Qwen/Qwen3.5-2B",
+    "dl": 4031032
    },
    {
-    "id": "Qwen/Qwen3.5-122B-A10B-FP8",
-    "dl": 1688222
+    "id": "Qwen/Qwen3-32B",
+    "dl": 3660105
    },
    {
-    "id": "Qwen/Qwen2-VL-7B-Instruct-AWQ",
-    "dl": 1638449
+    "id": "Qwen/Qwen3-4B-Instruct-2507",
+    "dl": 3650593
+   },
+   {
+    "id": "Qwen/Qwen3.6-35B-A3B",
+    "dl": 3537522
+   },
+   {
+    "id": "Qwen/Qwen3-TTS-12Hz-1.7B-Base",
+    "dl": 3250021
+   },
+   {
+    "id": "Qwen/Qwen3-VL-4B-Instruct",
+    "dl": 3194167
+   },
+   {
+    "id": "Qwen/Qwen3-1.7B",
+    "dl": 3110028
+   },
+   {
+    "id": "Qwen/Qwen3-14B-AWQ",
+    "dl": 3009602
+   },
+   {
+    "id": "Qwen/Qwen3-VL-2B-Instruct",
+    "dl": 2681368
+   },
+   {
+    "id": "Qwen/Qwen2.5-7B-Instruct-AWQ",
+    "dl": 2608841
+   },
+   {
+    "id": "Qwen/Qwen3.5-0.8B",
+    "dl": 2538664
+   },
+   {
+    "id": "Qwen/Qwen3-Embedding-8B",
+    "dl": 2446285
+   },
+   {
+    "id": "Qwen/Qwen3.6-27B-FP8",
+    "dl": 2445241
+   },
+   {
+    "id": "Qwen/Qwen3-Reranker-4B",
+    "dl": 2366052
    },
    {
     "id": "Qwen/Qwen3-8B-AWQ",
-    "dl": 1599745
+    "dl": 2344734
+   },
+   {
+    "id": "Qwen/Qwen3.6-27B",
+    "dl": 2323903
+   },
+   {
+    "id": "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
+    "dl": 2316282
+   },
+   {
+    "id": "Qwen/Qwen2.5-VL-3B-Instruct",
+    "dl": 2250774
+   },
+   {
+    "id": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "dl": 2126685
+   },
+   {
+    "id": "Qwen/Qwen3.5-27B",
+    "dl": 1898479
+   },
+   {
+    "id": "Qwen/Qwen2.5-32B-Instruct",
+    "dl": 1818722
+   },
+   {
+    "id": "Qwen/Qwen3-Embedding-4B",
+    "dl": 1804509
+   },
+   {
+    "id": "Qwen/Qwen3-VL-8B-Instruct-FP8",
+    "dl": 1760786
+   },
+   {
+    "id": "Qwen/Qwen2.5-14B-Instruct-AWQ",
+    "dl": 1708009
+   },
+   {
+    "id": "Qwen/Qwen2.5-VL-7B-Instruct-AWQ",
+    "dl": 1671851
+   },
+   {
+    "id": "Qwen/Qwen3.8-Flash-Next",
+    "dl": 1640938
+   },
+   {
+    "id": "Qwen/Qwen2-VL-7B-Instruct-AWQ",
+    "dl": 1610369
+   },
+   {
+    "id": "Qwen/Qwen2.5-Coder-14B-Instruct",
+    "dl": 1603605
+   },
+   {
+    "id": "Qwen/Qwen3-Reranker-0.6B",
+    "dl": 1542287
+   },
+   {
+    "id": "Qwen/Qwen3-VL-Embedding-8B",
+    "dl": 1496639
+   },
+   {
+    "id": "Qwen/Qwen3.5-35B-A3B",
+    "dl": 1475747
+   },
+   {
+    "id": "Qwen/Qwen2.5-0.5B",
+    "dl": 1457936
+   },
+   {
+    "id": "Qwen/Qwen3-30B-A3B",
+    "dl": 1432071
+   },
+   {
+    "id": "Qwen/Qwen3.5-35B-A3B-FP8",
+    "dl": 1347117
+   },
+   {
+    "id": "Qwen/Qwen2.5-14B-Instruct",
+    "dl": 1346684
+   },
+   {
+    "id": "Qwen/Qwen2-VL-2B-Instruct",
+    "dl": 1303098
+   },
+   {
+    "id": "Qwen/Qwen3-ASR-1.7B",
+    "dl": 1267269
+   },
+   {
+    "id": "Qwen/Qwen2.5-32B-Instruct-AWQ",
+    "dl": 1143309
+   },
+   {
+    "id": "Qwen/Qwen3-VL-Embedding-2B",
+    "dl": 1129405
+   },
+   {
+    "id": "Qwen/Qwen3-4B-Instruct-2507-FP8",
+    "dl": 1108942
+   },
+   {
+    "id": "Qwen/Qwen3-Coder-Next-FP8",
+    "dl": 1075487
+   },
+   {
+    "id": "Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice",
+    "dl": 1045234
+   },
+   {
+    "id": "Qwen/Qwen3-32B-AWQ",
+    "dl": 1019810
    },
    {
     "id": "Qwen/Qwen2.5-Coder-32B-Instruct-AWQ",
-    "dl": 1444917
-   },
-   {
-    "id": "Qwen/Qwen2.5-VL-32B-Instruct",
-    "dl": 1403838
+    "dl": 1001082
    }
   ]
  },
