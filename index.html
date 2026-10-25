@@ -6,7 +6,7 @@
 <title>媒体关注 DeepSeek，开发者下载 Qwen</title>
 <meta name="description" content="中国开源大模型出海的「两个现场」：被讨论的中国 AI 和被使用的中国 AI，是不是同一个？">
 <link rel="preload" href="fonts/sans.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=44">
+  <link rel="stylesheet" href="css/site.css?v=46">
 </head>
 <body>
 <div class="progress" aria-hidden="true"><i></i></div>
@@ -82,7 +82,7 @@
 
   <!-- ======================= 问题与数据来源 ======================= -->
   <section class="sources" id="sources">
-    <p class="statement">从新闻到模型下载，<span class="hl">关注为何不同？</span>能力、产品与使用场景，怎样影响选择？</p>
+    <p class="statement">从新闻到模型下载，<span class="hl">关注为何不同？</span><span class="statement-follow">能力、产品与使用场景，怎样影响选择？</span></p>
     <div class="src-row">
       <div class="src-lab">七类数据</div>
       <div class="chip"><span data-icon="download-simple" class="c-use"></span><b>HuggingFace</b><i>下载量、衍生模型</i></div>
@@ -97,8 +97,8 @@
 
   <section class="qs" id="qs">
     <div class="q"><div class="n">01</div><span class="act">第一幕</span><div class="t">被讨论的是谁？</div><div class="d">中外新闻与开发者社区在谈哪个中国 AI、谈些什么。</div></div>
-    <div class="q"><div class="n">02</div><span class="act">第二幕</span><div class="t">被使用的是谁？</div><div class="d">公开平台上，哪些模型被下载、被二次开发；差异从何而来。</div></div>
-    <div class="q"><div class="n">03</div><span class="act">第三幕</span><div class="t">禁令管到了哪里？</div><div class="d">各国针对 DeepSeek 的限制措施，管住了什么、没管住什么。</div></div>
+    <div class="q"><div class="n">02</div><span class="act">第二幕</span><div class="t">被使用的是谁？</div><div class="d">哪些模型被下载、被二次开发？差异从何而来？</div></div>
+    <div class="q"><div class="n">03</div><span class="act">第三幕</span><div class="t">禁令管到了哪里？</div><div class="d">各国对 DeepSeek 的限制，覆盖哪些使用场景？</div></div>
   </section>
 
   <!-- ======================= 第一幕章节页 ======================= -->
@@ -197,7 +197,7 @@
       <div class="bigcap">Qwen 最近 30 天的下载量（截至 <span data-hf-date>2026-10-08</span>）</div>
       <div class="act">第二幕</div>
       <h2>被使用的中国 AI</h2>
-      <p class="one">报道量与下载量，<br>呈现出不同的排序。</p>
+      <p class="one">报道量与下载量，呈现出不同的排序。</p>
     </div>
   </section>
 
@@ -273,7 +273,7 @@
     <div class="note">
       <div class="tag">从能力到实际开发</div>
       <p class="big">下载之后，模型还会被继续改造。</p>
-      <p>开发者需要结合任务、设备和运行成本选择模型，也会通过微调、量化或合并，制作适合自己的版本。HuggingFace 的「底座」字段记录了这些公开的二次开发关系，尚不能据此判断实际部署规模。</p>
+      <p>开发者结合任务、设备和运行成本选择模型，也通过微调、量化或合并，制作适合自己的版本。HuggingFace 的「底座」字段记录了这些二次开发关系，实际部署规模仍需其他数据验证。</p>
     </div>
   </section>
 
@@ -305,12 +305,13 @@
   </section>
 
   <section class="lineage" id="lineage">
-    <div class="lineage-heading"><div class="tag">技术的交汇</div><h2>一个模型里，也可以有两家的贡献。</h2><p>DeepSeek 用自身模型生成的推理数据，对 Qwen 的底座继续训练，形成了新的蒸馏模型。</p></div>
+    <div class="lineage-heading"><div class="tag">技术的交汇</div><h2>一个模型里，也可以有两家的贡献。</h2><p>DeepSeek 生成推理数据，在 Qwen 底座上继续训练，得到新的蒸馏模型。</p></div>
     <div class="lineage-flow">
-      <div class="lineage-parent use"><small>模型底座</small><strong>Qwen3</strong><span>8B-Base</span></div>
+      <div class="lineage-parent use"><small>模型底座 <em>01</em></small><strong>Qwen3</strong><span>8B-Base</span><div class="lineage-glyph modules" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
       <div class="lineage-join" aria-hidden="true">＋</div>
-      <div class="lineage-parent talk"><small>推理数据</small><strong>DeepSeek</strong><span>R1-0528</span></div>
-      <div class="lineage-result"><small>继续训练后的模型</small><strong>DeepSeek-R1-0528-<wbr>Qwen3-8B</strong><p>发布机构是 DeepSeek，底座来自 Qwen。<br>发布归属与技术来源，是两个不同维度。</p></div>
+      <div class="lineage-parent talk"><small>推理数据 <em>02</em></small><strong>DeepSeek</strong><span>R1-0528</span><div class="lineage-glyph signals" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div>
+      <div class="lineage-stream" aria-hidden="true"><svg viewBox="0 0 1000 70" preserveAspectRatio="none"><path class="stream-base use" d="M230 0V22Q230 32 245 32H480Q500 32 500 52V70"/><path class="stream-base talk" d="M770 0V22Q770 32 755 32H520Q500 32 500 52V70"/><path class="stream-run use" d="M230 0V22Q230 32 245 32H480Q500 32 500 52V70"/><path class="stream-run talk" d="M770 0V22Q770 32 755 32H520Q500 32 500 52V70"/></svg></div>
+      <div class="lineage-result"><small>继续训练后的模型</small><strong><span class="c-talk">DeepSeek-R1-0528</span>-<wbr><span class="c-use">Qwen3-8B</span></strong><p>发布机构是 DeepSeek，底座来自 Qwen。<br>发布归属与技术来源，是两个不同维度。</p></div>
     </div>
     <p class="lineage-note">来源：DeepSeek 官方模型卡。蒸馏关系体现技术来源，不代表双方存在商业合作，也不对同一次下载重复计数。</p>
   </section>
@@ -394,7 +395,7 @@
     <div class="note">
       <div class="tag">两个现场</div>
       <p class="big">报道与二次开发，后来各自怎样变化？</p>
-      <p>回到两个系列本身：将季度报道量和新衍生模型数分别以 2025 年一季度为 100，比较它们之后的变化。</p>
+      <p>回到两个系列本身：季度报道量与新衍生模型数，均以 2025 年一季度为 100，观察后续变化。</p>
     </div>
   </section>
 
@@ -475,7 +476,7 @@
 <script src="js/lenis.min.js"></script>
 <script src="data/data.js?v=10"></script>
 <script src="js/figs.js?v=32"></script>
-<script src="js/supplement.js?v=7"></script>
-<script src="js/app.js?v=40"></script>
+<script src="js/supplement.js?v=9"></script>
+<script src="js/app.js?v=42"></script>
 </body>
 </html>

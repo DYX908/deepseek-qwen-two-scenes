@@ -181,7 +181,7 @@
 
     /* ---------- 图表：卡片升入屏幕的过程中分步长出（不固定画面） ---------- */
     Object.keys(FIGS).forEach(id => {
-      const tl = gsap.timeline({ scrollTrigger: passing(`#${id} .fig-body`, "top bottom", "center 62%") });
+      const tl = gsap.timeline({ scrollTrigger: passing(`#${id} .fig-body`, FIGS[id].scrollStart || "top bottom", FIGS[id].scrollEnd || "center 62%") });
       FIGS[id].steps(tl);
       // 图表画完之后的持续动效：停在这张图上它也一直在动；离开就停下、归位
       if (FIGS[id].ambient) {
@@ -213,18 +213,23 @@
       .from("#finale .fin-bottom", { y: 50, opacity: 0, duration: .55, ease: "none" }, .35);
 
     /* 技术交汇：两个输入汇合，保持原有滚动惯性。 */
-    gsap.timeline({ scrollTrigger: passing("#lineage .lineage-flow", "top bottom", "center 60%") })
+    gsap.timeline({ scrollTrigger: passing("#lineage .lineage-flow", "top bottom", "top 36%") })
       .from("#lineage .lineage-parent.use", { x: -100, opacity: .1, duration: 1, ease: "none" }, 0)
       .from("#lineage .lineage-parent.talk", { x: 100, opacity: .1, duration: 1, ease: "none" }, 0)
       .from("#lineage .lineage-join", { scale: .3, opacity: 0, duration: .7, ease: "none" }, .1)
-      .from("#lineage .lineage-result", { y: 65, opacity: .1, duration: .9, ease: "none" }, .15);
+      .from("#lineage .lineage-result", { y: 90, opacity: .15, duration: .9, ease: "none" }, .15)
+      .from("#lineage .lineage-stream", { scaleY: 0, transformOrigin: "top", duration: .7, ease: "none" }, .1);
 
     /* ---------- 问题陈述：黄色标记划过；数据来源标签依次弹出 ---------- */
     gsap.fromTo("#sources .hl", { "--hl": 0 }, { "--hl": 1, ease: "none", scrollTrigger: passing("#sources .statement", "top 92%", "center 64%") });
     gsap.from("#sources .chip, #sources .src-lab", { y: 80, opacity: 0, stagger: .12, ease: "none", scrollTrigger: passing("#sources .src-row", "top bottom", "center 64%") });
 
     /* ---------- 三个问题：色卡依次升起 ---------- */
-    gsap.from(".q", { yPercent: 90, opacity: 0, stagger: .08, ease: "none", scrollTrigger: passing("#qs", "top bottom", "center 74%") });
+    if (innerWidth > 760) {
+      gsap.from(".q", { yPercent: 90, opacity: 0, duration: 1, stagger: .18, ease: "none", scrollTrigger: passing("#qs", "top 115%", "top 65%") });
+    } else {
+      gsap.utils.toArray(".q").forEach(q => gsap.from(q, { yPercent: 90, opacity: 0, ease: "none", scrollTrigger: passing(q, "top 110%", "top 65%") }));
+    }
 
     /* 结语独立排版：标题、两个现场、结论依次进入视野。 */
     gsap.timeline({ scrollTrigger: passing("#ending", "top bottom", "top 16%") })
@@ -269,7 +274,11 @@
       const pc = p.querySelector(".pc"), c = pc.querySelector(".pc-cursor");
       alive(p, [gsap.to(c, { x: () => pc.clientWidth - c.offsetWidth, duration: 2.6, ease: "sine.inOut", yoyo: true, repeat: -1, paused: true })]);
     });
-    // 五类数据：标签里的图标轮流跳一下
+    alive("#lineage", [
+      loopTo(".stream-run", { strokeDashoffset: -60 }, 2.4),
+      loopTo(".modules i", { opacity: .35 }, 1.6, { yoyo: true, stagger: .12 }),
+      loopTo(".signals i", { scaleY: .4 }, 1.2, { yoyo: true, stagger: .15, ease: "sine.inOut" })]);
+    // 七类数据：标签里的图标轮流跳一下
     alive("#sources", [gsap.timeline({ repeat: -1, repeatDelay: 1.6, paused: true })
       .to("#sources .chip [data-icon]", { y: -8, duration: .2, ease: "power2.out", stagger: { each: .16, yoyo: true, repeat: 1 } })]);
     // 顶部进度条：跟着滚动长，颜色随所在的幕切换
