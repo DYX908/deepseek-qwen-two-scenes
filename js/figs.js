@@ -296,9 +296,9 @@
     const nQ = Math.floor(qw / 1e6), nD = Math.floor(ds / 1e6), ratio = (qw / ds).toFixed(1), share = D.qwen_in_cn;
     const dsShare = ds / share.cn_total * 100, other = 100 - share.pct - dsShare;
     TEXT.fig4 = {
-      title: `开发者每下载 ${ratio} 次 Qwen，才下载 1 次 DeepSeek`,
+      title: `官方账号下载量，Qwen 是 DeepSeek 的 ${ratio} 倍`,
       sub: "一个小方块代表 100 万次下载。和图 02 正好反过来：报道里一面墙的 DeepSeek，到了下载量这里只剩一排。",
-      note: `数据：HuggingFace Hub API，Qwen 与 deepseek-ai 两个官方账号下全部模型最近 30 天下载量之和，截至 ${D.meta.snapshot_hf}；精确比值为 ${(qw / ds).toFixed(1)} 倍。不足 100 万次的部分不画方块。下方比例条为 16 家中国机构的全部下载量构成。`
+      note: `数据：HuggingFace Hub API，Qwen 与 deepseek-ai 两个官方账号下全部模型最近 30 天下载量之和，截至 ${D.meta.snapshot_hf}；精确比值为 ${(qw / ds).toFixed(1)} 倍。不足 100 万次的部分不画方块。下方比例条为 16 家中国机构的全部下载量构成。计数含各类任务及版本，下载请求不等同于独立用户、完整权重下载或境外使用。`
     };
     const el = {};
     FIGS.fig4 = {
@@ -357,8 +357,8 @@
     const R = [...D.ratios].sort((a, b) => (a.metric === "国外网络新闻报道量" ? -1 : b.metric === "国外网络新闻报道量" ? 1 : 0));
     const NAME = { "中文报刊报道量": "中文报刊报道", "国外网络新闻报道量": "国外网络新闻", "Hacker News 帖子数": "开发者论坛帖子", "GitHub star": "GitHub 收藏数", "HuggingFace 30 日下载量": "HuggingFace 下载量" };
     TEXT.fig5 = {
-      title: "连开发者社区的讨论都偏向 DeepSeek，可他们下载的是 Qwen",
-      sub: "五项指标，每一项都比较 DeepSeek 和 Qwen 谁更多、多几倍。四项「讨论」都偏向 DeepSeek，只有「使用」反过来偏向 Qwen。横轴为对数刻度。",
+      title: "讨论与收藏偏向 DeepSeek，官方账号下载量偏向 Qwen",
+      sub: "五项指标各自比较两个模型家族。报道、帖子与收藏较多的是 DeepSeek，HF 下载量较多的是 Qwen。各平台参与者不同，不能推断同一批人的行为。横轴为对数刻度。",
       note: R.map(r => `${NAME[r.metric]}：DeepSeek ${fmt(r.DeepSeek)}，Qwen ${fmt(r.Qwen)}（${r.window}，${r.source}）`).join("；") + "。五项口径与时间窗口各不相同，倍数只比较方向和量级。"
     };
     const el = {};
@@ -385,7 +385,7 @@
           g.append("text").attr("x", lead ? cx - w - 12 : cx + w + 12).attr("y", y + rh / 2 + 8).attr("text-anchor", lead ? "end" : "start").attr("font-size", 30).attr("font-weight", 900).attr("fill", C.ink).text(r.ratio + "×");
           // 指标名写在另一侧，不与条重叠
           g.append("text").attr("x", lead ? cx + 16 : cx - 16).attr("y", y + rh / 2 + 2).attr("text-anchor", lead ? "start" : "end").attr("font-size", 18).attr("font-weight", 900).attr("fill", C.ink).text(NAME[r.metric]);
-          g.append("text").attr("x", lead ? cx + 16 : cx - 16).attr("y", y + rh / 2 + 22).attr("text-anchor", lead ? "start" : "end").attr("font-size", 12).attr("font-weight", 700).attr("letter-spacing", ".15em").attr("fill", r.side === "use" ? C.use : C.talk).text(r.side === "use" ? "使用" : "讨论");
+          g.append("text").attr("x", lead ? cx + 16 : cx - 16).attr("y", y + rh / 2 + 22).attr("text-anchor", lead ? "start" : "end").attr("font-size", 12).attr("font-weight", 700).attr("letter-spacing", ".15em").attr("fill", r.side === "use" ? C.use : C.talk).text(r.side === "use" ? "下载" : "关注");
           el.labs.push(g.node());
         });
         svg.append("line").attr("x1", 0).attr("x2", W).attr("y1", top + nTalk * rh + gapUse / 2 + 2).attr("y2", top + nTalk * rh + gapUse / 2 + 2).attr("stroke", C.ink).attr("stroke-dasharray", "6 6").attr("stroke-opacity", .5);
@@ -407,7 +407,7 @@
     TEXT.fig6 = {
       title: `从 ${firstHalf.quarter.slice(0, 4)} 年${"一二三四"[+firstHalf.quarter.slice(5) - 1]}季度起，热门底座上的新衍生模型，过半出自中国底座`,
       sub: "每个方阵代表一个季度里新发布的衍生模型（微调、量化、合并后的新模型），一格是 1%。蓝格出自中国底座，灰格出自美欧底座。",
-      note: `数据：HuggingFace Hub API，30 日下载量 ≥ 50 万的 260 个底座（中国 ${D.derivatives.bases.CN} / 美欧 ${D.derivatives.bases.US_EU}）上的 ${fmt(D.derivatives.total_relations)} 条衍生关系，按衍生模型创建时间计季度。「热门」指底座按 2026 年 9 月的下载量选取；国别按发布机构计，英伟达发布的 Qwen 量化版计入美欧，中国占比为保守估计。`
+      note: `数据：HuggingFace Hub API，30 日下载量 ≥ 50 万的 260 个底座（中国 ${D.derivatives.bases.CN} / 美欧 ${D.derivatives.bases.US_EU}）上的 ${fmt(D.derivatives.total_relations)} 条衍生关系，按衍生模型创建时间计季度。「热门」指底座按 2026 年 9 月的下载量选取；国别按发布机构计，英伟达发布的 Qwen 量化版计入美欧；结果描述所选底座的公开衍生关系，不代表全部模型生态。`
     };
     const el = {};
     FIGS.fig6 = {
@@ -456,8 +456,8 @@
     const q = B.find(b => b.org === "Qwen").total, l = B.find(b => b.org === "meta-llama").total, d = B.find(b => b.org === "deepseek-ai").total;
     TEXT.fig7 = {
       title: `六个季度里，基于 Qwen 的新模型是 Llama 的 ${(q / l).toFixed(1)} 倍、DeepSeek 的 ${Math.round(q / d)} 倍`,
-      sub: `左边是底座的发布机构，带子越宽，在它的模型上新做出来的衍生模型越多。所有带子汇成右边一条：2025Q1—2026Q2 新发布的 ${fmt(total)} 个衍生模型，Qwen 一家占了 ${pct(q / total * 100)}。`,
-      note: `数据：同图 08，仅计 2025Q1—2026Q2 创建的衍生模型。「其他」包括 ${rest.slice(0, 6).map(b => b.org).join("、")} 等。`
+      sub: `左边是底座的发布机构，带子越宽，在它的模型上新做出来的衍生模型越多。所有带子汇成右边一条：2025Q1—2026Q2 记录的 ${fmt(total)} 条新衍生关系，Qwen 底座占 ${pct(q / total * 100)}。`,
+      note: `数据：同「衍生占比」图，仅计 2025Q1—2026Q2 创建的衍生模型。「其他」包括 ${rest.slice(0, 6).map(b => b.org).join("、")} 等。`
     };
     const el = {};
     FIGS.fig7 = {
@@ -509,7 +509,7 @@
     TEXT.fig8 = {
       title: `下载榜前十，${nQ} 个模型基于 Qwen`,
       sub: "书脊越宽，下载越多。蓝色是 Qwen 官方发布的模型，黄色是 NVIDIA 发布的 Qwen 量化版本。",
-      note: `数据：HuggingFace Hub API，28 家机构全部模型按最近 30 天下载量排序。统计时间：${D.meta.snapshot_rank}（本图为该日完整榜单）；其他下载指标更新至 ${D.meta.snapshot_hf}。第 9 名由 NVIDIA 发布，以 Qwen 为底座。下载量包含重复下载，不等同于用户数。`
+      note: `数据：HuggingFace Hub API，28 家机构全部模型按最近 30 天下载量排序。统计时间：${D.meta.snapshot_rank}（本图为该日完整榜单）；其他下载指标更新至 ${D.meta.snapshot_hf}。第 9 名由 NVIDIA 发布，以 Qwen 为底座。下载量为平台文件请求计数，包含重复请求，不等同于用户数。`
     };
     const el = {};
     FIGS.fig8 = {
@@ -578,7 +578,7 @@
     TEXT.fig9 = {
       title: `${total} 项限制措施里，${q1} 项出现在 DeepSeek 报道最多的 2025 年一季度`,
       sub: "浅红色的柱子是每个季度写到 DeepSeek 的海外网络新闻报道量，每个点是一项政府限制措施，按公布日期落在时间轴上。报道最热的那个季度，也是限制最密集的季度。",
-      note: `数据：限制措施由作者逐条核查（2026-10-07），${D.bans.items.filter(b => b.grade !== "media").length} 项有官方原文或官方新闻稿，${D.bans.items.filter(b => b.grade === "media").length} 项只有媒体报道、原件未公开（空心点）。纳入标准：政府机构针对 DeepSeek 或整批列名中国 AI 厂商的正式措施；排除非专项建议、未通过的法案和未落地的报道。报道量同图 02。`
+      note: `数据：限制措施由作者逐条核查（2026-10-07），${D.bans.items.filter(b => b.grade !== "media").length} 项有官方原文或官方新闻稿，${D.bans.items.filter(b => b.grade === "media").length} 项只有媒体报道、未取得原件（空心点）。纳入标准：政府机构针对 DeepSeek 或整批列名中国 AI 厂商的正式措施；排除非专项建议、未通过的法案和未落地的报道。报道量同图 02。`
     };
     const el = {};
     FIGS.fig9 = {
@@ -647,8 +647,8 @@
   (function () {
     const cols = Object.keys(D.bans.columns), CN = { public_app: "公众使用\n官方 App", gov_use: "政府人员与设备\n使用 App / 网站 / API", gov_local_model: "政府系统里\n本地运行的模型", public_local_model: "公众在自己电脑上\n运行下载的模型" };
     TEXT.fig10 = {
-      title: `${B.length} 项限制措施，没有一项管到公众在自己电脑上运行下载的模型`,
-      sub: "每一行是一项限制措施，每一列是一类可能被管到的使用方式。红色是明确覆盖，斜线是条文措辞宽泛、可能覆盖，黄色是条文明确把它排除在外。最右一列从头到尾是空的。",
+      title: `所核查的 ${B.length} 项措施，均未明确覆盖公众个人本地部署`,
+      sub: "每一行是一项限制措施，每一列是一类可能被管到的使用方式。红色是明确覆盖，斜线是条文措辞宽泛、可能覆盖，黄色是条文明确把它排除在外。最右列表示本次核查未发现明确覆盖，不代表法律影响为零。",
       note: "澳大利亚内政部 PSPF Direction 001-2025 脚注写明，限制「不包括」代码可审查、部署在政府系统本地的开源大模型；捷克政府第 537 号决议的实施方法论同样排除了本地部署、无法与 DeepSeek 服务器通信的开源模型。台湾地区公务机关的禁令明列「地端下载」，美国《2026 财年国防授权法》第 1532 条禁止国防部系统使用「DeepSeek 开发的任何 AI」——两者覆盖到模型本身，但只限政府内部。逐条来源见页面底部的数据说明。"
     };
     const el = {};
@@ -733,7 +733,7 @@
     TEXT.fig11 = {
       title: `DeepSeek 的报道和衍生一起往下走，Qwen 的海外报道减少 ${Math.round((1 - chg(qw.rep)) * 100)}%、衍生涨到 ${chg(qw.der).toFixed(0)} 倍`,
       sub: "左右两个面板，各画两条线：红线是每季度的海外网络新闻报道量，蓝线是每季度基于这个模型的新衍生模型数。都以 2025 年一季度为 100，看它们后来涨还是跌。",
-      note: `报道量同图 02；衍生数同图 08（以 deepseek-ai、Qwen 官方模型为底座的新衍生模型）。DeepSeek：报道 ${fmt(dk.rep[0])} → ${fmt(dk.rep[5])} 篇，衍生 ${fmt(dk.der[0])} → ${fmt(dk.der[5])} 个；Qwen：报道 ${fmt(qw.rep[0])} → ${fmt(qw.rep[5])} 篇，衍生 ${fmt(qw.der[0])} → ${fmt(qw.der[5])} 个。`
+      note: `报道量同图 02；衍生数同「衍生占比」图（以 deepseek-ai、Qwen 官方模型为底座的新衍生模型）。DeepSeek：报道 ${fmt(dk.rep[0])} → ${fmt(dk.rep[5])} 篇，衍生 ${fmt(dk.der[0])} → ${fmt(dk.der[5])} 个；Qwen：报道 ${fmt(qw.rep[0])} → ${fmt(qw.rep[5])} 篇，衍生 ${fmt(qw.der[0])} → ${fmt(qw.der[5])} 个。`
     };
     const el = { clips: [], ends: [], ripples: [] };
     FIGS.fig11 = {

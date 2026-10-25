@@ -65,20 +65,27 @@
     const G = D.bans.grades, dv = D.derivatives;
     const bans = D.bans.items.map(b => `<li>${b.date} ${b.place} · ${b.issuer}：${b.document}（${G[b.grade]}）<br><a href="${b.url}" target="_blank" rel="noopener">${b.url}</a></li>`).join("");
     host.innerHTML = `
-      <section><h3>六类数据来源</h3><ol>
-        <li>HuggingFace Hub API：28 家主要开源模型发布机构的全部公开模型 ${fmt(D.meta.hf_model_count)} 个，下载快照采集于 ${D.meta.snapshot_hf}；图 10 下载榜单独采用 ${D.meta.snapshot_rank} 的完整快照。衍生关系采用 ${D.meta.snapshot_derivatives} 的固定样本：${dv.bases.CN + dv.bases.US_EU} 个热门底座、${fmt(dv.total_relations)} 条关系。</li>
+      <section><h3>七类数据来源</h3><ol>
+        <li>HuggingFace Hub API：28 家主要开源模型发布机构的全部公开模型 ${fmt(D.meta.hf_model_count)} 个，下载快照采集于 ${D.meta.snapshot_hf}；「下载榜」图单独采用 ${D.meta.snapshot_rank} 的完整快照。衍生关系采用 ${D.meta.snapshot_derivatives} 的固定样本：${dv.bases.CN + dv.bases.US_EU} 个热门底座、${fmt(dv.total_relations)} 条关系。</li>
         <li>GitHub REST API：deepseek-ai 与 QwenLM 两个组织全部自有仓库的收藏数。采集于 ${D.meta.snapshot_github}。</li>
         <li>Hacker News（Algolia API）：关键词精确匹配的月度帖子数（采集于 ${D.meta.snapshot_hn}）；标题含 DeepSeek / Qwen 的帖子 ${fmt(D.hn_topics.by_keyword.DeepSeek.n + D.hn_topics.by_keyword.Qwen.n)} 条（采集于 2026-10-07）。</li>
         <li>慧科新闻搜索研究库（完整检索库）：中国大陆报刊，标题与正文检索，按季度统计报道篇数。采集于 ${D.meta.snapshot_wisers}。</li>
         <li>GDELT 全球新闻库（DOC 2.0 API）：65 种语言的网络新闻，外语文章经机器翻译后检索；检索式「DeepSeek」与「(Qwen OR "Tongyi Qianwen")」，去掉中国大陆来源（-sourcecountry:CH）；2025Q1—2026Q2 按季度统计文章数。采集于 ${D.meta.snapshot_gdelt}。</li>
+        <li>LiveBench：${D.supplement.benchmark.edition} 题目版本，${D.supplement.benchmark.retrieved} 采集快照；对比 ${D.supplement.benchmark.models.DeepSeek} 与 ${D.supplement.benchmark.models.Qwen}，七类子任务分别取均值。选取两家较新一代的 Flash 系列公开权重型号，不按得分选取；平台成绩来自其配置的 API，不能等同于本地部署成绩。<a href="${D.supplement.benchmark.archive}" download>采集时评分原表（CSV）</a>、<a href="data/livebench-categories-2026-06-25.json" download>任务分类</a>、<a href="https://livebench.ai/" target="_blank" rel="noopener">LiveBench 网站</a>。</li>
         <li>各国政府公告：${D.bans.total} 项限制措施，依据官方公告与公开报道核查，来源见下。核查于 2026-10-07。</li></ol></section>
       <section><h3>统计说明</h3><ul>
         <li>时间序列统一为 2025 年一季度至 2026 年二季度；下载量为采集日之前 30 天的快照。</li>
         <li>模型所属地区按发布机构归属划分；衍生关系依据 HuggingFace 的底座字段，底座统一采用 30 日下载量 ≥ 50 万的筛选标准。</li>
         <li>慧科统计中国大陆报刊；GDELT 统计中国大陆以外来源的网络新闻，两库分别计算，不合并篇数。GDELT 的 ${D.gdelt.days_total} 天查询区间中，接口返回 ${D.gdelt.days} 个日度数据点，季度值为返回记录之和。</li>
         <li>报道与帖子按所列关键词检索；新闻篇数、帖子数、收藏数、下载量和衍生关系分别反映报道、讨论与模型获取情况，不等同于独立用户数或实际部署数量。</li>
+        <li>HF 下载量按平台特定文件请求计数，可能包含重复或自动请求，不等同于完整权重下载、独立用户或实际部署；公开数据不含下载者地区，不能据此计算海外采用人数。任务构成按 pipeline_tag 划分，缺标签的保留在未标注组。</li>
         <li>五项对比指标分别按各自的统计范围与时间窗口计算，倍数用于比较各指标内的 DeepSeek 与 Qwen。</li></ul></section>
-      <section><h3>议题编码</h3><p>对 Hacker News 上标题含 DeepSeek 或 Qwen 的全部帖子，按标题主要内容归入「技术与发布、部署与动手、成本市场与公司、国家与安全、其他」五类。一条标题按主要落点只归一类。</p></section>
+      <section><h3>能力评测与背景资料</h3><p>能力图固定使用 2026-10-10 留存的七维评分，不是实时排行榜。2026-06-25 是题目版本日期，不是两款模型的发布日期或测试日期。该快照的模型配置中，DeepSeek 使用 Max 推理设置、输出上限 384,000 tokens；Qwen 开启思考、输出上限 131,072 tokens。配置并非实际消耗；参数规模、预算与服务端实现不同，不能作等成本因果比较，未核实每次实际运行消耗。</p><ul>
+        <li>型号与公开权重：<a href="https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash" target="_blank" rel="noopener">DeepSeek V4.1 Flash</a>、<a href="https://huggingface.co/Qwen/Qwen3.8-Flash-Next" target="_blank" rel="noopener">Qwen3.8 Flash Next</a>。</li>
+        <li>新闻背景：<a href="https://deepseek.com/en/news/deepseek-r1/" target="_blank" rel="noopener">R1 发布公告</a>、<a href="https://apnews.com/article/f4908eaca221d601e31e7e3368778030" target="_blank" rel="noopener">AP 当时报道</a>。</li>
+        <li>历史产品与技术关系：<a href="https://qwenlm.github.io/blog/qwen3/" target="_blank" rel="noopener">Qwen3 发布说明</a>、<a href="https://github.com/deepseek-ai/DeepSeek-R1" target="_blank" rel="noopener">DeepSeek-R1 型号说明</a>、<a href="https://huggingface.co/deepseek-ai/DeepSeek-R1-0528-Qwen3-8B" target="_blank" rel="noopener">Qwen 底座与 DeepSeek 蒸馏模型卡</a>、<a href="https://blogs.nvidia.com/blog/deepseek-r1-nim-microservice/" target="_blank" rel="noopener">NVIDIA NIM 公告</a>。</li>
+      </ul></section>
+      <section><h3>议题编码</h3><p>对 Hacker News 上标题含 DeepSeek 或 Qwen 的全部帖子，按标题主要内容归入「技术与发布、部署与动手、成本市场与公司、国家与安全、其他」五类。一条标题按主要落点只归一类。作者已对分层抽样的 100 条标题逐条复核。该材料反映 HN 社区，不代替新闻媒体内容分析。</p></section>
       <section><h3>限制措施逐条来源</h3><ol>${bans}</ol></section>
       <section><h3>开源工具与字体</h3><p>D3（ISC）、GSAP（标准免费授权）、Lenis（MIT）、Phosphor Icons（MIT）；思源黑体、IBM Plex Mono（SIL OFL）。</p></section>`;
   }
@@ -99,6 +106,8 @@
     fillMethod();
     Object.values(FIGS).forEach(f => f.draw());
     bind();
+    // 按页面实际顺序编号，新增图表后不留下旧编号。
+    document.querySelectorAll(".figcard .fig-no > span").forEach((el, i) => { el.textContent = String(i + 1).padStart(2, "0"); });
     // 章节页的大虚线圈（装饰）
     document.querySelectorAll(".chapter .slab").forEach(s => {
       const ring = document.createElement("div"); ring.className = "ch-ring"; ring.setAttribute("aria-hidden", "true"); s.prepend(ring);
@@ -202,6 +211,13 @@
       .from("#finale .ebb .is-it", { scale: .35, rotation: -18, opacity: 0, duration: .7, ease: "none" }, .1)
       .from("#finale .acc .is-it", { scale: .35, rotation: 18, opacity: 0, duration: .7, ease: "none" }, .15)
       .from("#finale .fin-bottom", { y: 50, opacity: 0, duration: .55, ease: "none" }, .35);
+
+    /* 技术交汇：两个输入汇合，保持原有滚动惯性。 */
+    gsap.timeline({ scrollTrigger: passing("#lineage .lineage-flow", "top bottom", "center 60%") })
+      .from("#lineage .lineage-parent.use", { x: -100, opacity: .1, duration: 1, ease: "none" }, 0)
+      .from("#lineage .lineage-parent.talk", { x: 100, opacity: .1, duration: 1, ease: "none" }, 0)
+      .from("#lineage .lineage-join", { scale: .3, opacity: 0, duration: .7, ease: "none" }, .1)
+      .from("#lineage .lineage-result", { y: 65, opacity: .1, duration: .9, ease: "none" }, .15);
 
     /* ---------- 问题陈述：黄色标记划过；数据来源标签依次弹出 ---------- */
     gsap.fromTo("#sources .hl", { "--hl": 0 }, { "--hl": 1, ease: "none", scrollTrigger: passing("#sources .statement", "top 92%", "center 64%") });

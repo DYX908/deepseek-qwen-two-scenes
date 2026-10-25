@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>媒体在吵 DeepSeek，开发者在用 Qwen</title>
+<title>媒体关注 DeepSeek，开发者下载 Qwen</title>
 <meta name="description" content="中国开源大模型出海的「两个现场」：被讨论的中国 AI 和被使用的中国 AI，是不是同一个？">
 <link rel="preload" href="fonts/sans.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=40">
+  <link rel="stylesheet" href="css/site.css?v=44">
 </head>
 <body>
 <div class="progress" aria-hidden="true"><i></i></div>
@@ -15,7 +15,7 @@
 <header class="cover">
   <div class="c-top">
     <div class="c-meta"><div class="no">01</div>数据新闻<br>2026 媒介数据挖掘工作坊<br>文 · 图 · 数据　董宇翔</div>
-    <h1><span class="l1">媒体在吵 DeepSeek，</span><span class="l2">开发者在用 Qwen</span></h1>
+    <h1><span class="l1">媒体关注 DeepSeek，</span><span class="l2">开发者下载 Qwen</span></h1>
     <p class="subt">中国开源大模型出海的「两个现场」</p>
     <div class="c-square" aria-hidden="true"></div>
   </div>
@@ -28,10 +28,10 @@
     </div>
     <div class="blk use">
       <div class="shape ring" aria-hidden="true"></div>
-      <div class="lab">被使用的</div>
+      <div class="lab">被下载的</div>
       <div class="v"><span data-hf-total>2.75</span><small>亿次</small></div>
       <div class="k">Qwen 在 HuggingFace 上最近 30 天的下载量<br>（截至 <span data-hf-date>2026-10-08</span>）</div>
-      <div class="live"><span class="dot" aria-hidden="true"></span><span>你打开这一页以来，Qwen 又被下载了</span><b id="ctr">0</b><span>次</span></div>
+      <div class="live"><span class="dot" aria-hidden="true"></span><span>按日均速率估算，这段时间约有</span><b id="ctr">0</b><span>次</span></div>
     </div>
   </div>
 </header>
@@ -47,7 +47,7 @@
     <div class="lead-in">
       <p class="ln">你最近一次听说中国 AI，大概是在<b class="c-talk">新闻里</b>。</p>
       <p class="ln">你最近一次用到中国 AI，可能是在某个开源项目的<b class="c-use">依赖里</b>。</p>
-      <p class="ln punch">这两件事说的，<span class="hl">不是同一个中国 AI</span>。</p>
+      <p class="ln punch">新闻里的焦点，<span class="hl">也是下载榜上的焦点吗？</span></p>
     </div>
   </section>
 
@@ -61,8 +61,8 @@
     <div class="card story-card">
       <div class="tag">背景 · 2025 年 1 月</div>
       <p class="big">2025 年 1 月，DeepSeek 发布推理模型 R1，“DeepSeek 时刻”成了全球头条。</p>
-      <p>从那以后，提起中国 AI，人们首先想到的就是 DeepSeek。但在开发者下载模型的 HuggingFace 上，下载最多的中国模型不是它。</p>
-      <div class="next"><span data-icon="arrow-down-right"></span>先看全局：中国开源模型到底被用了多少</div>
+      <p>这次发布把模型能力、计算成本与市场预期带入公共讨论。而在本文 2026 年 10 月的 HuggingFace 下载快照中，Qwen 官方账号的下载量更高。</p>
+      <div class="next"><span data-icon="arrow-down-right"></span>先看全局：中国机构发布的模型，占多少下载量</div>
     </div>
   </section>
 
@@ -82,21 +82,22 @@
 
   <!-- ======================= 问题与数据来源 ======================= -->
   <section class="sources" id="sources">
-    <p class="statement">中国开源模型确实被大量使用。问题是：<span class="hl">被用的是谁？</span>它和新闻里的那个，是同一个吗？</p>
+    <p class="statement">从新闻到模型下载，<span class="hl">关注为何不同？</span>能力、产品与使用场景，怎样影响选择？</p>
     <div class="src-row">
-      <div class="src-lab">六类数据</div>
+      <div class="src-lab">七类数据</div>
       <div class="chip"><span data-icon="download-simple" class="c-use"></span><b>HuggingFace</b><i>下载量、衍生模型</i></div>
       <div class="chip"><span data-icon="github-logo"></span><b>GitHub</b><i>仓库收藏数</i></div>
       <div class="chip"><span data-icon="chats-circle" class="c-talk"></span><b>Hacker News</b><i>开发者讨论</i></div>
       <div class="chip"><span data-icon="newspaper-clipping" class="c-talk"></span><b>慧科新闻库</b><i>中文报刊报道</i></div>
       <div class="chip"><span data-icon="globe" class="c-talk"></span><b>GDELT 新闻库</b><i>国外网络新闻</i></div>
+      <div class="chip"><span data-icon="download-simple" class="c-use"></span><b>LiveBench</b><i>七项能力评测</i></div>
       <div class="chip"><span data-icon="bank"></span><b>各国政府公告</b><i>20 项限制措施</i></div>
     </div>
   </section>
 
   <section class="qs" id="qs">
     <div class="q"><div class="n">01</div><span class="act">第一幕</span><div class="t">被讨论的是谁？</div><div class="d">中外新闻与开发者社区在谈哪个中国 AI、谈些什么。</div></div>
-    <div class="q"><div class="n">02</div><span class="act">第二幕</span><div class="t">被使用的是谁？</div><div class="d">全球开发者实际在下载、在二次开发哪个中国 AI。</div></div>
+    <div class="q"><div class="n">02</div><span class="act">第二幕</span><div class="t">被使用的是谁？</div><div class="d">公开平台上，哪些模型被下载、被二次开发；差异从何而来。</div></div>
     <div class="q"><div class="n">03</div><span class="act">第三幕</span><div class="t">禁令管到了哪里？</div><div class="d">各国针对 DeepSeek 的限制措施，管住了什么、没管住什么。</div></div>
   </section>
 
@@ -131,9 +132,9 @@
 
   <section class="txt split">
     <div class="note">
-      <div class="tag">报道多，谈的是什么</div>
-      <p class="big">报道多，不等于谈的是使用。</p>
-      <p>我们把英文程序员社区 Hacker News 上标题提到这两个模型的 1,943 条帖子逐条归类。右边是两边点赞最多的帖子。</p>
+      <div class="tag">从新闻到开发者社区</div>
+      <p class="big">开发者社区，也在讨论技术之外的问题。</p>
+      <p>我们另取英文社区 Hacker News 的 1,943 条帖子，按标题归类。它反映社区讨论，不能代替海外新闻的内容分析。旁边列出两类议题中的高赞帖子。</p>
     </div>
     <div class="clips" data-examples></div>
   </section>
@@ -151,8 +152,8 @@
   <section class="txt">
     <div class="note">
       <div class="tag">同一个社区，两件事</div>
-      <p>谈 DeepSeek 时，人们在谈英伟达股价、训练成本、出口管制、审查和数据安全；谈 Qwen 时，人们在谈怎么在自己的电脑上跑起来、怎么接进自己的工具。</p>
-      <p class="big">而 DeepSeek 本身的热度，并没有持续。</p>
+      <p>样本中，DeepSeek 的市场与安全议题较多，Qwen 的部署与动手议题占比更高。模型发布既是技术事件，也会牵动投资与监管；社区中的讨论因此不只围绕能力展开。</p>
+      <p class="big">首季高峰之后，DeepSeek 的报道量回落。</p>
     </div>
   </section>
 
@@ -196,15 +197,15 @@
       <div class="bigcap">Qwen 最近 30 天的下载量（截至 <span data-hf-date>2026-10-08</span>）</div>
       <div class="act">第二幕</div>
       <h2>被使用的中国 AI</h2>
-      <p class="one">下载最多的中国模型，<br>是一个很少上新闻的名字。</p>
+      <p class="one">报道量与下载量，<br>呈现出不同的排序。</p>
     </div>
   </section>
 
   <section class="txt" style="--act: var(--use)">
     <div class="note">
       <div class="tag">第二幕 · 被使用的</div>
-      <p class="big">在 HuggingFace 上，下载最多的中国模型是 Qwen。</p>
-      <p>Qwen 是阿里巴巴通义千问团队发布的开源模型家族，从手机上能跑的 0.6B 到几千亿参数的大模型都有。任何人都可以免费下载到自己的电脑上运行、修改、再发布。</p>
+      <p class="big">在所统计的官方账号中，Qwen 的下载量更高。</p>
+      <p>Qwen 是阿里巴巴发布的模型家族，包含多种参数规模和任务类型。下载与二次开发还取决于设备、工具和许可证；这里的下载量不等于独立用户数，也无法区分境内外用户。</p>
     </div>
   </section>
 
@@ -220,9 +221,9 @@
 
   <section class="txt" style="--act: var(--use)">
     <div class="note">
-      <div class="tag">讨论 vs 使用</div>
-      <p class="big">这个落差，不只出现在媒体上。</p>
-      <p>把中外报道量、论坛帖子、GitHub 收藏和下载量放在一起比：</p>
+      <div class="tag">从新闻到开发者社区</div>
+      <p class="big">讨论与收藏，也更集中在 DeepSeek。</p>
+      <p>Hacker News 的帖子数、GitHub 的仓库收藏数，都延续了报道中的排序。HuggingFace 官方账号的下载量，则呈现相反的结果。</p>
     </div>
   </section>
 
@@ -238,15 +239,47 @@
 
   <section class="txt" style="--act: var(--use)">
     <div class="note">
-      <div class="tag">比下载更进一步</div>
-      <p class="big">下载只是第一步。</p>
-      <p>开发者拿一个模型做微调、量化、合并，再作为新模型发布出来，这就是衍生模型，比下载更能说明「在用」。HuggingFace 上的模型可以标明自己的「底座」，也就是它是在哪个模型的基础上做出来的。</p>
+      <div class="tag">拆开下载构成</div>
+      <p class="big">同一个品牌名下，并不是同一种模型。</p>
+      <p>文本生成、图像理解、嵌入检索、语音，各有不同用途。把它们一起计入下载量，也把产品覆盖范围带进了比较。</p>
+    </div>
+  </section>
+  <section class="figcard card supplement-card" id="fig14">
+    <div class="fig-head">
+      <div class="fig-no"><span>08</span>下载构成</div>
+      <h2 class="fig-title" data-bind="fig14.title"></h2>
+      <p class="fig-sub" data-bind="fig14.sub"></p>
+    </div>
+    <div class="fig-body"></div>
+    <div class="fig-note" data-bind="fig14.note"></div>
+  </section>
+  <section class="txt" style="--act: var(--use)">
+    <div class="note">
+      <div class="tag">具体型号的能力</div>
+      <p class="big">下载量之外，还要看它能完成什么。</p>
+      <p>产品类型解释了部分总量差异，具体任务的表现还需要单独比较。以 2026 年的 DeepSeek V4.1 Flash 与 Qwen3.8 Flash Next 为例，两款模型在同一版 LiveBench 试题中各有所长。</p>
+    </div>
+  </section>
+  <section class="figcard card supplement-card" id="fig15">
+    <div class="fig-head">
+      <div class="fig-no"><span>09</span>分项能力</div>
+      <h2 class="fig-title" data-bind="fig15.title"></h2>
+      <p class="fig-sub" data-bind="fig15.sub"></p>
+    </div>
+    <div class="fig-body"></div>
+    <div class="fig-note" data-bind="fig15.note"></div>
+  </section>
+  <section class="txt" style="--act: var(--use)">
+    <div class="note">
+      <div class="tag">从能力到实际开发</div>
+      <p class="big">下载之后，模型还会被继续改造。</p>
+      <p>开发者需要结合任务、设备和运行成本选择模型，也会通过微调、量化或合并，制作适合自己的版本。HuggingFace 的「底座」字段记录了这些公开的二次开发关系，尚不能据此判断实际部署规模。</p>
     </div>
   </section>
 
   <section class="figcard card" id="fig6">
     <div class="fig-head">
-      <div class="fig-no"><span>08</span>衍生占比</div>
+      <div class="fig-no"><span>10</span>衍生占比</div>
       <h2 class="fig-title" data-bind="fig6.title"></h2>
       <p class="fig-sub" data-bind="fig6.sub"></p>
     </div>
@@ -257,13 +290,13 @@
   <section class="txt" style="--act: var(--use)">
     <div class="note">
       <div class="tag">一家过半</div>
-      <p class="big">这些新模型里，一半以上出自 Qwen 一家。</p>
+      <p class="big">在热门底座样本中，过半新衍生关系指向 Qwen。</p>
     </div>
   </section>
 
   <section class="figcard card" id="fig7">
     <div class="fig-head">
-      <div class="fig-no"><span>09</span>底座流向</div>
+      <div class="fig-no"><span>11</span>底座流向</div>
       <h2 class="fig-title" data-bind="fig7.title"></h2>
       <p class="fig-sub" data-bind="fig7.sub"></p>
     </div>
@@ -271,17 +304,28 @@
     <div class="fig-note" data-bind="fig7.note"></div>
   </section>
 
+  <section class="lineage" id="lineage">
+    <div class="lineage-heading"><div class="tag">技术的交汇</div><h2>一个模型里，也可以有两家的贡献。</h2><p>DeepSeek 用自身模型生成的推理数据，对 Qwen 的底座继续训练，形成了新的蒸馏模型。</p></div>
+    <div class="lineage-flow">
+      <div class="lineage-parent use"><small>模型底座</small><strong>Qwen3</strong><span>8B-Base</span></div>
+      <div class="lineage-join" aria-hidden="true">＋</div>
+      <div class="lineage-parent talk"><small>推理数据</small><strong>DeepSeek</strong><span>R1-0528</span></div>
+      <div class="lineage-result"><small>继续训练后的模型</small><strong>DeepSeek-R1-0528-<wbr>Qwen3-8B</strong><p>发布机构是 DeepSeek，底座来自 Qwen。<br>发布归属与技术来源，是两个不同维度。</p></div>
+    </div>
+    <p class="lineage-note">来源：DeepSeek 官方模型卡。蒸馏关系体现技术来源，不代表双方存在商业合作，也不对同一次下载重复计数。</p>
+  </section>
+
   <section class="txt" style="--act: var(--use)">
     <div class="note">
       <div class="tag">美国公司也在发 Qwen</div>
       <p class="big">NVIDIA 的发布账号里，也有 Qwen。</p>
-      <p data-bind="hf.nvidia"></p>
+      <p data-bind="hf.nvidia"></p><p>NVIDIA 同样在 2025 年 1 月推出了 DeepSeek-R1 的 NIM 服务。两家模型都进入了海外部署生态，HF 下载榜只呈现其中一个入口。</p>
     </div>
   </section>
 
   <section class="figcard card" id="fig8">
     <div class="fig-head">
-      <div class="fig-no"><span>10</span>下载榜</div>
+      <div class="fig-no"><span>12</span>下载榜</div>
       <h2 class="fig-title" data-bind="fig8.title"></h2>
       <p class="fig-sub" data-bind="fig8.sub"></p>
     </div>
@@ -298,24 +342,24 @@
   <section class="chapter ink" id="ch3">
     <div class="slab">
       <div class="bignum"><span class="bn">20</span><small>项</small></div>
-      <div class="bigcap">各国政府针对 DeepSeek 的限制措施（2025 年至今）</div>
+      <div class="bigcap">各国政府针对 DeepSeek 的限制措施（2025 年起，截至 2026-10-07 核查）</div>
       <div class="act">第三幕</div>
       <h2>禁令管到了哪里</h2>
-      <p class="one">20 项限制措施，管的是 App 和政府系统，<br>没有一项管到下载到本地的模型。</p>
+      <p class="one">所核查的 20 项措施，主要针对 App 与政府使用，<br>均未明确覆盖公众个人本地部署。</p>
     </div>
   </section>
 
   <section class="txt" style="--act: var(--ink)">
     <div class="note">
       <div class="tag">第三幕 · 禁令管到了哪里</div>
-      <p class="big">被讨论的 DeepSeek，引来了一波限制措施。</p>
+      <p class="big">报道高峰，与一批限制措施同期出现。</p>
       <p>我们逐条核对了 2025 年以来各国政府针对 DeepSeek 的 20 项限制，查到官方原文的就以原文为准，查不到原件的单独标出。</p>
     </div>
   </section>
 
   <section class="figcard card" id="fig9">
     <div class="fig-head">
-      <div class="fig-no"><span>11</span>禁令时间</div>
+      <div class="fig-no"><span>13</span>禁令时间</div>
       <h2 class="fig-title" data-bind="fig9.title"></h2>
       <p class="fig-sub" data-bind="fig9.sub"></p>
     </div>
@@ -333,7 +377,7 @@
 
   <section class="figcard card" id="fig10">
     <div class="fig-head">
-      <div class="fig-no"><span>12</span>管辖对象</div>
+      <div class="fig-no"><span>14</span>管辖对象</div>
       <h2 class="fig-title" data-bind="fig10.title"></h2>
       <p class="fig-sub" data-bind="fig10.sub"></p>
     </div>
@@ -341,17 +385,22 @@
     <div class="fig-note" data-bind="fig10.note"></div>
   </section>
 
+  <section class="pull ink" id="pull3">
+    <div class="pn"><span data-pull="0" data-from="20" data-dec="0">0</span> / 20</div>
+    <div class="pc">所核查的 20 项措施中，明确覆盖公众个人本地部署的：0 项。<br>这不等于限制没有影响；政府内部部署与公众使用的适用范围不同。</div>
+  </section>
+
   <section class="txt" style="--act: var(--ink)">
     <div class="note">
       <div class="tag">两个现场</div>
-      <p class="big">最后，把报道和使用放在同一张图上。</p>
-      <p>每季度的报道量和衍生模型数，都以 2025 年一季度为 100：</p>
+      <p class="big">报道与二次开发，后来各自怎样变化？</p>
+      <p>回到两个系列本身：将季度报道量和新衍生模型数分别以 2025 年一季度为 100，比较它们之后的变化。</p>
     </div>
   </section>
 
   <section class="figcard card" id="fig11">
     <div class="fig-head">
-      <div class="fig-no"><span>13</span>此消彼长</div>
+      <div class="fig-no"><span>15</span>此消彼长</div>
       <h2 class="fig-title" data-bind="fig11.title"></h2>
       <p class="fig-sub" data-bind="fig11.sub"></p>
     </div>
@@ -359,10 +408,6 @@
     <div class="fig-note" data-bind="fig11.note"></div>
   </section>
 
-  <section class="pull ink" id="pull3">
-    <div class="pn"><span data-pull="0" data-from="20" data-dec="0">0</span> / 20</div>
-    <div class="pc">20 项限制措施里，管到个人在本地运行下载模型的：0 项。<br>澳大利亚和捷克的禁令，还专门把本地部署的开源模型排除在外。</div>
-  </section>
 
   <!-- ======================= 结语 ======================= -->
   <section class="ending" id="ending">
@@ -377,17 +422,17 @@
       <article class="ending-scene talk">
         <div class="scene-index">01 / 关注与限制</div>
         <h3>一种在新闻里</h3>
-        <p>发布会、股价、禁令。<br>很多国家都在看，也都在防。</p>
+        <p>新闻记录技术发布，<br>也记录市场反应与政策争议。</p>
       </article>
       <article class="ending-scene use">
         <div class="scene-index">02 / 下载与二次开发</div>
         <h3>一种在代码里</h3>
-        <p>开发者下载模型，改成自己的版本，接进自己的产品。NVIDIA 也用 Qwen 发布了新版本。</p>
-        <p>所核查的 20 项限制措施，<br>均未覆盖个人本地运行模型。</p>
+        <p>开发者根据任务与设备选择模型，再通过微调、量化或蒸馏，做出新的版本。</p>
+        <p>同一个模型，既可能成为新闻焦点，也可能成为别人继续开发的底座。</p>
       </article>
     </div>
     </div>
-    <p class="ending-verdict">被谈论得最多的，<span>不一定是被用得最多的。</span></p>
+    <p class="ending-verdict">被看见的热度，<span>不是技术价值的全部。</span></p>
   </section>
 
   <!-- ======================= 收束：以结论句为主视觉 ======================= -->
@@ -397,14 +442,14 @@
       <p class="punch2"><span class="ebb">新闻记下它被看见的那几天，</span><span class="acc">代码记下它被用到的每一天。</span></p>
     </div>
     <div class="fin-bottom">
-    <div class="fin-time"><span>你读到这里，用了</span><b id="m-time">0<small>分</small>00<small>秒</small></b><span>这段时间里：</span></div>
+    <div class="fin-time"><span>你读到这里，用了</span><b id="m-time">0<small>分</small>00<small>秒</small></b><span>按各自日均速率估算：</span></div>
     <div class="fin-metrics">
     <div class="eb talk">
-      <div class="lab">被看见 · DeepSeek</div>
+      <div class="lab">报道估算 · DeepSeek</div>
       <div class="meter"><div class="mv"><span>约</span><b id="m-talk">0.000</b><span>篇海外网络新闻报道</span></div><small data-rate="talk"></small></div>
     </div>
     <div class="eb use">
-      <div class="lab">被使用 · Qwen</div>
+      <div class="lab">下载估算 · Qwen</div>
       <div class="meter"><div class="mv"><span>约</span><b id="m-use">0</b><span>次 HuggingFace 下载</span></div><small data-rate="use"></small></div>
     </div>
     </div>
@@ -414,11 +459,11 @@
   <!-- ======================= 数据与方法 ======================= -->
   <section class="method" id="method">
     <details>
-      <summary><span class="tag">数据来源</span>六类数据来源与统计说明（点开查看）</summary>
+      <summary><span class="tag">数据来源</span>七类数据来源与统计说明（点开查看）</summary>
       <div class="method-body" data-method></div>
     </details>
     <footer class="foot">
-      <div>数据新闻作品 ·《媒体在吵 DeepSeek，开发者在用 Qwen——中国开源大模型出海的「两个现场」》</div>
+      <div>数据新闻作品 ·《媒体关注 DeepSeek，开发者下载 Qwen——中国开源大模型出海的「两个现场」》</div>
       <div>文 · 图 · 数据　董宇翔　｜　中央民族大学新闻与传播学院　2026 媒介数据挖掘工作坊</div>
     </footer>
   </section>
@@ -428,8 +473,9 @@
 <script src="js/gsap.min.js"></script>
 <script src="js/ScrollTrigger.min.js"></script>
 <script src="js/lenis.min.js"></script>
-<script src="data/data.js?v=8"></script>
-<script src="js/figs.js?v=31"></script>
-<script src="js/app.js?v=38"></script>
+<script src="data/data.js?v=10"></script>
+<script src="js/figs.js?v=32"></script>
+<script src="js/supplement.js?v=7"></script>
+<script src="js/app.js?v=40"></script>
 </body>
 </html>

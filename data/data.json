@@ -2018,5 +2018,121 @@
     "topic": "H"
    }
   ]
+ },
+ "supplement": {
+  "revision_date": "2026-10-26",
+  "composition": [
+   {
+    "name": "DeepSeek",
+    "org": "deepseek-ai",
+    "total": 26257475,
+    "parts": [
+     {
+      "id": "text",
+      "label": "文本生成",
+      "downloads": 20941318,
+      "pct": 79.75373869726621
+     },
+     {
+      "id": "vision",
+      "label": "图文输入 → 文本输出",
+      "downloads": 4989807,
+      "pct": 19.00337713355911
+     },
+     {
+      "id": "other",
+      "label": "其他任务 / 未标注",
+      "downloads": 326350,
+      "pct": 1.2428841691746826
+     }
+    ]
+   },
+   {
+    "name": "Qwen",
+    "org": "Qwen",
+    "total": 274666754,
+    "parts": [
+     {
+      "id": "text",
+      "label": "文本生成",
+      "downloads": 146243979,
+      "pct": 53.244150182078464
+     },
+     {
+      "id": "vision",
+      "label": "图文输入 → 文本输出",
+      "downloads": 93455947,
+      "pct": 34.02521260363386
+     },
+     {
+      "id": "other",
+      "label": "其他任务 / 未标注",
+      "downloads": 34966828,
+      "pct": 12.730637214287682
+     }
+    ]
+   }
+  ],
+  "benchmark": {
+   "edition": "2026-06-25",
+   "retrieved": "2026-10-10",
+   "models": {
+    "DeepSeek": "DeepSeek V4.1 Flash（Max）",
+    "Qwen": "Qwen3.8 Flash Next"
+   },
+   "source": "https://github.com/LiveBench/new-livebench/blob/main/public/table_2026_06_25.csv",
+   "archive": "data/livebench-2026-06-25-snapshot-2026-10-10.csv",
+   "selection": "固定 2026-10-10 快照中，两家较新一代、标注公开权重的 Flash 系列型号；不按得分选取，不作等参数或等推理预算比较。",
+   "rows": [
+    {
+     "category": "Reasoning",
+     "label": "推理",
+     "DeepSeek": 86.69225,
+     "Qwen": 87.37975
+    },
+    {
+     "category": "Mathematics",
+     "label": "数学",
+     "DeepSeek": 93.28975,
+     "Qwen": 85.821
+    },
+    {
+     "category": "Coding",
+     "label": "代码",
+     "DeepSeek": 80.037,
+     "Qwen": 72.5505
+    },
+    {
+     "category": "Agentic Coding",
+     "label": "代理编程",
+     "DeepSeek": 77.27266666666667,
+     "Qwen": 61.61633333333333
+    },
+    {
+     "category": "Data Analysis",
+     "label": "数据分析",
+     "DeepSeek": 79.25333333333333,
+     "Qwen": 74.24
+    },
+    {
+     "category": "Language",
+     "label": "语言任务",
+     "DeepSeek": 81.18966666666667,
+     "Qwen": 74.643
+    },
+    {
+     "category": "IF",
+     "label": "指令遵循",
+     "DeepSeek": 70.03325000000001,
+     "Qwen": 77.10849999999999
+    }
+   ]
+  },
+  "lineage": {
+   "base": "Qwen3-8B-Base",
+   "teacher": "DeepSeek-R1-0528",
+   "result": "DeepSeek-R1-0528-Qwen3-8B",
+   "source": "https://huggingface.co/deepseek-ai/DeepSeek-R1-0528-Qwen3-8B"
+  }
  }
 }

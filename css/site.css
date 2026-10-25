@@ -260,6 +260,72 @@ b, strong { font-weight: 700; }
 
 .draft-end { padding: 10vh var(--pad); text-align: center; font-size: 13px; font-weight: 700; letter-spacing: .3em; color: var(--muted); }
 
+/* ---------------- 补充解释：产品目录、能力刻度、技术交汇 ---------------- */
+.scope-summary { display: grid; grid-template-columns: 1fr .8fr 1fr 1fr; align-items: center; gap: 24px; padding: 18px 0 28px; border-bottom: 2px solid var(--ink); }
+.scope-summary span { display: block; font-size: 14px; font-weight: 700; }
+.scope-summary b { display: block; font-size: clamp(42px, 5vw, 74px); line-height: 1.25; font-weight: 900; letter-spacing: -.04em; }
+.scope-summary b small { font-size: 20px; margin-left: 8px; }
+.scope-summary > div:nth-child(3) b { color: var(--use); }
+.scope-transition i { display: block; font-style: normal; font-size: 42px; }
+.scope-summary p { font-size: 16px; line-height: 1.7; margin: 0; }
+.scope-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 6%; padding-top: 30px; }
+.scope-panel { --scope: var(--talk); min-width: 0; }
+.scope-panel.use { --scope: var(--use); }
+.scope-name { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.scope-name b { font-size: 26px; color: var(--scope); font-weight: 900; }
+.scope-name span { font-size: 18px; font-weight: 700; white-space: nowrap; }
+.scope-strip { display: flex; height: 52px; border: 1px solid var(--scope); }
+.scope-strip i { display: block; flex-shrink: 0; }
+.part-text { background: var(--scope); }
+.part-vision { background: repeating-linear-gradient(135deg, var(--scope) 0 2px, white 2px 7px); }
+.part-other { background: radial-gradient(var(--scope) 1px, white 1.5px) 0 0 / 6px 6px; }
+.scope-list { margin-top: 18px; }
+.scope-row { display: grid; grid-template-columns: 14px 1fr auto; gap: 3px 10px; padding: 10px 0; border-bottom: 1px solid #dedbd4; align-items: baseline; }
+.scope-row i { width: 12px; height: 12px; border: 1px solid var(--scope); }
+.scope-row span { font-size: 15px; font-weight: 650; }
+.scope-row b { font-size: 19px; font-variant-numeric: tabular-nums; }
+.scope-row small { grid-column: 2 / 4; font-size: 12px; color: var(--muted); }
+.bench-models { display: flex; gap: 12px 30px; align-items: center; flex-wrap: wrap; margin: 0 0 25px; }
+.bench-models span { font-size: 16px; font-weight: 800; }
+.bench-models i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: currentColor; margin-right: 7px; }
+.bench-models small { color: var(--muted); font-size: 12px; }
+.lineage { margin: 10vh var(--pad); padding: 50px 48px; border-top: 6px solid var(--ink); border-bottom: 1px solid var(--ink); }
+.lineage-heading { max-width: 900px; }
+.lineage-heading h2 { font-size: clamp(30px, 3.2vw, 48px); line-height: 1.3; margin: 20px 0; font-weight: 900; letter-spacing: -.025em; }
+.lineage-heading > p { font-size: 19px; line-height: 1.8; max-width: 40em; }
+.lineage-flow { display: grid; grid-template-columns: 1fr 70px 1fr; align-items: center; gap: 24px; margin-top: 36px; }
+.lineage-parent { padding: 22px 26px; border-top: 4px solid var(--use); background: white; }
+.lineage-parent.talk { border-color: var(--talk); }
+.lineage-parent small { display: block; font-size: 13px; font-weight: 750; letter-spacing: .15em; }
+.lineage-parent strong { display: block; font-size: clamp(32px, 4vw, 58px); line-height: 1.3; margin: 12px 0; color: var(--use); }
+.lineage-parent.talk strong { color: var(--talk); }
+.lineage-parent > span { font-family: var(--mono); font-size: 16px; }
+.lineage-join { font-size: 54px; text-align: center; }
+.lineage-result { grid-column: 1 / -1; position: relative; margin-top: 20px; padding: 30px; border: 2px solid var(--ink); background: var(--paper); }
+.lineage-result::before { content: ''; position: absolute; width: 2px; height: 45px; top: -45px; left: 50%; background: var(--ink); }
+.lineage-result small { display: inline-block; background: var(--yel); padding: 3px 10px; font-weight: 750; }
+.lineage-result strong { display: block; font-size: clamp(24px, 3vw, 42px); line-height: 1.3; margin: 18px 0; letter-spacing: -.02em; overflow-wrap: anywhere; }
+.lineage-result p { margin: 0; font-size: 18px; line-height: 1.7; }
+.lineage-note { margin: 22px 0 0; font-size: 12.5px; line-height: 1.8; color: var(--muted); }
+@media (max-width: 760px) {
+  .supplement-card .fig-title { word-break: normal; overflow-wrap: anywhere; }
+  .scope-summary { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .scope-transition { display: none; }
+  .scope-summary p { grid-column: 1 / -1; }
+  .scope-panels { grid-template-columns: 1fr; gap: 30px; }
+  .scope-name b { font-size: 24px; }
+  .scope-name span { font-size: 17px; }
+  .bench-models { gap: 10px; }
+  .bench-models span { font-size: 13px; }
+  .lineage { padding: 28px 20px; }
+  .lineage-flow { grid-template-columns: 1fr; gap: 16px; }
+  .lineage-join { font-size: 34px; }
+  .lineage-result { grid-column: 1; }
+  .lineage-parent { padding: 20px; }
+  .lineage-result { padding: 24px 18px; }
+  .lineage-result::before { height: 36px; top: -36px; }
+}
+
 /* ---------------- 手机 ---------------- */
 @media (max-width: 760px) {
   .src-row { grid-template-columns: max-content; }
